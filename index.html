@@ -1143,6 +1143,14 @@
   function buildGDots() {
     if (!gDots) return;
     gDots.innerHTML = '';
+    
+    // Hide dots on mobile
+    if (window.innerWidth <= 900) {
+      gDots.style.display = 'none';
+      return;
+    }
+    
+    gDots.style.display = 'flex';
     for (let i = 0; i < gTotalPages(); i++) {
       const d = document.createElement('button');
       d.className = 'gallery-dot' + (i === gIndex ? ' active' : '');
@@ -1152,18 +1160,28 @@
   }
 
   function updateGScroll() {
-    const scrollPos = gIndex * (gScroller.offsetWidth / gCardsPerView);
+    const card = gCards[0];
+    if (!card) return;
+    
+    const cardWidth = card.offsetWidth;
+    const gap = parseFloat(getComputedStyle(gScroller).gap) || 16;
+    const scrollPos = gIndex * (cardWidth + gap);
+
     gScroller.scrollTo({ left: scrollPos, behavior: 'smooth' });
-    if(gDots) [...gDots.children].forEach((d, i) => d.classList.toggle('active', i === gIndex));
+
+    if (window.innerWidth > 900 && gDots) {
+      [...gDots.children].forEach((d, i) => d.classList.toggle('active', i === gIndex));
+    }
   }
 
-  gPrev.addEventListener('click', () => { if (gIndex > 0) { gIndex--; updateGScroll(); } });
-  gNext.addEventListener('click', () => { if (gIndex < gTotalPages() - 1) { gIndex++; updateGScroll(); } });
+  if (gPrev) gPrev.addEventListener('click', () => { if (gIndex > 0) { gIndex--; updateGScroll(); } });
+  if (gNext) gNext.addEventListener('click', () => { if (gIndex < gTotalPages() - 1) { gIndex++; updateGScroll(); } });
   
   window.addEventListener('resize', () => {
     const newCardsPerView = window.innerWidth <= 900 ? 1 : 3;
     if (newCardsPerView !== gCardsPerView) {
       gCardsPerView = newCardsPerView;
+      gIndex = 0;
       buildGDots();
       updateGScroll();
     }
