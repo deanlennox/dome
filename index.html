@@ -17,7 +17,6 @@
     --sage: #7a8c6e;
     --off-white: #faf7f2;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
@@ -26,7 +25,6 @@
     color: var(--earth);
     overflow-x: hidden;
   }
-
   /* ── NAV ── */
   #nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -75,7 +73,6 @@
     background: var(--cream); transition: background 0.4s;
   }
   #nav.scrolled .nav-hamburger span { background: var(--earth); }
-
   /* ── HERO ── */
   .hero {
     position: relative; height: 100vh; min-height: 600px;
@@ -123,8 +120,8 @@
     padding: 1rem 2.5rem; background: var(--clay); color: var(--cream);
     transition: background 0.3s, transform 0.3s;
   }
-  .btn-primary:hover, .btn-outline:hover { 
-    background: var(--warm); transform: translateY(-2px); 
+  .btn-primary:hover, .btn-outline:hover {
+    background: var(--warm); transform: translateY(-2px);
   }
   .btn-outline { margin-left: 1rem; }
   .hero-scroll {
@@ -138,7 +135,6 @@
     background: linear-gradient(to bottom, rgba(245,239,230,0.5), transparent);
     animation: scrollPulse 2s ease-in-out infinite;
   }
-
   /* ── SECTION COMMON ── */
   section { padding: 7rem 3rem; }
   .section-label {
@@ -151,7 +147,6 @@
     line-height: 1.2; color: var(--earth);
   }
   .section-title em { font-style: italic; color: var(--clay); }
-
   /* ── ABOUT ── */
   .about {
     background: var(--cream);
@@ -165,11 +160,7 @@
   }
   .about-image:hover img { transform: scale(1.04); }
   .about-image-overlay {
-    position: absolute; bottom: 2rem; right: -1px;
-    background: var(--sage); color: var(--cream);
-    padding: 0.8rem 1.2rem;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.82rem; font-style: italic; max-width: 220px; line-height: 1.5;
+    display: none;
   }
   .about-text {
     padding: 6rem 3rem 6rem 4rem;
@@ -189,7 +180,6 @@
     background: var(--clay); flex-shrink: 0; margin-top: 0.45rem;
   }
   .feature-item span { font-size: 0.82rem; font-weight: 300; letter-spacing: 0.05em; color: var(--warm); }
-
   /* ── ACTIVITIES ── */
   .activities { background: var(--off-white); }
   .activities-header {
@@ -230,7 +220,6 @@
     border: 1px solid rgba(212,184,150,0.4); padding: 0.2rem 0.6rem;
     margin-bottom: 0.6rem; width: fit-content;
   }
-
   /* ── LOCATION ── */
   .location {
     background: var(--earth); color: var(--cream);
@@ -259,7 +248,6 @@
   .detail-icon { font-size: 1rem; color: var(--sand); flex-shrink: 0; margin-top: 0.1rem; }
   .detail-text { font-size: 0.85rem; font-weight: 300; color: rgba(245,239,230,0.7); }
   .detail-text strong { color: var(--cream); font-weight: 400; display: block; margin-bottom: 0.2rem; }
-
   /* ── GALLERY ── */
   .gallery-section {
     padding: 7rem 3rem; background: var(--off-white); position: relative;
@@ -273,7 +261,6 @@
     padding-bottom: 2rem;
   }
   .gallery-grid::-webkit-scrollbar { display: none; }
-
   .gallery-item {
     flex: 0 0 calc(33.333% - 0.7rem);
     aspect-ratio: 16/10;
@@ -289,7 +276,6 @@
   .gallery-item:hover img {
     transform: scale(1.05); filter: brightness(1.05);
   }
-
   .gallery-nav {
     display: flex; justify-content: center; align-items: center;
     gap: 1.5rem; margin-top: 2rem;
@@ -309,10 +295,9 @@
     transition: background 0.3s;
   }
   .gallery-dot.active { background: var(--clay); }
-
   @media (max-width: 900px) {
     .gallery-container { padding: 0 1.5rem; }
-    .gallery-item { flex: 0 0 85%; }
+    .gallery-item { flex: 0 0 calc(85% - 0.7rem); }
   }
   .gallery-item::after {
     content: '';
@@ -329,7 +314,6 @@
     padding: 0.9rem 2.5rem; cursor: pointer; transition: all 0.3s;
   }
   .gallery-more-btn:hover { border-color: var(--clay); color: var(--clay); background: rgba(160,120,74,0.04); }
-
   /* ── LIGHTBOX ── */
   .lightbox {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -340,7 +324,6 @@
     opacity: 0; transition: opacity 0.4s ease;
   }
   .lightbox.active { display: flex; opacity: 1; }
-  
   .lightbox-content {
     position: relative; max-width: 90%; max-height: 85%;
     display: flex; align-items: center; justify-content: center;
@@ -353,7 +336,6 @@
     transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .lightbox.active .lightbox-image { transform: scale(1); }
-
   .lightbox-close {
     position: absolute; top: 2rem; right: 2rem;
     background: none; border: none; color: var(--cream);
@@ -369,13 +351,11 @@
   .lightbox-nav:hover { background: var(--cream); color: var(--earth); }
   .lightbox-prev { left: -80px; }
   .lightbox-next { right: -80px; }
-
   @media (max-width: 1100px) {
     .lightbox-prev { left: 20px; }
     .lightbox-next { right: 20px; }
     .lightbox-nav { width: 44px; height: 44px; background: rgba(28,24,18,0.5); }
   }
-
   /* ── REVIEWS ── */
   .reviews { background: var(--cream); padding: 7rem 3rem; text-align: center; }
   .reviews-header { margin-bottom: 4rem; }
@@ -436,7 +416,6 @@
     margin-top: 4rem;
   }
   .press-badge .badge-label { color: var(--sand); font-style: italic; }
-
   /* ── RADIO FEATURE ── */
   .radio-feature {
     margin-top: 4rem;
@@ -498,7 +477,6 @@
     .radio-content-col { padding: 2rem; }
     .radio-quote { font-size: 1.05rem; }
   }
-
   /* ── CONTACT ── */
   .contact-cta {
     background: var(--sage); display: grid;
@@ -538,7 +516,6 @@
     transition: background 0.3s, transform 0.3s; width: fit-content;
   }
   .btn-whatsapp:hover { background: #1ebe5d; transform: translateY(-2px); }
-
   /* ── FOOTER ── */
   footer {
     background: var(--earth); padding: 3rem;
@@ -562,7 +539,6 @@
   }
   .footer-links a:hover { color: var(--sand); }
   .footer-copy { font-size: 0.7rem; color: rgba(245,239,230,0.25); font-weight: 300; }
-
   /* ── ANIMATIONS ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(30px); }
@@ -577,44 +553,35 @@
   .reveal-delay-1 { transition-delay: 0.15s; }
   .reveal-delay-2 { transition-delay: 0.30s; }
   .reveal-delay-3 { transition-delay: 0.45s; }
-
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     #nav { padding: 1.2rem 1.5rem; }
     #nav.scrolled { padding: 0.9rem 1.5rem; }
     .nav-links, .nav-cta { display: none; }
     .nav-hamburger { display: flex; }
-
     .hero-content { padding: 0 1.5rem 4rem; }
     .hero h1 { font-size: 3rem; }
     .hero-content > div { display: flex; flex-direction: column; gap: 1rem; }
     .btn-primary, .btn-outline { margin-left: 0; width: 100%; text-align: center; }
-
     section { padding: 4rem 1.5rem; }
     .about, .location, .contact-cta { grid-template-columns: 1fr; }
     .about-image { min-height: 250px; order: -1; }
     .about-text { padding: 2rem 1.5rem; }
     .about-features { grid-template-columns: 1fr; }
-
     .activities-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
     .activities-grid { grid-template-columns: 1fr; }
     .activity-card { aspect-ratio: 4/3; }
-
     .gallery-section { padding: 4rem 1.5rem; }
     .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
-
     .review-card { flex: 0 0 90%; }
-
     .contact-image { min-height: 300px; order: -1; }
     .contact-text { padding: 3.5rem 1.5rem; }
-
     footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2.5rem 1.5rem; }
     .footer-links { flex-wrap: wrap; justify-content: center; gap: 1.2rem; }
   }
   @media (max-width: 1100px) and (min-width: 901px) {
     .review-card { flex: 0 0 50%; }
   }
-
   /* ── MOBILE NAV OVERLAY ── */
   .mobile-nav-overlay {
     position: fixed; inset: 0; z-index: 200;
@@ -651,7 +618,6 @@
 </style>
 </head>
 <body>
-
 <!-- NAV -->
 <header id="nav">
   <a href="#" class="nav-logo">Protea Dome</a>
@@ -667,7 +633,6 @@
     <span></span><span></span><span></span>
   </button>
 </header>
-
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-bg"></div>
@@ -685,12 +650,11 @@
     <span>Scroll</span>
   </div>
 </section>
-
 <!-- ABOUT -->
 <div class="about" id="about">
   <div class="about-image">
     <img src="images/interior.jpg" alt="Protea Dome interior" loading="lazy">
-    <div class="about-image-overlay">"It's not just a dome — it's a way of life."</div>
+    <div class="about-image-overlay"></div>
   </div>
   <div class="about-text reveal">
     <div class="section-label">About the Dome</div>
@@ -707,7 +671,6 @@
     </div>
   </div>
 </div>
-
 <!-- ACTIVITIES -->
 <section class="activities" id="activities">
   <div class="activities-header reveal">
@@ -747,7 +710,6 @@
     </div>
   </div>
 </section>
-
 <!-- LOCATION -->
 <div class="location" id="location">
   <div class="location-image">
@@ -782,7 +744,6 @@
     </div>
   </div>
 </div>
-
 <!-- GALLERY -->
 <section class="gallery-section" id="gallery">
   <div class="reveal" style="margin-bottom: 3rem; text-align: center;">
@@ -817,7 +778,6 @@
       <div class="gallery-item"><img src="gallery/44d2a4_1c282cab2c164cfa83c1343d1575d4ce~mv2.jpg" alt="Farm surroundings"></div>
     </div>
   </div>
-
   <div class="gallery-nav">
     <button class="gallery-nav-btn" id="galleryPrev" aria-label="Previous">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
@@ -828,92 +788,76 @@
     </button>
   </div>
 </section>
-
 <!-- REVIEWS -->
 <section class="reviews" id="reviews">
   <div class="reviews-header reveal">
     <div class="section-label">Guest Stories</div>
     <h2 class="section-title">From the <em>Protea Dome family</em></h2>
   </div>
-
   <div class="reviews-track-wrapper reveal">
     <div class="reviews-track" id="reviewsTrack">
-
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
         <p class="review-text">Wow! Just wow! As the first official guests, we were really impressed. We are so grateful for your attention to detail and hospitality. It was a beautiful birthday surprise for my husband, Emmanuel, and he loved it. We went for a hike as suggested and it was beautiful. This is definitely our little haven whenever we need a break from the city.</p>
         <div class="review-author">Mellania &amp; Emmanuel</div>
       </div></div>
-
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
         <p class="review-text">This has been our best Christmas to date! A big thank you for being so accommodating, hospitable, and making our stay so comfortable with our pooches! We deeply felt rested &amp; reconnected and wished we had one more evening. We will be back... in a less warm month :)</p>
         <div class="review-author">Shaun &amp; Christine</div>
       </div></div>
-
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
         <p class="review-text">What an amazing way to celebrate our 7th anniversary here. It was an awesome experience &amp; had a great time in nature. Thank you so much for this blessing, would love to come back.</p>
         <div class="review-author">Noulen &amp; Jess</div>
       </div></div>
-
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
         <p class="review-text">What an awesome getaway from the noise and busyness! Such a beautiful place with a friendly host. This place has everything we could possibly need. Lovely location &amp; loved the horses. Thank you so much for this little love nest. P.S: The space man is a hit!</p>
         <div class="review-author">Graham &amp; Leigh</div>
       </div></div>
-
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
         <p class="review-text">Thank you — what a precious spot this is! Decor &amp; attentiveness &amp; caring service is wonderful. I love the space man &amp; fairy lights! We will come again!</p>
         <div class="review-author">Ilse &amp; Matty</div>
       </div></div>
-
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
         <p class="review-text">Lovely, peaceful getaway from the city. Enjoyed the birds, the stars and some friendly horses. The small details like the spaceman &amp; fairy lights really make it special. Christine is an amazing host — a great way to spend our anniversary, will be back!</p>
         <div class="review-author">John &amp; Kay</div>
       </div></div>
-
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
         <p class="review-text">We spent our 1 year anniversary in a spot we'd never have imagined! We loved spending time in nature &amp; the dome is unreal! The stars &amp; view were breathtaking. Feeding the horses, rafting on the dam, the sunset braai — completely exceeded all expectations.</p>
         <div class="review-author">Joshua &amp; Hannah</div>
       </div></div>
-
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
         <p class="review-text">We had a wonderful time at the dome! My wife and I loved the serene surroundings and peaceful atmosphere. Our kids thoroughly enjoyed feeding the horses. Christine's hospitality was exceptional — highly recommended!</p>
         <div class="review-author">Saleem Family</div>
       </div></div>
-
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
         <p class="review-text">The peace and quiet we found here is unmatched. The accommodation itself was picturesque, a true respite from the bustling world. Thank you Christine for being a lovely host. We will definitely be back to visit the horses again soon!</p>
         <div class="review-author">Jade &amp; Gilles</div>
       </div></div>
-
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
         <p class="review-text">Thank you for making our stay over New Years truly a breeze. We love the disconnect from the world and just being in touch with nature. The quietness and peaceful aura from the dome is truly like anything we have experienced.</p>
         <div class="review-author">Isaacs Family</div>
       </div></div>
-
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
         <p class="review-text">Absolutely incredible! We really enjoyed our stay. The dome was an escape from the crazy hustle &amp; just what we all needed. Christine is an exceptional host &amp; has thought of every little thing. Thank you from the bottom of our hearts for creating this little slice of heaven.</p>
         <div class="review-author">Johnston Family</div>
       </div></div>
-
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
         <p class="review-text">Thank you for the warm welcome, care and attention you put into our stay. It was the perfect setting to celebrate our 10th anniversary with our children. We especially loved the nebula and getting to see and experience the animals.</p>
         <div class="review-author">Newalani Family</div>
       </div></div>
-
     </div><!-- /reviews-track -->
   </div>
-
   <div class="reviews-nav">
     <button class="reviews-nav-btn" id="reviewPrev" aria-label="Previous">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
@@ -923,7 +867,6 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
     </button>
   </div>
-
   <div class="radio-feature reveal">
     <div class="radio-feature-inner">
       <div class="radio-logo-col">
@@ -936,12 +879,10 @@
         <div class="radio-context">
           Christine was interviewed on Radio Tygerberg 104FM's popular <em>Alles Wat Lekker Is</em> segment — a show dedicated to uncovering the most interesting and unique experiences the Cape has to offer.
         </div>
-        
         <audio controls style="width: 100%; margin: 1rem 0;">
           <source src="radio.m4a" type="audio/mp4">
           Your browser does not support the audio element.
         </audio>
-
         <blockquote class="radio-quote">
           "Protea Dome glamping wants everyone to have a personalised experience, whether it's a birthday, anniversary or just a weekend to get away. The space offers tranquility and peace — waking up with natural sunlight and the birds tweeting."
         </blockquote>
@@ -950,7 +891,6 @@
     </div>
   </div>
 </section>
-
 <!-- CONTACT -->
 <div class="contact-cta" id="contact">
   <div class="contact-image">
@@ -979,7 +919,6 @@
     </a>
   </div>
 </div>
-
 <!-- FOOTER -->
 <footer>
   <div class="footer-brand">
@@ -995,7 +934,6 @@
   </div>
   <div class="footer-copy">© 2025 Protea Dome Glamping</div>
 </footer>
-
 <!-- MOBILE NAV OVERLAY -->
 <div class="mobile-nav-overlay" id="mobileNav">
   <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
@@ -1008,7 +946,6 @@
   <a href="#reviews"    onclick="closeMobileNav()">Reviews</a>
   <a href="book.html" class="mob-book">Book Now</a>
 </div>
-
   <!-- LIGHTBOX MODAL -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lbClose" aria-label="Close gallery">
@@ -1024,14 +961,12 @@
       </button>
     </div>
   </div>
-
 <script>
   // ── NAV SCROLL ──────────────────────────────────────────
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 60);
   });
-
   // ── REVEAL ON SCROLL ────────────────────────────────────
   const reveals = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
@@ -1040,12 +975,10 @@
     });
   }, { threshold: 0.1 });
   reveals.forEach(el => io.observe(el));
-
   // ── MOBILE NAV ──────────────────────────────────────────
   const mobileNav = document.getElementById('mobileNav');
   const hamburger = document.querySelector('.nav-hamburger');
   const mobileClose = document.getElementById('mobileNavClose');
-
   function openMobileNav() {
     mobileNav.classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -1056,25 +989,20 @@
   }
   hamburger.addEventListener('click', openMobileNav);
   mobileClose.addEventListener('click', closeMobileNav);
-
   // ── GALLERY LIGHTBOX ────────────────────────────────────
   const lightbox    = document.getElementById('lightbox');
   const lbImage     = document.getElementById('lbImage');
   const lbClose     = document.getElementById('lbClose');
   const lbPrev      = document.getElementById('lbPrev');
   const lbNext      = document.getElementById('lbNext');
-
   // Build full image list: visible + hidden
   const visibleImgs  = [...document.querySelectorAll('.gallery-item img')];
   const hiddenImgs   = [...document.querySelectorAll('#gallery-hidden img')];
   const allGalleryImgs = [...visibleImgs, ...hiddenImgs];
-
   // Set gallery count on button
   const countEl = document.getElementById('galleryCount');
   if (countEl) countEl.textContent = `(${allGalleryImgs.length})`;
-
   let currentIndex = 0;
-
   function openLightbox(index) {
     currentIndex = index;
     lbImage.src = allGalleryImgs[currentIndex].src;
@@ -1098,15 +1026,12 @@
     lbImage.src = allGalleryImgs[currentIndex].src;
     lbImage.alt = allGalleryImgs[currentIndex].alt;
   }
-
   visibleImgs.forEach((img, i) => {
     img.parentElement.addEventListener('click', () => openLightbox(i));
   });
-
   // "View All" button opens lightbox at image 0
   const moreBtn = document.getElementById('galleryMoreBtn');
   if (moreBtn) moreBtn.addEventListener('click', () => openLightbox(0));
-
   lbClose.addEventListener('click', closeLightbox);
   lbNext.addEventListener('click', showNext);
   lbPrev.addEventListener('click', showPrev);
@@ -1117,7 +1042,6 @@
     if (e.key === 'ArrowRight')  showNext();
     if (e.key === 'ArrowLeft')   showPrev();
   });
-
   // ── GALLERY SCROLLER ────────────────────────────────────
   const gScroller   = document.getElementById('galleryScroller');
   const gDots       = document.getElementById('galleryDots');
@@ -1127,7 +1051,6 @@
   let gCardsPerView = window.innerWidth <= 900 ? 1 : 3;
   let gIndex        = 0;
   const gTotalPages = () => Math.ceil(gCards.length / gCardsPerView);
-
   function buildGDots() {
     if (!gDots) return;
     gDots.innerHTML = '';
@@ -1138,16 +1061,29 @@
       gDots.appendChild(d);
     }
   }
-
   function updateGScroll() {
-    const scrollPos = gIndex * (gScroller.offsetWidth / gCardsPerView);
+    const cardWidth = gCards[0] ? gCards[0].offsetWidth : 0;
+    const gap = 16; // 1rem gap in pixels
+    const scrollPos = gIndex * (cardWidth + gap);
     gScroller.scrollTo({ left: scrollPos, behavior: 'smooth' });
     if(gDots) [...gDots.children].forEach((d, i) => d.classList.toggle('active', i === gIndex));
   }
-
   gPrev.addEventListener('click', () => { if (gIndex > 0) { gIndex--; updateGScroll(); } });
   gNext.addEventListener('click', () => { if (gIndex < gTotalPages() - 1) { gIndex++; updateGScroll(); } });
-  
+  // Handle scroll events to sync dots with current position
+  let scrollTimeout;
+  gScroller.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      const cardWidth = gCards[0] ? gCards[0].offsetWidth : 0;
+      const gap = 16;
+      const newIndex = Math.round(gScroller.scrollLeft / (cardWidth + gap));
+      if (newIndex !== gIndex && newIndex >= 0 && newIndex < gTotalPages()) {
+        gIndex = newIndex;
+        if(gDots) [...gDots.children].forEach((d, i) => d.classList.toggle('active', i === gIndex));
+      }
+    }, 100);
+  });
   window.addEventListener('resize', () => {
     const newCardsPerView = window.innerWidth <= 900 ? 1 : 3;
     if (newCardsPerView !== gCardsPerView) {
@@ -1157,18 +1093,15 @@
     }
   });
   buildGDots();
-
   // ── REVIEWS CAROUSEL ────────────────────────────────────
   const track     = document.getElementById('reviewsTrack');
   const dotsEl    = document.getElementById('reviewsDots');
   const prevBtn   = document.getElementById('reviewPrev');
   const nextBtn   = document.getElementById('reviewNext');
   const cards     = track ? [...track.children] : [];
-
   let cardsPerView = window.innerWidth <= 900 ? 1 : window.innerWidth <= 1100 ? 2 : 3;
   let reviewIndex  = 0;
   const totalPages = () => Math.ceil(cards.length / cardsPerView);
-
   function buildDots() {
     dotsEl.innerHTML = '';
     for (let i = 0; i < totalPages(); i++) {
@@ -1179,14 +1112,12 @@
       dotsEl.appendChild(d);
     }
   }
-
   function goToPage(page) {
     reviewIndex = Math.max(0, Math.min(page, totalPages() - 1));
     const cardWidth = 100 / cardsPerView;
     track.style.transform = `translateX(-${reviewIndex * cardsPerView * cardWidth}%)`;
     [...dotsEl.children].forEach((d, i) => d.classList.toggle('active', i === reviewIndex));
   }
-
   // Set card widths
   function setCardWidths() {
     cardsPerView = window.innerWidth <= 900 ? 1 : window.innerWidth <= 1100 ? 2 : 3;
@@ -1195,7 +1126,6 @@
     buildDots();
     goToPage(0);
   }
-
   if (track) {
     setCardWidths();
     prevBtn.addEventListener('click', () => goToPage(reviewIndex - 1));
