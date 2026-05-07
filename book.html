@@ -4,19 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Book Your Stay — Protea Dome Glamping</title>
+<meta name="description" content="Book your glamping stay at Protea Dome in the Cape Winelands. Check availability and reserve your dome online.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<!-- InnStyle Booking Engine -->
+<script id="InnStyle-js" src="https://developer.innstyle.co.uk/calendar.min.js" defer></script>
+
 <style>
   :root {
-    --earth: #2c2416;
-    --warm: #5c4a2a;
-    --clay: #a0784a;
-    --sand: #d4b896;
-    --cream: #f5efe6;
-    --sage: #7a8c6e;
-    --off-white: #faf7f2;
-    --white: #ffffff;
+    --earth:    #2c2416;
+    --warm:     #5c4a2a;
+    --clay:     #a0784a;
+    --sand:     #d4b896;
+    --cream:    #f5efe6;
+    --sage:     #7a8c6e;
+    --off-white:#faf7f2;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -51,111 +54,163 @@
   .nav-links a:hover { color: var(--clay); }
   .nav-cta {
     font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--earth);
+    text-transform: uppercase;
     border: 1px solid var(--clay); padding: 0.55rem 1.4rem;
     text-decoration: none; transition: all 0.3s;
+    background: var(--clay); color: var(--cream);
   }
-  .nav-cta:hover { background: var(--clay); color: var(--cream); }
-
+  .nav-cta:hover { background: var(--warm); }
   .nav-hamburger {
     display: none; flex-direction: column; gap: 5px; cursor: pointer;
-    background: none; border: none; padding: 4px;
+    background: none; border: none; padding: 4px; z-index: 201;
   }
   .nav-hamburger span {
-    display: block; width: 24px; height: 1px;
+    display: block; width: 24px; height: 1px; background: var(--earth);
+  }
+
+  /* ── MOBILE NAV OVERLAY ── */
+  .mobile-nav-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: var(--off-white);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 2.5rem;
+    transform: translateY(-100%);
+    transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+    pointer-events: none;
+  }
+  .mobile-nav-overlay.open { transform: translateY(0); pointer-events: all; }
+  .mobile-nav-overlay a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 300; color: var(--earth);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .mobile-nav-overlay a:hover { color: var(--clay); }
+  .mobile-nav-overlay .mob-book {
+    font-family: 'Jost', sans-serif; font-size: 0.8rem;
+    font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+    background: var(--clay); color: var(--cream) !important;
+    padding: 0.9rem 2.5rem; margin-top: 0.5rem;
+  }
+  .mobile-nav-close {
+    position: absolute; top: 1.4rem; right: 1.5rem;
+    background: none; border: none; cursor: pointer;
+    width: 40px; height: 40px; display: flex;
+    align-items: center; justify-content: center; color: var(--earth);
+  }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    padding: 9rem 3rem 4rem;
     background: var(--earth);
+    position: relative; overflow: hidden;
   }
-
-  /* ── MOBILE NAV ── */
-  .mobile-nav {
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: var(--off-white); z-index: 90;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 2rem; transform: translateY(-100%); transition: transform 0.5s ease;
+  .page-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url('images/valley.jpg') center/cover no-repeat;
+    opacity: 0.18;
   }
-  .mobile-nav.active { transform: translateY(0); }
-  .mobile-nav a {
-    font-family: 'Cormorant Garamond', serif; font-size: 2rem;
-    color: var(--earth); text-decoration: none;
+  .page-hero-content { position: relative; z-index: 1; max-width: 640px; }
+  .section-label {
+    font-size: 0.68rem; font-weight: 400; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--sand); margin-bottom: 1rem;
   }
-
-  /* ── HERO ── */
-  .hero-mini {
-    padding-top: 10rem; padding-bottom: 4rem;
-    background: var(--cream);
-  }
-  .hero-mini h1 {
+  .page-hero h1 {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300;
-    color: var(--earth); margin-bottom: 1rem;
+    line-height: 1.1; color: var(--cream); margin-bottom: 1.2rem;
   }
-  .hero-mini p {
-    font-size: 0.95rem; font-weight: 300; color: var(--warm);
-    max-width: 500px;
+  .page-hero h1 em { font-style: italic; color: var(--sand); }
+  .page-hero p {
+    font-size: 0.9rem; font-weight: 300; line-height: 1.8;
+    color: rgba(245,239,230,0.65); max-width: 480px;
+  }
+  .hero-rules {
+    display: flex; gap: 2rem; margin-top: 1.8rem; flex-wrap: wrap;
+  }
+  .hero-rule {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.72rem; letter-spacing: 0.06em;
+    color: rgba(245,239,230,0.45);
+  }
+  .hero-rule span { color: var(--sand); }
+
+  /* ── MAIN LAYOUT ── */
+  .booking-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 3rem 6rem;
+    align-items: start;
   }
 
-  /* ── BOOKING FORM ── */
-  .booking-container {
-    max-width: 1000px; margin: -2rem auto 6rem;
-    display: grid; grid-template-columns: 1.4fr 1fr;
-    gap: 4rem; padding: 0 3rem;
+  /* ── INNSTYLE WRAPPER ── */
+  .innstyle-wrapper {
+    background: white;
+    border-top: 3px solid var(--clay);
+    box-shadow: 0 4px 40px rgba(44,36,22,0.06);
+    min-height: 400px;
   }
-  .booking-card {
-    background: var(--white); padding: 3.5rem;
-    box-shadow: 0 30px 60px rgba(44,36,22,0.05);
-  }
-  .form-group { margin-bottom: 2rem; }
-  .form-label {
-    display: block; font-size: 0.72rem; font-weight: 500;
-    letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--clay); margin-bottom: 0.8rem;
-  }
-  input[type="text"], select, textarea {
-    width: 100%; padding: 1rem;
-    border: 1px solid var(--sand);
-    background: var(--off-white);
-    font-family: 'Jost', sans-serif; font-size: 0.95rem;
-    color: var(--earth); outline: none;
-    transition: border-color 0.3s;
-  }
-  input:focus, select:focus, textarea:focus { border-color: var(--clay); }
 
-  .date-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  
-  .activity-options {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
-    margin-top: 0.5rem;
+  #innstyle-booking {
+    font-family: 'Jost', sans-serif;
   }
-  .checkbox-item {
-    display: flex; align-items: center; gap: 0.8rem;
-    font-size: 0.85rem; color: var(--warm); cursor: pointer;
-  }
-  .checkbox-item input { accent-color: var(--clay); }
 
-  .btn-submit {
-    width: 100%; padding: 1.2rem;
-    background: var(--earth); color: var(--cream);
-    border: none; font-family: 'Jost', sans-serif;
-    font-size: 0.8rem; font-weight: 500; letter-spacing: 0.2em;
-    text-transform: uppercase; cursor: pointer;
-    transition: background 0.3s, transform 0.3s;
-    display: flex; align-items: center; justify-content: center; gap: 1rem;
-  }
-  .btn-submit:hover { background: var(--warm); transform: translateY(-2px); }
+  /* ── SIDEBAR ── */
+  .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
 
-  /* ── WEATHER GUIDE ── */
-  .weather-sidebar h3 {
+  .sidebar-card {
+    background: white;
+    border-top: 3px solid var(--sand);
+    padding: 2rem;
+    box-shadow: 0 4px 40px rgba(44,36,22,0.05);
+  }
+  .sidebar-card-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.8rem; font-weight: 400; margin-bottom: 1.5rem;
+    font-size: 1.15rem; font-weight: 400; color: var(--earth);
+    margin-bottom: 1.2rem; padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(44,36,22,0.06);
   }
-  .season-item { margin-bottom: 2rem; }
+
+  .seasons { display: flex; flex-direction: column; gap: 0.6rem; }
+  .season {
+    display: grid; grid-template-columns: 28px 1fr;
+    gap: 0.7rem; align-items: start; padding: 0.7rem;
+    border-left: 2px solid transparent; transition: border-color 0.2s, background 0.2s;
+  }
+  .season.active-season { border-left-color: var(--clay); background: rgba(160,120,74,0.04); }
+  .season-icon { font-size: 1.1rem; text-align: center; }
   .season-name {
-    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em;
-    text-transform: uppercase; color: var(--clay);
-    display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.5rem;
+    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--clay); margin-bottom: 0.15rem;
   }
-  .season-name::after { content: ''; flex-grow: 1; height: 1px; background: var(--sand); }
-  .season-desc { font-size: 0.88rem; font-weight: 300; color: var(--warm); }
+  .season-months { font-size: 0.65rem; color: var(--sand); margin-bottom: 0.25rem; }
+  .season-desc { font-size: 0.76rem; font-weight: 300; color: var(--warm); line-height: 1.5; }
+
+  .contact-options { display: flex; flex-direction: column; gap: 0.7rem; }
+  .contact-opt {
+    display: flex; align-items: center; gap: 0.7rem;
+    text-decoration: none; font-size: 0.8rem; font-weight: 300;
+    color: var(--warm); padding: 0.6rem 0.8rem;
+    border: 1px solid rgba(44,36,22,0.1); transition: all 0.2s;
+  }
+  .contact-opt:hover { border-color: var(--clay); color: var(--clay); }
+  .contact-opt-icon { font-size: 0.95rem; width: 18px; text-align: center; flex-shrink: 0; }
+  .btn-wa {
+    display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+    background: #25D366; color: white;
+    text-decoration: none; padding: 0.85rem;
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; transition: background 0.2s; margin-top: 0.8rem;
+  }
+  .btn-wa:hover { background: #1ebe5d; }
+
+  .know-list { display: flex; flex-direction: column; gap: 0.8rem; }
+  .know-item { display: flex; gap: 0.7rem; align-items: flex-start; }
+  .know-tick { color: var(--clay); font-size: 0.9rem; flex-shrink: 0; margin-top: 0.05rem; }
+  .know-text { font-size: 0.78rem; font-weight: 300; color: var(--warm); line-height: 1.5; }
 
   /* ── FOOTER ── */
   footer {
@@ -181,19 +236,22 @@
   .footer-links a:hover { color: var(--sand); }
   .footer-copy { font-size: 0.7rem; color: rgba(245,239,230,0.25); font-weight: 300; }
 
+  /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     #nav { padding: 1.2rem 1.5rem; }
     .nav-links, .nav-cta { display: none; }
     .nav-hamburger { display: flex; }
-    .booking-container { grid-template-columns: 1fr; padding: 0 1.5rem; gap: 3rem; }
-    .booking-card { padding: 2rem; }
-    .date-grid { grid-template-columns: 1fr; }
-    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    .page-hero { padding: 7rem 1.5rem 3rem; }
+    .booking-layout { grid-template-columns: 1fr; padding: 3rem 1.5rem 4rem; gap: 2rem; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem; }
+    .footer-links { flex-wrap: wrap; justify-content: center; gap: 1.2rem; }
+    .hero-rules { flex-direction: column; gap: 0.6rem; }
   }
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <header id="nav">
   <a href="index.html" class="nav-logo">Protea Dome</a>
   <ul class="nav-links">
@@ -201,104 +259,123 @@
     <li><a href="index.html#activities">Activities</a></li>
     <li><a href="index.html#location">Location</a></li>
     <li><a href="index.html#gallery">Gallery</a></li>
+    <li><a href="index.html#reviews">Reviews</a></li>
   </ul>
-  <a href="index.html" class="nav-cta">Back to Home</a>
+  <a href="book.html" class="nav-cta">Book Now</a>
   <button class="nav-hamburger" id="hamburger" aria-label="Menu">
-    <span></span><span style="margin: 5px 0;"></span><span></span>
+    <span></span><span></span><span></span>
   </button>
 </header>
 
-<div class="mobile-nav" id="mobileNav">
-  <a href="index.html#about">The Dome</a>
-  <a href="index.html#activities">Activities</a>
-  <a href="index.html#location">Location</a>
-  <a href="index.html#gallery">Gallery</a>
-  <a href="index.html" style="font-size: 1.2rem; margin-top: 2rem; color: var(--clay);">Back to Home</a>
+<!-- MOBILE NAV OVERLAY -->
+<div class="mobile-nav-overlay" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+  <a href="index.html#about"      onclick="closeMobileNav()">The Dome</a>
+  <a href="index.html#activities" onclick="closeMobileNav()">Activities</a>
+  <a href="index.html#location"   onclick="closeMobileNav()">Location</a>
+  <a href="index.html#gallery"    onclick="closeMobileNav()">Gallery</a>
+  <a href="index.html#reviews"    onclick="closeMobileNav()">Reviews</a>
+  <a href="book.html" class="mob-book">Book Now</a>
 </div>
 
-<div class="hero-mini">
-  <div style="max-width:1000px; margin:0 auto; padding:0 3rem; text-align:left;">
-    <h1>Request Your Stay</h1>
-    <p>Fill in the details below. We'll receive your request via WhatsApp and get back to you with availability and a formal quote.</p>
-  </div>
-</div>
-
-<div class="booking-container">
-  <div class="booking-card">
-    <form id="bookingForm">
-      <div class="form-group">
-        <label class="form-label">Your Name</label>
-        <input type="text" id="name" placeholder="Full name" required>
-      </div>
-
-      <div class="date-grid">
-        <div class="form-group">
-          <label class="form-label">Check-in</label>
-          <input type="text" id="checkin" placeholder="Select date" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Check-out</label>
-          <input type="text" id="checkout" placeholder="Select date" required>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Number of Guests</label>
-        <select id="guests">
-          <option value="1">1 Guest</option>
-          <option value="2" selected>2 Guests</option>
-          <option value="3">3 Guests (incl. child)</option>
-          <option value="4">4 Guests (max)</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Interested Activities</label>
-        <div class="activity-options">
-          <label class="checkbox-item"><input type="checkbox" name="activity" value="Horse Riding"> Horse Riding</label>
-          <label class="checkbox-item"><input type="checkbox" name="activity" value="Art Classes"> Art Classes</label>
-          <label class="checkbox-item"><input type="checkbox" name="activity" value="Clay Building"> Clay Building</label>
-          <label class="checkbox-item"><input type="checkbox" name="activity" value="Hiking Trails"> Hiking Trails</label>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Message (Optional)</label>
-        <textarea id="message" rows="3" placeholder="Special requests, dietary needs, or occasion..."></textarea>
-      </div>
-
-      <button type="submit" class="btn-submit">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 10px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Send via WhatsApp
-      </button>
-    </form>
-  </div>
-
-  <div class="weather-sidebar">
-    <h3>Seasonal Guide</h3>
-    
-    <div class="season-item">
-      <div class="season-name">Summer <span>(Dec - Feb)</span></div>
-      <p class="season-desc">Warm to hot days, perfect for dam swims. Late golden sunsets and warm, starry nights for the outdoor bath.</p>
-    </div>
-
-    <div class="season-item">
-      <div class="season-name">Autumn <span>(Mar - May)</span></div>
-      <p class="season-desc">The winelands turn vibrant amber and gold. Mild days and crisp, fresh evenings. The best time for trail hiking.</p>
-    </div>
-
-    <div class="season-item">
-      <div class="season-name">Winter <span>(Jun - Aug)</span></div>
-      <p class="season-desc">Cool, rainy, and incredibly cozy. The farm landscape turns a lush, vibrant green. Perfect for a glass of red by the fire.</p>
-    </div>
-
-    <div class="season-item">
-      <div class="season-name">Spring <span>(Sep - Nov)</span></div>
-      <p class="season-desc">Wildflowers in bloom and newborn foals on the farm. Fresh breezes and mild temperatures. Nature at its most alive.</p>
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-content">
+    <div class="section-label">Reservations</div>
+    <h1>Book the <em>Dome</em></h1>
+    <p>Select your dates, choose your extras, and confirm your escape to the Cape Winelands — all in one place.</p>
+    <div class="hero-rules">
+      <div class="hero-rule"><span>🕐</span> 48h minimum notice</div>
+      <div class="hero-rule"><span>🌙</span> Weekends: 2-night minimum</div>
+      <div class="hero-rule"><span>☀️</span> Weekdays: 1-night minimum</div>
     </div>
   </div>
 </div>
 
+<!-- MAIN LAYOUT -->
+<div class="booking-layout">
+
+  <!-- INNSTYLE BOOKING ENGINE -->
+  <div class="innstyle-wrapper">
+    <div id="innstyle-booking"></div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="sidebar-card">
+      <div class="sidebar-card-title">When to Visit</div>
+      <div class="seasons">
+        <div class="season" data-months="11,0,1">
+          <div class="season-icon">☀️</div>
+          <div>
+            <div class="season-name">Summer</div>
+            <div class="season-months">December – February</div>
+            <div class="season-desc">Warm dry days, golden sunsets and starry nights for the outdoor bath.</div>
+          </div>
+        </div>
+        <div class="season" data-months="2,3,4">
+          <div class="season-icon">🍂</div>
+          <div>
+            <div class="season-name">Autumn</div>
+            <div class="season-months">March – May</div>
+            <div class="season-desc">Amber winelands, mild days and crisp evenings — ideal for hiking.</div>
+          </div>
+        </div>
+        <div class="season" data-months="5,6,7">
+          <div class="season-icon">🌧️</div>
+          <div>
+            <div class="season-name">Winter</div>
+            <div class="season-months">June – August</div>
+            <div class="season-desc">Cool, green and cosy — perfect for a quiet retreat with red wine.</div>
+          </div>
+        </div>
+        <div class="season" data-months="8,9,10">
+          <div class="season-icon">🌸</div>
+          <div>
+            <div class="season-name">Spring</div>
+            <div class="season-months">September – November</div>
+            <div class="season-desc">Wildflowers, newborn foals and perfect valley temperatures.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-card-title">Prefer to Chat?</div>
+      <p style="font-size:0.78rem;font-weight:300;color:var(--warm);line-height:1.6;margin-bottom:1rem;">Happy to answer any questions before you book.</p>
+      <div class="contact-options">
+        <a href="tel:+27834518949" class="contact-opt">
+          <span class="contact-opt-icon">📞</span> +27 83 451 8949
+        </a>
+        <a href="mailto:proteadomeglamping@gmail.com" class="contact-opt">
+          <span class="contact-opt-icon">✉</span> proteadomeglamping@gmail.com
+        </a>
+      </div>
+      <a href="https://wa.me/27834518949" class="btn-wa" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp Us
+      </a>
+    </div>
+
+    <div class="sidebar-card" style="border-top-color:var(--sage);">
+      <div class="sidebar-card-title">Good to Know</div>
+      <div class="know-list">
+        <div class="know-item"><span class="know-tick">✓</span><span class="know-text">48-hour minimum notice for all bookings</span></div>
+        <div class="know-item"><span class="know-tick">✓</span><span class="know-text">Weekends require a 2-night minimum stay</span></div>
+        <div class="know-item"><span class="know-tick">✓</span><span class="know-text">Activities must be booked with your stay</span></div>
+        <div class="know-item"><span class="know-tick">✓</span><span class="know-text">Ideal for couples and small families</span></div>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<!-- FOOTER -->
 <footer>
   <div class="footer-brand">
     Protea Dome Glamping
@@ -309,66 +386,48 @@
     <a href="index.html#activities">Activities</a>
     <a href="index.html#location">Location</a>
     <a href="index.html#gallery">Gallery</a>
+    <a href="book.html">Book</a>
   </div>
   <div class="footer-copy">© 2025 Protea Dome Glamping</div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-  // Mobile Nav Toggle
-  const hamburger = document.getElementById('hamburger');
-  const mobileNav = document.getElementById('mobileNav');
-  hamburger.addEventListener('click', () => {
-    mobileNav.classList.toggle('active');
+  // ── MOBILE NAV ──────────────────────────────────────────
+  const mobileNav   = document.getElementById('mobileNav');
+  const hamburger   = document.getElementById('hamburger');
+  const mobileClose = document.getElementById('mobileNavClose');
+
+  function openMobileNav()  { mobileNav.classList.add('open');    document.body.style.overflow = 'hidden'; }
+  function closeMobileNav() { mobileNav.classList.remove('open'); document.body.style.overflow = ''; }
+
+  hamburger.addEventListener('click', openMobileNav);
+  mobileClose.addEventListener('click', closeMobileNav);
+
+  // ── SEASON HIGHLIGHT ────────────────────────────────────
+  const currentMonth = new Date().getMonth();
+  document.querySelectorAll('.season').forEach(el => {
+    const months = el.dataset.months.split(',').map(Number);
+    if (months.includes(currentMonth)) el.classList.add('active-season');
   });
-  mobileNav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => mobileNav.classList.remove('active'));
+
+  // ── INNSTYLE ─────────────────────────────────────────────
+  // The script is loaded with `defer` so InnStyle will be available
+  // by DOMContentLoaded. If the CDN is slow we also poll briefly.
+  document.addEventListener('DOMContentLoaded', function () {
+    initInnStyle();
   });
 
-  // Initialize Date Pickers
-  const config = {
-    altInput: true,
-    altFormat: "F j, Y",
-    dateFormat: "Y-m-d",
-    minDate: "today",
-  };
-  flatpickr("#checkin", config);
-  flatpickr("#checkout", config);
-
-  // Form Submission Logic
-  document.getElementById('bookingForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const name = document.getElementById('name').value;
-    const checkin = document.getElementById('checkin').value;
-    const checkout = document.getElementById('checkout').value;
-    const guests = document.getElementById('guests').value;
-    const message = document.getElementById('message').value;
-    
-    const selectedActivities = [];
-    document.querySelectorAll('input[name="activity"]:checked').forEach(cb => {
-      selectedActivities.push(cb.value);
-    });
-
-    // Format the WhatsApp Message
-    let waMessage = `*New Booking Request — Protea Dome*%0A%0A`;
-    waMessage += `*Name:* ${name}%0A`;
-    waMessage += `*Dates:* ${checkin} to ${checkout}%0A`;
-    waMessage += `*Guests:* ${guests}%0A`;
-    
-    if (selectedActivities.length > 0) {
-      waMessage += `*Interests:* ${selectedActivities.join(', ')}%0A`;
+  function initInnStyle(attempt) {
+    attempt = attempt || 0;
+    if (typeof InnStyle === 'function') {
+      InnStyle('proteadomeglamping', {
+        container: '#innstyle-booking',
+      });
+    } else if (attempt < 20) {
+      // retry every 250ms for up to 5 seconds
+      setTimeout(function () { initInnStyle(attempt + 1); }, 250);
     }
-    
-    if (message) {
-      waMessage += `%0A*Message:* ${message}`;
-    }
-
-    const waNumber = '27834518949';
-    const waUrl = `https://wa.me/${waNumber}?text=${waMessage}`;
-
-    window.open(waUrl, '_blank');
-  });
+  }
 </script>
 
 </body>
