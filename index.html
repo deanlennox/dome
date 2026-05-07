@@ -6,8 +6,7 @@
 <title>Protea Dome Glamping — Cape Winelands</title>
 <meta name="description" content="A handcrafted geodesic dome retreat on a horse-riding farm in the Paarl/Stellenbosch valley. Eco-friendly glamping for couples and small families.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --earth: #2c2416;
@@ -165,6 +164,13 @@
     transition: transform 6s ease;
   }
   .about-image:hover img { transform: scale(1.04); }
+  .about-image-overlay {
+    position: absolute; bottom: 2rem; right: -1px;
+    background: var(--sage); color: var(--cream);
+    padding: 0.8rem 1.2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.82rem; font-style: italic; max-width: 220px; line-height: 1.5;
+  }
   .about-text {
     padding: 6rem 3rem 6rem 4rem;
     display: flex; flex-direction: column; justify-content: center;
@@ -254,15 +260,61 @@
   .detail-text { font-size: 0.85rem; font-weight: 300; color: rgba(245,239,230,0.7); }
   .detail-text strong { color: var(--cream); font-weight: 400; display: block; margin-bottom: 0.2rem; }
 
-  /* ── SWIPER OVERRIDES ── */
-  .mySwiper { height: 500px; width: 100%; }
-  .swiper-slide {
-    display: flex; align-items: center; justify-content: center;
-    background: var(--off-white);
+  /* ── GALLERY ── */
+  .gallery-section {
+    padding: 7rem 3rem; background: var(--off-white); position: relative;
   }
-  .swiper-slide img {
-    max-width: 100%; max-height: 100%; object-fit: contain;
-  }  .gallery-item::after {
+  .gallery-container {
+    max-width: 1400px; margin: 0 auto; position: relative; padding: 0 4rem;
+  }
+  .gallery-grid {
+    display: flex; gap: 1rem; overflow-x: auto;
+    scroll-snap-type: x mandatory; scrollbar-width: none;
+    padding-bottom: 2rem;
+  }
+  .gallery-grid::-webkit-scrollbar { display: none; }
+
+  .gallery-item {
+    flex: 0 0 calc(33.333% - 0.7rem);
+    aspect-ratio: 16/10;
+    scroll-snap-align: start;
+    position: relative; overflow: hidden;
+    cursor: pointer; background: var(--cream);
+  }
+  .gallery-item img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.6s ease, filter 0.4s;
+    filter: brightness(0.95);
+  }
+  .gallery-item:hover img {
+    transform: scale(1.05); filter: brightness(1.05);
+  }
+
+  .gallery-nav {
+    display: flex; justify-content: center; align-items: center;
+    gap: 1.5rem; margin-top: 2rem;
+  }
+  .gallery-nav-btn {
+    background: none; border: 1px solid var(--sand);
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.3s; color: var(--earth);
+  }
+  .gallery-nav-btn:hover { background: var(--earth); border-color: var(--earth); color: var(--cream); }
+  .gallery-nav-btn svg { width: 18px; height: 18px; }
+  .gallery-dots { display: flex; gap: 0.5rem; }
+  .gallery-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--sand); border: none; cursor: pointer;
+    transition: background 0.3s;
+  }
+  .gallery-dot.active { background: var(--clay); }
+
+  @media (max-width: 900px) {
+    .gallery-container { padding: 0 1.5rem; }
+    .gallery-item { flex: 0 0 85%; }
+  }
+  .gallery-item::after {
     content: '';
     position: absolute; inset: 0;
     background: rgba(44,36,22,0);
@@ -391,21 +443,15 @@
     background: var(--earth);
   }
   .radio-feature-inner {
-    display: flex;
+    display: grid;
+    grid-template-columns: 200px 1px 1fr;
     align-items: stretch;
-  }
-  @media (max-width: 900px) {
-    .radio-feature-inner { flex-direction: column; }
-    .radio-divider { display: none; }
-    .radio-logo-col { padding: 2rem; }
-    .radio-content-col { padding: 2rem; }
   }
   .radio-logo-col {
     padding: 3rem 2.5rem;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center; text-align: center;
     background: rgba(255,255,255,0.03);
-    min-width: 200px;
   }
   .radio-mic { font-size: 2rem; margin-bottom: 1rem; opacity: 0.7; }
   .radio-station {
@@ -422,7 +468,6 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 0.78rem; font-style: italic;
     color: rgba(245,239,230,0.4); letter-spacing: 0.05em; margin-top: 0.4rem;
-    display: block; width: 100%;
   }
   .radio-divider { width: 1px; background: rgba(255,255,255,0.08); }
   .radio-content-col {
@@ -738,67 +783,51 @@
   </div>
 </div>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
-
-<style>
-    .gallery-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-        max-width: 1000px;
-        margin: 0 auto;
-    }
-    .gallery-item {
-        width: 100%;
-        aspect-ratio: 1;
-        overflow: hidden;
-        border-radius: 8px;
-        cursor: pointer;
-    }
-    .gallery-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s;
-    }
-    .gallery-item:hover img {
-        transform: scale(1.05);
-    }
-    @media (max-width: 600px) {
-        .gallery-grid { grid-template-columns: 1fr; }
-    }
-</style>
-
 <!-- GALLERY -->
 <section class="gallery-section" id="gallery">
   <div class="reveal" style="margin-bottom: 3rem; text-align: center;">
     <div class="section-label">Gallery</div>
     <h2 class="section-title">Life at the <em>Dome</em></h2>
   </div>
+  <div class="gallery-container reveal">
+    <div class="gallery-grid" id="galleryScroller">
+      <div class="gallery-item"><img src="gallery/44d2a4_75bbb032840746f7b61ee0685340fbee~mv2.jpg" alt="Protea Dome at night"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_eaebb3e6780e428db178a18e3d771458~mv2.jpg" alt="Dome interior living"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_566c802d6b8b47ed8973cc5bc32bcdcc~mv2.jpg" alt="Farm surroundings"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_cf15b71540974f30a5063526ebe5f5fb~mv2.jpg" alt="Valley view"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_60ea058118b4448d86686de54cf06f4e~mv2.jpg" alt="Dam view"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_522d3f77621443d1ab897a2d36c7cd07~mv2.png" alt="Protea Dome aerial"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_e631d46fd0b64b52ab8ac179ea9c3c2a~mv2.jpg" alt="Dome detail"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_67395aeb4f4848ba9a36d8fec4e20d22~mv2.jpg" alt="Outdoor bath"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_debeffaba55647d0835d3428ebfacaef~mv2.jpg" alt="Farm life"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_bb6a88c9d9724b7bbdd0a4475b654efa~mv2.jpg" alt="Inside view"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_d3456211246c4f28a642d35068b96bd8~mv2.jpg" alt="Morning coffee"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_17372958a72347d49dd62f32501a6c74~mv2.jpg" alt="Sunset view"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_bd6d16a432b347809077ea78936c562f~mv2.jpg" alt="Horse riding"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_7789b981c51540d1a6b11d777f7ccced~mv2.jpg" alt="Art on the farm"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_6c797c3409a14f31902c5f0f1b16c3f2~mv2.jpg" alt="Nature trails"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_ad7485e2b3a342f6ac01b4ef6a35c530~mv2.jpg" alt="Dome deck"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_fcd4aa928016448a8686f52a6554da3b~mv2.jpg" alt="Interior decor"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_f37f2eba71404fcca49e90ef3cc92f3e~mv2.jpg" alt="Stargazing bath"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_c7a1e0505e4f4f0095b8f4076a4612cc~mv2.jpg" alt="Farm morning"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_f757624dcef040459cb39cf1c8b9edc3~mv2.jpg" alt="Eco retreat"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_638bfceaaab64b6cb2e787f777660e43~mv2.jpg" alt="Paarl valley"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_fdb297d7f1fb4fe9ab2580dac77ab0f3~mv2.jpg" alt="Interior textures"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_e200c37b214e4f208190a8a25ccd47a6~mv2.jpg" alt="Cozy corners"></div>
+      <div class="gallery-item"><img src="gallery/44d2a4_1c282cab2c164cfa83c1343d1575d4ce~mv2.jpg" alt="Farm surroundings"></div>
+    </div>
+  </div>
 
-  <div class="gallery-grid">
-      <a href="gallery/44d2a4_75bbb032840746f7b61ee0685340fbee~mv2.jpg" class="gallery-item glightbox"><img src="gallery/44d2a4_75bbb032840746f7b61ee0685340fbee~mv2.jpg" alt="Protea Dome at night"></a>
-      <a href="gallery/44d2a4_eaebb3e6780e428db178a18e3d771458~mv2.jpg" class="gallery-item glightbox"><img src="gallery/44d2a4_eaebb3e6780e428db178a18e3d771458~mv2.jpg" alt="Dome interior living"></a>
+  <div class="gallery-nav">
+    <button class="gallery-nav-btn" id="galleryPrev" aria-label="Previous">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+    <div class="gallery-dots" id="galleryDots"></div>
+    <button class="gallery-nav-btn" id="galleryNext" aria-label="Next">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
   </div>
 </section>
-
-<script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
-<script>
-    const lightbox = GLightbox({
-        selector: '.glightbox',
-        touchNavigation: true,
-        loop: true,
-        keyboardNavigation: true,
-        zoomable: true,
-        draggable: true,
-        openEffect: 'zoom',
-        closeEffect: 'fade',
-        slideEffect: 'slide',
-        width: '100%',
-        height: '100vh',
-        preload: true
-    });
-</script>
 
 <!-- REVIEWS -->
 <section class="reviews" id="reviews">
@@ -812,7 +841,7 @@
 
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Wow! Just wow! As the first official guests, we were really impressed. We are so grateful for your attention to detail and hospitality. It was a beautiful birthday surprise for my husband, Emmanuel, and he loved it. We went for a hike as suggested and it was beautiful. This is definitely our little haven whenever we need a break from the city. Love it and love it!</p>
+        <p class="review-text">Wow! Just wow! As the first official guests, we were really impressed. We are so grateful for your attention to detail and hospitality. It was a beautiful birthday surprise for my husband, Emmanuel, and he loved it. We went for a hike as suggested and it was beautiful. This is definitely our little haven whenever we need a break from the city.</p>
         <div class="review-author">Mellania &amp; Emmanuel</div>
       </div></div>
 
@@ -824,7 +853,7 @@
 
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">What an amazing way to be able to celebrate our 7th anniversary here. It was an awesome experience &amp; had a great time in nature. Thank you so much for this blessing, would love to come back.</p>
+        <p class="review-text">What an amazing way to celebrate our 7th anniversary here. It was an awesome experience &amp; had a great time in nature. Thank you so much for this blessing, would love to come back.</p>
         <div class="review-author">Noulen &amp; Jess</div>
       </div></div>
 
@@ -836,68 +865,50 @@
 
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Thank you - What a precious spot this is! Decor &amp; attentiveness &amp; caring service is wonderful. I love the space man &amp; fairy lights! We will come again! :)</p>
+        <p class="review-text">Thank you — what a precious spot this is! Decor &amp; attentiveness &amp; caring service is wonderful. I love the space man &amp; fairy lights! We will come again!</p>
         <div class="review-author">Ilse &amp; Matty</div>
       </div></div>
 
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Really loved the getaway, and the host... love her! Can't wait to see you again!</p>
-        <div class="review-author">Robert &amp; Nicole</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Lovely, peaceful getaway from the city. Enjoyed the birds, the stars and some friendly horses. The small details like the spaceman &amp; fairy lights really make it special. Christine is an amazing host and we appreciate her attention to detail. A great way to spend our anniversary, will be back!</p>
+        <p class="review-text">Lovely, peaceful getaway from the city. Enjoyed the birds, the stars and some friendly horses. The small details like the spaceman &amp; fairy lights really make it special. Christine is an amazing host — a great way to spend our anniversary, will be back!</p>
         <div class="review-author">John &amp; Kay</div>
       </div></div>
 
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Thank you Tina for going the extra mile for Dylan's birthday. Our stay was lovely and peaceful, just what we needed! We will definitely be back.</p>
-        <div class="review-author">Dylan &amp; Jastine</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">We spent our 1 year anniversary in spot we'd never have imagined! We loved spending time in nature &amp; the dome is unreal! The stars &amp; view were breathtaking. Thank you Tina for being an amazing host! Will definitely be back to celebrate again. The most memorable experiences for us were definitely feeding the horses, rafting on the dam, the sunset braai and the whole night-time in the dome (10/10) - Loved this getaway; completely exceeded all expectations and cannot wait to be back. Thank you!</p>
+        <p class="review-text">We spent our 1 year anniversary in a spot we'd never have imagined! We loved spending time in nature &amp; the dome is unreal! The stars &amp; view were breathtaking. Feeding the horses, rafting on the dam, the sunset braai — completely exceeded all expectations.</p>
         <div class="review-author">Joshua &amp; Hannah</div>
       </div></div>
 
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">We had a wonderful time at the dome! My wife and I loved the serene surroundings and peaceful atmosphere, it was 'The Perfect Getaway' from our busy schedules. Our kids thoroughly enjoyed feeding the horses and I must say, there are majestic beautiful horses: a pity we ran out of apples because my daughter wanted to pet each and every horse. Christine's hospitality was exceptional. We appreciate the warm welcome and can't wait to return. Highly recommended!</p>
+        <p class="review-text">We had a wonderful time at the dome! My wife and I loved the serene surroundings and peaceful atmosphere. Our kids thoroughly enjoyed feeding the horses. Christine's hospitality was exceptional — highly recommended!</p>
         <div class="review-author">Saleem Family</div>
       </div></div>
 
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">The peace and quiet we found here is unmatched. The accommodation itself was picturesque, a true respite from the bustling world around us. Thank you Christine for being a lovely host. We will definitely be back to visit the horses again soon!</p>
+        <p class="review-text">The peace and quiet we found here is unmatched. The accommodation itself was picturesque, a true respite from the bustling world. Thank you Christine for being a lovely host. We will definitely be back to visit the horses again soon!</p>
         <div class="review-author">Jade &amp; Gilles</div>
       </div></div>
 
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Thank you for making our stay at the dome over New Years truly a breeze and easy. We love the disconnect from the world around us and just being in touch with nature. The quietness and peaceful aura from the dome is truly like anything we have experienced. Thank you for assisting us and going the extra mile. We will definitely be back soon!</p>
+        <p class="review-text">Thank you for making our stay over New Years truly a breeze. We love the disconnect from the world and just being in touch with nature. The quietness and peaceful aura from the dome is truly like anything we have experienced.</p>
         <div class="review-author">Isaacs Family</div>
       </div></div>
 
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Thank you for the warm welcome, care and attention you put into our stay last night. It was the perfect settling to celebrate our 10th anniversary with our children. We especially loved the nebula and getting to see and experience the animals. Thank you for everything.</p>
-        <div class="review-author">Newalani Family</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Absolutely incredible! We really enjoyed our stay. The dome was an escape from the crazy hustle &amp; just what we all needed. Christine is an exceptional host &amp; has thought of every little thing. Nebula guy was an extra special little feature &amp; we so enjoyed it as a family. Thank you from the bottom of our hearts for creating this little slice of heaven.</p>
+        <p class="review-text">Absolutely incredible! We really enjoyed our stay. The dome was an escape from the crazy hustle &amp; just what we all needed. Christine is an exceptional host &amp; has thought of every little thing. Thank you from the bottom of our hearts for creating this little slice of heaven.</p>
         <div class="review-author">Johnston Family</div>
       </div></div>
 
       <div class="review-card"><div class="review-card-inner">
         <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">We had a lovely weekend by the dome. The quietness and nature around us was perfect for our anniversary celebration. Besides the heat and our little 8 legged friends, we loved it and will definitely be back again! Thank you for your amazing hospitality and having whatever we needed ready. Your dome is absolutely beautiful and can't wait to see the success of it come your way.</p>
-        <div class="review-author">Keana &amp; Simon</div>
+        <p class="review-text">Thank you for the warm welcome, care and attention you put into our stay. It was the perfect setting to celebrate our 10th anniversary with our children. We especially loved the nebula and getting to see and experience the animals.</p>
+        <div class="review-author">Newalani Family</div>
       </div></div>
 
     </div><!-- /reviews-track -->
@@ -919,18 +930,13 @@
         <div class="radio-mic">🎙</div>
         <div class="radio-station">Radio Tygerberg</div>
         <div class="radio-freq">104FM</div>
+        <div class="radio-show">Alles Wat Lekker Is</div>
       </div>
       <div class="radio-divider"></div>
       <div class="radio-content-col">
         <div class="radio-context">
           Christine was interviewed on Radio Tygerberg 104FM's popular <em>Alles Wat Lekker Is</em> segment — a show dedicated to uncovering the most interesting and unique experiences the Cape has to offer.
         </div>
-        
-        <audio controls style="width: 100%; margin: 1rem 0;">
-          <source src="radio.m4a" type="audio/mp4">
-          Your browser does not support the audio element.
-        </audio>
-
         <blockquote class="radio-quote">
           "Protea Dome glamping wants everyone to have a personalised experience, whether it's a birthday, anniversary or just a weekend to get away. The space offers tranquility and peace — waking up with natural sunlight and the birds tweeting."
         </blockquote>
@@ -1107,6 +1113,46 @@
     if (e.key === 'ArrowLeft')   showPrev();
   });
 
+  // ── GALLERY SCROLLER ────────────────────────────────────
+  const gScroller   = document.getElementById('galleryScroller');
+  const gDots       = document.getElementById('galleryDots');
+  const gPrev       = document.getElementById('galleryPrev');
+  const gNext       = document.getElementById('galleryNext');
+  const gCards      = [...gScroller.children];
+  let gCardsPerView = window.innerWidth <= 900 ? 1 : 3;
+  let gIndex        = 0;
+  const gTotalPages = () => Math.ceil(gCards.length / gCardsPerView);
+
+  function buildGDots() {
+    if (!gDots) return;
+    gDots.innerHTML = '';
+    for (let i = 0; i < gTotalPages(); i++) {
+      const d = document.createElement('button');
+      d.className = 'gallery-dot' + (i === gIndex ? ' active' : '');
+      d.addEventListener('click', () => { gIndex = i; updateGScroll(); });
+      gDots.appendChild(d);
+    }
+  }
+
+  function updateGScroll() {
+    const scrollPos = gIndex * (gScroller.offsetWidth / gCardsPerView);
+    gScroller.scrollTo({ left: scrollPos, behavior: 'smooth' });
+    if(gDots) [...gDots.children].forEach((d, i) => d.classList.toggle('active', i === gIndex));
+  }
+
+  gPrev.addEventListener('click', () => { if (gIndex > 0) { gIndex--; updateGScroll(); } });
+  gNext.addEventListener('click', () => { if (gIndex < gTotalPages() - 1) { gIndex++; updateGScroll(); } });
+  
+  window.addEventListener('resize', () => {
+    const newCardsPerView = window.innerWidth <= 900 ? 1 : 3;
+    if (newCardsPerView !== gCardsPerView) {
+      gCardsPerView = newCardsPerView;
+      buildGDots();
+      updateGScroll();
+    }
+  });
+  buildGDots();
+
   // ── REVIEWS CAROUSEL ────────────────────────────────────
   const track     = document.getElementById('reviewsTrack');
   const dotsEl    = document.getElementById('reviewsDots');
@@ -1147,10 +1193,8 @@
 
   if (track) {
     setCardWidths();
-    if(prevBtn && nextBtn) {
-      prevBtn.addEventListener('click', () => goToPage(reviewIndex - 1));
-      nextBtn.addEventListener('click', () => goToPage(reviewIndex + 1));
-    }
+    prevBtn.addEventListener('click', () => goToPage(reviewIndex - 1));
+    nextBtn.addEventListener('click', () => goToPage(reviewIndex + 1));
     window.addEventListener('resize', setCardWidths);
   }
 </script>
