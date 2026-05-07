@@ -291,28 +291,22 @@
   }
 
   .gallery-nav {
-    display: flex; justify-content: center; align-items: center;
-    gap: 1.5rem; margin-top: 2rem;
-  }
-  .gallery-nav-btn {
-    background: none; border: 1px solid var(--sand);
+    background: var(--off-white); border: 1px solid var(--sand);
     width: 44px; height: 44px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer; transition: all 0.3s; color: var(--earth);
+    position: absolute; top: 50%; transform: translateY(-50%);
+    z-index: 10;
   }
-  .gallery-nav-btn:hover { background: var(--earth); border-color: var(--earth); color: var(--cream); }
-  .gallery-nav-btn svg { width: 18px; height: 18px; }
-  .gallery-dots { display: flex; gap: 0.5rem; }
-  .gallery-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--sand); border: none; cursor: pointer;
-    transition: background 0.3s;
-  }
-  .gallery-dot.active { background: var(--clay); }
+  #galleryPrev { left: 0.5rem; }
+  #galleryNext { right: 0.5rem; }
+  .gallery-nav:hover { background: var(--earth); border-color: var(--earth); color: var(--cream); }
+  .gallery-nav svg { width: 18px; height: 18px; }
 
   @media (max-width: 900px) {
     .gallery-container { padding: 0 1.5rem; }
     .gallery-item { flex: 0 0 85%; }
+    .gallery-nav { display: none; }
   }
   .gallery-item::after {
     content: '';
@@ -790,6 +784,9 @@
     <h2 class="section-title">Life at the <em>Dome</em></h2>
   </div>
   <div class="gallery-container reveal">
+    <button class="gallery-nav" id="galleryPrev" aria-label="Previous image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
     <div class="gallery-grid" id="galleryScroller">
       <div class="gallery-item"><img src="gallery/44d2a4_75bbb032840746f7b61ee0685340fbee~mv2.jpg" alt="Protea Dome at night"></div>
       <div class="gallery-item"><img src="gallery/44d2a4_eaebb3e6780e428db178a18e3d771458~mv2.jpg" alt="Dome interior living"></div>
@@ -816,14 +813,7 @@
       <div class="gallery-item"><img src="gallery/44d2a4_e200c37b214e4f208190a8a25ccd47a6~mv2.jpg" alt="Cozy corners"></div>
       <div class="gallery-item"><img src="gallery/44d2a4_1c282cab2c164cfa83c1343d1575d4ce~mv2.jpg" alt="Farm surroundings"></div>
     </div>
-  </div>
-
-  <div class="gallery-nav">
-    <button class="gallery-nav-btn" id="galleryPrev" aria-label="Previous">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-    </button>
-    <div class="gallery-dots" id="galleryDots"></div>
-    <button class="gallery-nav-btn" id="galleryNext" aria-label="Next">
+    <button class="gallery-nav" id="galleryNext" aria-label="Next image">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
     </button>
   </div>
@@ -1112,46 +1102,6 @@
     if (e.key === 'ArrowRight')  showNext();
     if (e.key === 'ArrowLeft')   showPrev();
   });
-
-  // ── GALLERY SCROLLER ────────────────────────────────────
-  const gScroller   = document.getElementById('galleryScroller');
-  const gDots       = document.getElementById('galleryDots');
-  const gPrev       = document.getElementById('galleryPrev');
-  const gNext       = document.getElementById('galleryNext');
-  const gCards      = [...gScroller.children];
-  let gCardsPerView = window.innerWidth <= 900 ? 1 : 3;
-  let gIndex        = 0;
-  const gTotalPages = () => Math.ceil(gCards.length / gCardsPerView);
-
-  function buildGDots() {
-    if (!gDots) return;
-    gDots.innerHTML = '';
-    for (let i = 0; i < gTotalPages(); i++) {
-      const d = document.createElement('button');
-      d.className = 'gallery-dot' + (i === gIndex ? ' active' : '');
-      d.addEventListener('click', () => { gIndex = i; updateGScroll(); });
-      gDots.appendChild(d);
-    }
-  }
-
-  function updateGScroll() {
-    const scrollPos = gIndex * (gScroller.offsetWidth / gCardsPerView);
-    gScroller.scrollTo({ left: scrollPos, behavior: 'smooth' });
-    if(gDots) [...gDots.children].forEach((d, i) => d.classList.toggle('active', i === gIndex));
-  }
-
-  gPrev.addEventListener('click', () => { if (gIndex > 0) { gIndex--; updateGScroll(); } });
-  gNext.addEventListener('click', () => { if (gIndex < gTotalPages() - 1) { gIndex++; updateGScroll(); } });
-  
-  window.addEventListener('resize', () => {
-    const newCardsPerView = window.innerWidth <= 900 ? 1 : 3;
-    if (newCardsPerView !== gCardsPerView) {
-      gCardsPerView = newCardsPerView;
-      buildGDots();
-      updateGScroll();
-    }
-  });
-  buildGDots();
 
   // ── REVIEWS CAROUSEL ────────────────────────────────────
   const track     = document.getElementById('reviewsTrack');
