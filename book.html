@@ -411,24 +411,11 @@
   });
 
   // ── INNSTYLE ─────────────────────────────────────────────
-  // The script is loaded with `defer` so InnStyle will be available
-  // by DOMContentLoaded. If the CDN is slow we also poll briefly.
-  document.addEventListener('DOMContentLoaded', function () {
-    initInnStyle();
-  });
-
-  function initInnStyle(attempt) {
-    attempt = attempt || 0;
-    if (typeof InnStyle === 'function') {
-      InnStyle({
-        id: 'proteadomeglamping',
-        container: '#innstyle-booking'
+  document.addEventListener("DOMContentLoaded", function() {
+      InnStyle('proteadomeglamping', {
+          container: '#innstyle-booking',
       });
-    } else if (attempt < 20) {
-      // retry every 250ms for up to 5 seconds
-      setTimeout(function () { initInnStyle(attempt + 1); }, 250);
-    }
-  }
+  });
 </script>
 
 </body>
