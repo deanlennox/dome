@@ -164,6 +164,13 @@
     transition: transform 6s ease;
   }
   .about-image:hover img { transform: scale(1.04); }
+  .about-image-overlay {
+    position: absolute; bottom: 2rem; right: -1px;
+    background: var(--sage); color: var(--cream);
+    padding: 0.8rem 1.2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.82rem; font-style: italic; max-width: 220px; line-height: 1.5;
+  }
   .about-text {
     padding: 6rem 3rem 6rem 4rem;
     display: flex; flex-direction: column; justify-content: center;
@@ -377,12 +384,10 @@
   }
   .reviews-track {
     display: flex; transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
-    width: max-content;
   }
   .review-card {
-    flex: 0 0 33.3333%; padding: 0 1rem;
+    flex: 0 0 33.333%; padding: 0 1rem;
     box-sizing: border-box;
-    width: 33.3333%;
   }
   .review-card-inner {
     background: var(--off-white); padding: 2.5rem;
@@ -906,23 +911,6 @@
         <div class="review-author">Newalani Family</div>
       </div></div>
 
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Absolutely incredible! We really enjoyed our stay. The dome was an escape from the crazy hustle &amp; just what we all needed. Christine is an exceptional host &amp; has thought of every little thing. Nebula guy was an extra special little feature &amp; we so enjoyed it as a family. Thank you from the bottom of our hearts for creating this little slice of heaven.</p>
-        <div class="review-author">Johnston Family</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Thank you for the warm welcome, care and attention you put into our stay. It was the perfect setting to celebrate our 10th anniversary with our children. We especially loved the nebula and getting to see and experience the animals.</p>
-        <div class="review-author">Newalani Family</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">We had a lovely weekend by the dome. The quietness and nature around us was perfect for our anniversary celebration. Besides the heat and our little 8 legged friends, we loved it and will definitely be back again! Thank you for your amazing hospitality and having whatever we needed ready. Your dome is absolutely beautiful and can't wait to see the success of it come your way.</p>
-        <div class="review-author">Keana &amp; Simon</div>
-      </div></div>
     </div><!-- /reviews-track -->
   </div>
 
@@ -1194,7 +1182,8 @@
 
   function goToPage(page) {
     reviewIndex = Math.max(0, Math.min(page, totalPages() - 1));
-    track.style.transform = `translateX(-${reviewIndex * 100}%)`;
+    const cardWidth = 100 / cardsPerView;
+    track.style.transform = `translateX(-${reviewIndex * cardsPerView * cardWidth}%)`;
     [...dotsEl.children].forEach((d, i) => d.classList.toggle('active', i === reviewIndex));
   }
 
