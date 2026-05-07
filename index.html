@@ -437,15 +437,21 @@
     background: var(--earth);
   }
   .radio-feature-inner {
-    display: grid;
-    grid-template-columns: 200px 1px 1fr;
+    display: flex;
     align-items: stretch;
+  }
+  @media (max-width: 900px) {
+    .radio-feature-inner { flex-direction: column; }
+    .radio-divider { display: none; }
+    .radio-logo-col { padding: 2rem; }
+    .radio-content-col { padding: 2rem; }
   }
   .radio-logo-col {
     padding: 3rem 2.5rem;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center; text-align: center;
     background: rgba(255,255,255,0.03);
+    min-width: 200px;
   }
   .radio-mic { font-size: 2rem; margin-bottom: 1rem; opacity: 0.7; }
   .radio-station {
@@ -1143,8 +1149,10 @@
 
   if (track) {
     setCardWidths();
-    prevBtn.addEventListener('click', () => goToPage(reviewIndex - 1));
-    nextBtn.addEventListener('click', () => goToPage(reviewIndex + 1));
+    if(prevBtn && nextBtn) {
+      prevBtn.addEventListener('click', () => goToPage(reviewIndex - 1));
+      nextBtn.addEventListener('click', () => goToPage(reviewIndex + 1));
+    }
     window.addEventListener('resize', setCardWidths);
   }
 </script>
