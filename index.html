@@ -1175,8 +1175,7 @@
 
   function goToPage(page) {
     reviewIndex = Math.max(0, Math.min(page, totalPages() - 1));
-    const cardWidth = 100 / cardsPerView;
-    track.style.transform = `translateX(-${reviewIndex * cardsPerView * cardWidth}%)`;
+    track.style.transform = `translateX(-${reviewIndex * 100}%)`;
     [...dotsEl.children].forEach((d, i) => d.classList.toggle('active', i === reviewIndex));
   }
 
