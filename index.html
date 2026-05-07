@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Protea Dome Glamping — Cape Winelands</title>
+<meta name="description" content="A handcrafted geodesic dome retreat on a horse-riding farm in the Paarl/Stellenbosch valley. Eco-friendly glamping for couples and small families.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --earth: #2c2416;
+    --warm: #5c4a2a;
+    --clay: #a0784a;
+    --sand: #d4b896;
+    --cream: #f5efe6;
+    --sage: #7a8c6e;
+    --off-white: #faf7f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--off-white);
+    color: var(--earth);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  #nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 3rem;
+    transition: background 0.4s, padding 0.4s;
+  }
+  #nav.scrolled {
+    background: rgba(250,247,242,0.96);
+    backdrop-filter: blur(8px);
+    padding: 1rem 3rem;
+    box-shadow: 0 1px 0 rgba(44,36,22,0.08);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem; font-weight: 600; letter-spacing: 0.05em;
+    color: var(--cream); text-decoration: none; transition: color 0.4s;
+  }
+  #nav.scrolled .nav-logo { color: var(--earth); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem; font-weight: 400; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(245,239,230,0.85);
+    text-decoration: none; transition: color 0.3s;
+  }
+  #nav.scrolled .nav-links a { color: var(--warm); }
+  .nav-links a:hover { color: var(--sand); }
+  #nav.scrolled .nav-links a:hover { color: var(--clay); }
+  .nav-cta {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--cream);
+    border: 1px solid rgba(245,239,230,0.5);
+    padding: 0.55rem 1.4rem; text-decoration: none; transition: all 0.3s;
+  }
+  #nav.scrolled .nav-cta { color: var(--earth); border-color: var(--clay); }
+  .nav-cta:hover { background: rgba(245,239,230,0.15); }
+  #nav.scrolled .nav-cta:hover { background: var(--clay); color: var(--cream); }
+  .nav-hamburger {
+    display: none; flex-direction: column; gap: 5px; cursor: pointer;
+    background: none; border: none; padding: 4px;
+  }
+  .nav-hamburger span {
+    display: block; width: 24px; height: 1px;
+    background: var(--cream); transition: background 0.4s;
+  }
+  #nav.scrolled .nav-hamburger span { background: var(--earth); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; height: 100vh; min-height: 600px;
+    display: flex; align-items: flex-end; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(20,15,8,0.2) 0%, rgba(20,15,8,0.1) 40%, rgba(20,15,8,0.65) 100%),
+      url('images/hero.jpg') center/cover no-repeat;
+  }
+  .hero-bg::after {
+    content: ''; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4; pointer-events: none;
+  }
+  .hero-content {
+    position: relative; z-index: 1;
+    padding: 0 3rem 5rem; max-width: 700px;
+    animation: fadeUp 1.2s ease both;
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem; font-weight: 400; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--sand);
+    margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 40px; height: 1px; background: var(--sand);
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 300;
+    line-height: 1.08; color: var(--cream); margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--sand); }
+  .hero-sub {
+    font-size: 0.95rem; font-weight: 400; line-height: 1.7;
+    color: var(--off-white); margin-bottom: 2.5rem; max-width: 420px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  }
+  .btn-primary, .btn-outline {
+    display: inline-block; font-family: 'Jost', sans-serif;
+    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.15em;
+    text-transform: uppercase; text-decoration: none;
+    padding: 1rem 2.5rem; background: var(--clay); color: var(--cream);
+    transition: background 0.3s, transform 0.3s;
+  }
+  .btn-primary:hover, .btn-outline:hover { 
+    background: var(--warm); transform: translateY(-2px); 
+  }
+  .btn-outline { margin-left: 1rem; }
+  .hero-scroll {
+    position: absolute; bottom: 2rem; right: 3rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: rgba(245,239,230,0.5); font-size: 0.65rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, rgba(245,239,230,0.5), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 7rem 3rem; }
+  .section-label {
+    font-size: 0.68rem; font-weight: 400; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--clay); margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300;
+    line-height: 1.2; color: var(--earth);
+  }
+  .section-title em { font-style: italic; color: var(--clay); }
+
+  /* ── ABOUT ── */
+  .about {
+    background: var(--cream);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; padding: 0; overflow: hidden;
+  }
+  .about-image { position: relative; min-height: 560px; overflow: hidden; }
+  .about-image img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 6s ease;
+  }
+  .about-image:hover img { transform: scale(1.04); }
+  .about-image-overlay {
+    position: absolute; bottom: 2rem; right: -1px;
+    background: var(--sage); color: var(--cream);
+    padding: 1.2rem 1.8rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-style: italic; max-width: 260px; line-height: 1.5;
+  }
+  .about-text {
+    padding: 6rem 5rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .about-text p {
+    font-size: 1rem; font-weight: 300; line-height: 1.85;
+    color: var(--warm); margin-top: 1.8rem;
+  }
+  .about-features {
+    margin-top: 2.5rem; display: grid;
+    grid-template-columns: 1fr 1fr; gap: 1.2rem;
+  }
+  .feature-item { display: flex; align-items: flex-start; gap: 0.8rem; }
+  .feature-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--clay); flex-shrink: 0; margin-top: 0.45rem;
+  }
+  .feature-item span { font-size: 0.82rem; font-weight: 300; letter-spacing: 0.05em; color: var(--warm); }
+
+  /* ── ACTIVITIES ── */
+  .activities { background: var(--off-white); }
+  .activities-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 4rem;
+  }
+  .activities-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .activity-card { position: relative; overflow: hidden; aspect-ratio: 3/4; cursor: default; }
+  .activity-card img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.7s ease; filter: brightness(0.75);
+  }
+  .activity-card:hover img { transform: scale(1.06); filter: brightness(0.6); }
+  .activity-overlay {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 2rem;
+    background: linear-gradient(to top, rgba(20,15,8,0.8) 0%, transparent 60%);
+  }
+  .activity-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; font-weight: 300;
+    color: rgba(245,239,230,0.2); line-height: 1; margin-bottom: 0.5rem;
+  }
+  .activity-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 400; color: var(--cream); margin-bottom: 0.5rem;
+  }
+  .activity-desc {
+    font-size: 0.8rem; font-weight: 300; line-height: 1.6;
+    color: rgba(245,239,230,0.7); max-height: 0; overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease; opacity: 0;
+  }
+  .activity-card:hover .activity-desc { max-height: 100px; opacity: 1; }
+  .activity-tag {
+    display: inline-block; font-size: 0.65rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--sand);
+    border: 1px solid rgba(212,184,150,0.4); padding: 0.2rem 0.6rem;
+    margin-bottom: 0.6rem; width: fit-content;
+  }
+
+  /* ── LOCATION ── */
+  .location {
+    background: var(--earth); color: var(--cream);
+    display: grid; grid-template-columns: 1.2fr 1fr;
+    gap: 0; padding: 0; overflow: hidden;
+  }
+  .location-image { position: relative; min-height: 500px; overflow: hidden; }
+  .location-image img {
+    width: 100%; height: 100%; object-fit: cover;
+    opacity: 0.7; transition: transform 6s ease, opacity 0.4s;
+  }
+  .location-image:hover img { transform: scale(1.04); opacity: 0.85; }
+  .location-text {
+    padding: 6rem 5rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .location-text .section-label { color: var(--sand); }
+  .location-text .section-title { color: var(--cream); }
+  .location-text .section-title em { color: var(--sand); }
+  .location-text p {
+    font-size: 0.95rem; font-weight: 300; line-height: 1.85;
+    color: rgba(245,239,230,0.7); margin-top: 1.8rem;
+  }
+  .location-details { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+  .location-detail { display: flex; gap: 1rem; align-items: flex-start; }
+  .detail-icon { font-size: 1rem; color: var(--sand); flex-shrink: 0; margin-top: 0.1rem; }
+  .detail-text { font-size: 0.85rem; font-weight: 300; color: rgba(245,239,230,0.7); }
+  .detail-text strong { color: var(--cream); font-weight: 400; display: block; margin-bottom: 0.2rem; }
+
+  /* ── GALLERY MASONRY ── */
+  .gallery-section {
+    padding: 7rem 3rem; background: var(--off-white);
+  }
+  .gallery-grid {
+    column-count: 3;
+    column-gap: 1.5rem;
+  }
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    background: var(--cream);
+    cursor: pointer;
+  }
+  .gallery-item img {
+    width: 100%; height: auto; display: block;
+    transition: transform 0.6s ease, filter 0.4s;
+    filter: brightness(0.95);
+  }
+  .gallery-item:hover img {
+    transform: scale(1.05); filter: brightness(1.05);
+  }
+
+  @media (max-width: 1100px) {
+    .gallery-grid { column-count: 2; }
+  }
+  @media (max-width: 600px) {
+    .gallery-grid { column-count: 1; }
+  }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(28,24,18,0.98);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: none; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.4s ease;
+  }
+  .lightbox.active { display: flex; opacity: 1; }
+  
+  .lightbox-content {
+    position: relative; max-width: 90%; max-height: 85%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lightbox-image {
+    max-width: 100%; max-height: 100%;
+    object-fit: contain;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+    transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .lightbox.active .lightbox-image { transform: scale(1); }
+
+  .lightbox-close {
+    position: absolute; top: 2rem; right: 2rem;
+    background: none; border: none; color: var(--cream);
+    cursor: pointer; padding: 10px; z-index: 10;
+  }
+  .lightbox-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    color: var(--cream); width: 56px; height: 56px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .lightbox-nav:hover { background: var(--cream); color: var(--earth); }
+  .lightbox-prev { left: -80px; }
+  .lightbox-next { right: -80px; }
+
+  @media (max-width: 1100px) {
+    .lightbox-prev { left: 20px; }
+    .lightbox-next { right: 20px; }
+    .lightbox-nav { width: 44px; height: 44px; background: rgba(28,24,18,0.5); }
+  }
+
+  /* ── REVIEWS ── */
+  .reviews { background: var(--cream); text-align: center; position: relative; padding-bottom: 6rem; }
+  .reviews-header { margin-bottom: 4rem; }
+  .reviews-container {
+    max-width: 1400px; margin: 0 auto; position: relative; padding: 0 4rem;
+  }
+  .reviews-grid { 
+    display: flex; gap: 2rem; overflow-x: auto; 
+    scroll-snap-type: x mandatory; scrollbar-width: none;
+    padding-bottom: 2rem; text-align: left;
+  }
+  .reviews-grid::-webkit-scrollbar { display: none; }
+  
+  .review-card {
+    background: var(--off-white); padding: 2.5rem;
+    border-top: 2px solid var(--sand);
+    flex: 0 0 calc(33.333% - 1.35rem);
+    scroll-snap-align: start;
+    display: flex; flex-direction: column;
+  }
+  
+  .scroll-btn {
+    background: var(--off-white); border: 1px solid var(--sand);
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.3s; color: var(--earth);
+    position: absolute; top: 50%; transform: translateY(-50%);
+    z-index: 10;
+  }
+  .scroll-btn#prevBtn { left: 0.5rem; }
+  .scroll-btn#nextBtn { right: 0.5rem; }
+  .scroll-btn:hover { background: var(--earth); border-color: var(--earth); color: var(--cream); }
+  .scroll-btn svg { width: 18px; height: 18px; }
+  .review-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem; font-weight: 300; color: var(--sand);
+    line-height: 0.5; margin-bottom: 1.2rem;
+  }
+  .review-text {
+    font-size: 0.9rem; font-weight: 300; line-height: 1.8;
+    color: var(--warm); font-style: italic; margin-bottom: 1.5rem;
+  }
+  .review-author {
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--clay);
+  }
+  .stars { color: var(--clay); font-size: 0.75rem; margin-bottom: 0.8rem; }
+  .press-badge {
+    display: inline-flex; align-items: center; gap: 1rem;
+    background: var(--earth); color: var(--cream);
+    padding: 1rem 2rem; font-size: 0.75rem; letter-spacing: 0.1em;
+    margin-top: 3rem;
+  }
+  .press-badge .badge-label { color: var(--sand); font-style: italic; }
+
+  /* ── CONTACT ── */
+  .contact-cta {
+    background: var(--sage); display: grid;
+    grid-template-columns: 1fr 1fr; gap: 0; padding: 0; overflow: hidden;
+  }
+  .contact-image { position: relative; min-height: 480px; overflow: hidden; }
+  .contact-image img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(0.65); transition: transform 6s ease;
+  }
+  .contact-image:hover img { transform: scale(1.04); }
+  .contact-text {
+    padding: 6rem 5rem; display: flex; flex-direction: column;
+    justify-content: center; background: var(--earth);
+  }
+  .contact-text .section-label { color: var(--sand); }
+  .contact-text .section-title { color: var(--cream); }
+  .contact-text .section-title em { color: var(--sand); }
+  .contact-text p {
+    font-size: 0.95rem; font-weight: 300; line-height: 1.85;
+    color: rgba(245,239,230,0.6); margin-top: 1.5rem; margin-bottom: 2.5rem;
+  }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2.5rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    text-decoration: none; font-size: 0.85rem;
+    color: rgba(245,239,230,0.7); transition: color 0.3s;
+  }
+  .contact-link:hover { color: var(--sand); }
+  .contact-link-icon { color: var(--sand); font-size: 1rem; width: 20px; text-align: center; }
+  .btn-whatsapp {
+    display: inline-flex; align-items: center; gap: 0.8rem;
+    font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; padding: 1rem 2rem;
+    background: #25D366; color: white;
+    transition: background 0.3s, transform 0.3s; width: fit-content;
+  }
+  .btn-whatsapp:hover { background: #1ebe5d; transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--earth); padding: 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 600; color: var(--cream); letter-spacing: 0.05em;
+  }
+  .footer-brand small {
+    display: block; font-family: 'Jost', sans-serif;
+    font-size: 0.68rem; font-weight: 300; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--sand); margin-top: 0.3rem;
+  }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a {
+    font-size: 0.72rem; font-weight: 300; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(245,239,230,0.4);
+    text-decoration: none; transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--sand); }
+  .footer-copy { font-size: 0.7rem; color: rgba(245,239,230,0.25); font-weight: 300; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.5; transform: scaleY(1); }
+    50%       { opacity: 1;   transform: scaleY(1.2); }
+  }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.15s; }
+  .reveal-delay-2 { transition-delay: 0.30s; }
+  .reveal-delay-3 { transition-delay: 0.45s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    #nav { padding: 1.2rem 1.5rem; }
+    #nav.scrolled { padding: 0.9rem 1.5rem; }
+    .nav-links, .nav-cta { display: none; }
+    .nav-hamburger { display: flex; }
+    .hero-content { padding: 0 1.5rem 4rem; }
+    section { padding: 5rem 1.5rem; }
+    .about, .location, .contact-cta { grid-template-columns: 1fr; }
+    .about-image { min-height: 320px; order: -1; }
+    .about-text { padding: 3.5rem 1.5rem; }
+    .about-features { grid-template-columns: 1fr; }
+    .activities-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+    .activities-grid { grid-template-columns: 1fr; gap: 2px; }
+    .activity-card { aspect-ratio: 4/3; }
+    .location-image { min-height: 300px; }
+    .location-text { padding: 3.5rem 1.5rem; }
+
+    .reviews-container { padding: 0 1.5rem; }
+    .review-card { flex: 0 0 85%; }
+    .reviews-grid { gap: 1rem; }
+    .scroll-btn { display: none; }
+  }
+
+  @media (max-width: 1100px) and (min-width: 901px) {
+    .review-card { flex: 0 0 calc(50% - 1rem); }
+  }
+    .contact-image { min-height: 300px; }
+    .contact-text { padding: 3.5rem 1.5rem; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2.5rem 1.5rem; }
+    .footer-links { flex-wrap: wrap; justify-content: center; gap: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header id="nav">
+  <a href="#" class="nav-logo">Protea Dome</a>
+  <ul class="nav-links">
+    <li><a href="#about">The Dome</a></li>
+    <li><a href="#activities">Activities</a></li>
+    <li><a href="#location">Location</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+  </ul>
+  <a href="book.html" class="nav-cta">Book Now</a>
+  <button class="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Paarl · Cape Winelands · South Africa</div>
+    <h1>Sleep beneath<br>the <em>stars</em></h1>
+    <p class="hero-sub">A handcrafted geodesic dome retreat on a working horse farm. Eco-designed for those who want nature without sacrifice.</p>
+    <div>
+      <a href="book.html" class="btn-primary">Enquire &amp; Book</a>
+      <a href="#about" class="btn-outline">Discover More</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div class="about" id="about">
+  <div class="about-image">
+    <img src="images/interior.jpg" alt="Protea Dome interior" loading="lazy">
+    <div class="about-image-overlay">"It's not just a dome — it's a way of life."</div>
+  </div>
+  <div class="about-text reveal">
+    <div class="section-label">About the Dome</div>
+    <h2 class="section-title">Designed for<br><em>connection</em></h2>
+    <p>Escape to nature at Protea Dome — a handcrafted, eco-friendly retreat perched above a tranquil dam on Rivendale Winelands Riding Club farm. Overlooking the sweeping Paarl/Stellenbosch valley, the geodesic dome offers a sustainable and serene getaway, finished with 100% linen bedding and an outdoor bath made for stargazing.</p>
+    <p>Designed for couples or small families seeking simplicity, comfort, and a genuine connection to the natural world.</p>
+    <div class="about-features">
+      <div class="feature-item"><div class="feature-dot"></div><span>Handcrafted geodesic dome</span></div>
+      <div class="feature-item"><div class="feature-dot"></div><span>Outdoor stargazing bath</span></div>
+      <div class="feature-item"><div class="feature-dot"></div><span>100% natural linen bedding</span></div>
+      <div class="feature-item"><div class="feature-dot"></div><span>Eco-friendly design</span></div>
+      <div class="feature-item"><div class="feature-dot"></div><span>Dam &amp; valley views</span></div>
+      <div class="feature-item"><div class="feature-dot"></div><span>Working horse farm setting</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVITIES -->
+<section class="activities" id="activities">
+  <div class="activities-header reveal">
+    <div>
+      <div class="section-label">Experiences</div>
+      <h2 class="section-title">What to do<br><em>while you're here</em></h2>
+    </div>
+    <p style="font-size:0.85rem;font-weight:300;color:var(--warm);max-width:320px;line-height:1.7;">All activities are offered at Rivendale Winelands Riding Club and must be booked in conjunction with your stay, subject to availability.</p>
+  </div>
+  <div class="activities-grid">
+    <div class="activity-card reveal">
+      <img src="images/horses.jpg" alt="Horse riding at Rivendale" loading="lazy">
+      <div class="activity-overlay">
+        <div class="activity-number">01</div>
+        <div class="activity-tag">On horseback</div>
+        <div class="activity-title">Horse Riding</div>
+        <div class="activity-desc">Guided rides through the farm's trails with views of the dam and valley. Beginners and experienced riders welcome.</div>
+      </div>
+    </div>
+    <div class="activity-card reveal reveal-delay-1">
+      <img src="images/art.jpg" alt="Art classes" loading="lazy">
+      <div class="activity-overlay">
+        <div class="activity-number">02</div>
+        <div class="activity-tag">Creative</div>
+        <div class="activity-title">Art Classes</div>
+        <div class="activity-desc">Guided sessions in the serene farm environment. Ideal for all levels — draw inspiration from the textures and colours around you.</div>
+      </div>
+    </div>
+    <div class="activity-card reveal reveal-delay-2">
+      <img src="images/farm.jpg" alt="Clay brick building workshop" loading="lazy">
+      <div class="activity-overlay">
+        <div class="activity-number">03</div>
+        <div class="activity-tag">Sustainability</div>
+        <div class="activity-title">Clay Brick Building</div>
+        <div class="activity-desc">Learn the ancient craft of natural clay brick making — a hands-on workshop rooted in sustainable, low-impact building.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<div class="location" id="location">
+  <div class="location-image">
+    <img src="images/valley.jpg" alt="Rivendale Winelands valley" loading="lazy">
+  </div>
+  <div class="location-text reveal">
+    <div class="section-label">Getting Here</div>
+    <h2 class="section-title">Close to everything,<br><em>far from it all</em></h2>
+    <p>Situated on Tinkerberg Road in the Paarl Farms valley, Protea Dome sits at the doorstep of the Cape Winelands — conveniently near Stellenbosch, Franschhoek and the wine route, yet completely removed from city noise.</p>
+    <div class="location-details">
+      <div class="location-detail">
+        <div class="detail-icon">📍</div>
+        <div class="detail-text">
+          <strong>Address</strong>
+          Tinkerberg Road, Paarl Farms, Cape Town, 7620
+        </div>
+      </div>
+      <div class="location-detail">
+        <div class="detail-icon">🚗</div>
+        <div class="detail-text">
+          <strong>Distance</strong>
+          ~45 min from Cape Town CBD · 20 min from Stellenbosch · 25 min from Paarl
+        </div>
+      </div>
+      <div class="location-detail">
+        <div class="detail-icon">🌿</div>
+        <div class="detail-text">
+          <strong>Nearby</strong>
+          Wine estates, hiking trails, Paarl Mountain Nature Reserve
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="reveal" style="margin-bottom: 3rem; text-align: center;">
+    <div class="section-label">Gallery</div>
+    <h2 class="section-title">Life at the <em>Dome</em></h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_75bbb032840746f7b61ee0685340fbee~mv2.jpg" alt="Protea Dome at night" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_eaebb3e6780e428db178a18e3d771458~mv2.jpg" alt="Dome interior living" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_566c802d6b8b47ed8973cc5bc32bcdcc~mv2.jpg" alt="Farm surroundings" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_cf15b71540974f30a5063526ebe5f5fb~mv2.jpg" alt="Valley view" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_60ea058118b4448d86686de54cf06f4e~mv2.jpg" alt="Dam view" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_522d3f77621443d1ab897a2d36c7cd07~mv2.png" alt="Protea Dome aerial" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_e631d46fd0b64b52ab8ac179ea9c3c2a~mv2.jpg" alt="Dome detail" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_67395aeb4f4848ba9a36d8fec4e20d22~mv2.jpg" alt="Outdoor bath" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_debeffaba55647d0835d3428ebfacaef~mv2.jpg" alt="Farm life" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_bb6a88c9d9724b7bbdd0a4475b654efa~mv2.jpg" alt="Inside view" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_d3456211246c4f28a642d35068b96bd8~mv2.jpg" alt="Morning coffee" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_17372958a72347d49dd62f32501a6c74~mv2.jpg" alt="Sunset view" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_bd6d16a432b347809077ea78936c562f~mv2.jpg" alt="Horse riding" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_7789b981c51540d1a6b11d777f7ccced~mv2.jpg" alt="Art on the farm" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_6c797c3409a14f31902c5f0f1b16c3f2~mv2.jpg" alt="Nature trails" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_ad7485e2b3a342f6ac01b4ef6a35c530~mv2.jpg" alt="Dome deck" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_fcd4aa928016448a8686f52a6554da3b~mv2.jpg" alt="Interior decor" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_f37f2eba71404fcca49e90ef3cc92f3e~mv2.jpg" alt="Stargazing bath" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_c7a1e0505e4f4f0095b8f4076a4612cc~mv2.jpg" alt="Farm morning" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_f757624dcef040459cb39cf1c8b9edc3~mv2.jpg" alt="Eco retreat" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_638bfceaaab64b6cb2e787f777660e43~mv2.jpg" alt="Paarl valley" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_fdb297d7f1fb4fe9ab2580dac77ab0f3~mv2.jpg" alt="Interior textures" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_e200c37b214e4f208190a8a25ccd47a6~mv2.jpg" alt="Cozy corners" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_1c282cab2c164cfa83c1343d1575d4ce~mv2.jpg" alt="Farm surroundings" loading="lazy"></div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="reviews-header reveal">
+    <div class="section-label">Guest Stories</div>
+    <h2 class="section-title">From the <em>Protea Dome family</em></h2>
+  </div>
+  
+  <div class="reviews-container reveal">
+    <button class="scroll-btn" id="prevBtn" aria-label="Previous review">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+    
+    <div class="reviews-grid" id="reviewScroller">
+      <div class="review-card">
+        <div class="review-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="review-text">Wow! Just wow! As the first official guests, we were really impressed. We are so grateful for your attention to detail and hospitality. It was a beautiful birthday surprise for my husband, Emmanuel, and he loved it. We went for a hike as suggested and it was beautiful. This is definitely our little haven whenever we need a break from the city. Love it and love it!</p>
+        <div class="review-author">Mellania &amp; Emmanuel</div>
+      </div>
+    <div class="review-card reveal reveal-delay-1">
+      <div class="review-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="review-text">This has been our best Christmas to date! A big thank you for being so accommodating, hospitable, and making our stay so comfortable with our pooches! We deeply felt rested &amp; reconnected and wished we had one more evening. We will be back... in a less warm month :)</p>
+      <div class="review-author">Shaun &amp; Christine</div>
+    </div>
+    <div class="review-card reveal reveal-delay-2">
+      <div class="review-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="review-text">What an amazing way to be able to celebrate our 7th anniversary here. It was an awesome experience &amp; had a great time in nature. Thank you so much for this blessing, would love to come back.</p>
+      <div class="review-author">Noulen &amp; Jess</div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="review-text">What an awesome getaway from the noise and busyness! Such a beautiful place with a friendly host. This place has everything we could possibly need. Lovely location &amp; loved the horses. Thank you so much for this little love nest. P.S: The space man is a hit!</p>
+      <div class="review-author">Graham &amp; Leigh</div>
+    </div>
+    <div class="review-card reveal reveal-delay-1">
+      <div class="review-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Thank you - What a precious spot this is! Decor &amp; attentiveness &amp; caring service is wonderful. I love the space man &amp; fairy lights! We will come again! :)</p>
+      <div class="review-author">Ilse &amp; Matty</div>
+    </div>
+    <div class="review-card reveal reveal-delay-2">
+      <div class="review-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Really loved the getaway, and the host... love her! Can's wait to see you again!</p>
+      <div class="review-author">Robert &amp; Nicole</div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Lovely, peaceful getaway from the city. Enjoyed the birds, the stars and some friendly horses. The small details like the spaceman &amp; fairy lights really make it special. Christine is an amazing host and we appreciate her attention to detail. A great way to spend our anniversary, will be back!</p>
+      <div class="review-author">John &amp; Kay</div>
+    </div>
+    <div class="review-card reveal reveal-delay-1">
+      <div class="review-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Thank you Tina for going the extra mile for Dylan's birthday. Our stay was lovely and peaceful, just what we needed! We will definitely be back.</p>
+      <div class="review-author">Dylan &amp; Jastine</div>
+    </div>
+    <div class="review-card reveal reveal-delay-2">
+      <div class="review-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="review-text">We spent our 1 year anniversary in spot we'd never have imagined! We loved spending time in nature &amp; the dome is unreal! The stars &amp; view were breathtaking. Thank you Tina for being an amazing host! Will definitely be back to celebrate again. The most memorable experiences for us were definitely feeding the horses, rafting on the dam, the sunset braai and the whole night-time in the dome (10/10) - Loved this getaway; completely exceeded all expectations and cannot wait to be back. Thank you!</p>
+      <div class="review-author">Joshua &amp; Hannah</div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="review-text">We had a wonderful time at the dome! My wife and I loved the serene surroundings and peaceful atmosphere, it was 'The Perfect Getaway' from our busy schedules. Our kids thoroughly enjoyed feeding the horses and I must say, there are majestic beautiful horses: a pity we ran out of apples because my daughter wanted to pet each and every horse. Christine's hospitality was exceptional. We appreciate the warm welcome and can't wait to return. Highly recommended!</p>
+      <div class="review-author">Saleem Family</div>
+    </div>
+    <div class="review-card reveal reveal-delay-1">
+      <div class="review-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="review-text">The peace and quiet we found here is unmatched. The accommodation itself was picturesque, a true respite from the bustling world around us. Thank you Christine for being a lovely host. We will definitely be back to visit the horses again soon!</p>
+      <div class="review-author">Jade &amp; Gilles</div>
+    </div>
+    <div class="review-card reveal reveal-delay-2">
+      <div class="review-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Thank you for making our stay at the dome over New Years truly a breeze and easy. We love the disconnect from the world around us and just being in touch with nature. The quietness and peaceful aura from the dome is truly like anything we have experienced. Thank you for assisting us and going the extra mile. We will definitely be back soon!</p>
+      <div class="review-author">Isaacs Family</div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Thank you for the warm welcome, care and attention you put into our stay last night. It was the perfect settling to celebrate our 10th anniversary with our children. We especially loved the nebula and getting to see and experience the animals. Thank you for everything.</p>
+      <div class="review-author">Newalani Family</div>
+    </div>
+    <div class="review-card reveal reveal-delay-1">
+      <div class="review-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Absolutely incredible! We really enjoyed our stay. The dome was an escape from the crazy hustle &amp; just what we all needed. Christine is an exceptional host &amp; has thought of every little thing. Nebula guy was an extra special little feature &amp; we so enjoyed it as a family. Thank you from the bottom of our hearts for creating this little slice of heaven.</p>
+      <div class="review-author">Johnston Family</div>
+    </div>
+    <button class="scroll-btn" id="nextBtn" aria-label="Next review">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+  </div>
+  
+  <div style="text-align:center;">
+    <div class="press-badge reveal">
+      <span>🎙</span>
+      <div>
+        <div class="badge-label">As heard on Radio Tygerberg 104FM</div>
+        <div style="font-size:0.68rem;letter-spacing:0.1em;color:rgba(245,239,230,0.5);margin-top:0.2rem;">Alles Wat Lekker Is — with Ingrid & Meyer</div>
+      </div>
+    </div>
+  </div>
+  </section>
+
+<!-- CONTACT -->
+<div class="contact-cta" id="contact">
+  <div class="contact-image">
+    <img src="images/hero.jpg" alt="Book the dome" loading="lazy">
+  </div>
+  <div class="contact-text reveal">
+    <div class="section-label">Ready to Escape?</div>
+    <h2 class="section-title">Book the<br><em>Dome</em></h2>
+    <p>Use our booking request form to check availability and plan your escape. We'd love to welcome you to Protea Dome.</p>
+    <div class="contact-links">
+      <a href="tel:+27834518949" class="contact-link">
+        <span class="contact-link-icon">📞</span>
+        <span>+27 83 451 8949</span>
+      </a>
+      <a href="mailto:proteadomeglamping@gmail.com" class="contact-link">
+        <span class="contact-link-icon">✉</span>
+        <span>proteadomeglamping@gmail.com</span>
+      </a>
+      <div class="contact-link">
+        <span class="contact-link-icon">📍</span>
+        <span>Tinkerberg Road, Paarl Farms, Cape Town, 7620</span>
+      </div>
+    </div>
+    <a href="book.html" class="btn-primary">
+      Request a Booking
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    Protea Dome Glamping
+    <small>Paarl Farms · Cape Winelands · South Africa</small>
+  </div>
+  <div class="footer-links">
+    <a href="#about">The Dome</a>
+    <a href="#activities">Activities</a>
+    <a href="#location">Location</a>
+    <a href="#gallery">Gallery</a>
+    <a href="book.html">Book Now</a>
+  </div>
+  <div class="footer-copy">© 2025 Protea Dome Glamping</div>
+</footer>
+
+  <!-- LIGHTBOX MODAL -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lbClose" aria-label="Close gallery">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+    <div class="lightbox-content">
+      <button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Previous image">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <img src="" alt="" class="lightbox-image" id="lbImage">
+      <button class="lightbox-nav lightbox-next" id="lbNext" aria-label="Next image">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+  </div>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+
+  // Review Scroller Logic
+  const scroller = document.getElementById('reviewScroller');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  if (scroller && prevBtn && nextBtn) {
+    const scrollAmount = () => scroller.querySelector('.review-card').offsetWidth + 32; // card width + gap
+    
+    prevBtn.addEventListener('click', () => {
+      scroller.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+    });
+    
+    nextBtn.addEventListener('click', () => {
+      scroller.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+    });
+  }
+
+  // Gallery Lightbox Logic
+  const lightbox = document.getElementById('lightbox');
+  const lbImage = document.getElementById('lbImage');
+  const lbClose = document.getElementById('lbClose');
+  const lbPrev = document.getElementById('lbPrev');
+  const lbNext = document.getElementById('lbNext');
+  const galleryItems = document.querySelectorAll('.gallery-item img');
+  let currentIndex = 0;
+
+  const openLightbox = (index) => {
+    currentIndex = index;
+    lbImage.src = galleryItems[currentIndex].src;
+    lbImage.alt = galleryItems[currentIndex].alt;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent scrolling
+  };
+
+  const closeLightbox = () => {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  const showNext = (e) => {
+    e.stopPropagation();
+    currentIndex = (currentIndex + 1) % galleryItems.length;
+    lbImage.src = galleryItems[currentIndex].src;
+    lbImage.alt = galleryItems[currentIndex].alt;
+  };
+
+  const showPrev = (e) => {
+    e.stopPropagation();
+    currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+    lbImage.src = galleryItems[currentIndex].src;
+    lbImage.alt = galleryItems[currentIndex].alt;
+  };
+
+  galleryItems.forEach((img, index) => {
+    img.parentElement.addEventListener('click', () => openLightbox(index));
+  });
+
+  lbClose.addEventListener('click', closeLightbox);
+  lbNext.addEventListener('click', showNext);
+  lbPrev.addEventListener('click', showPrev);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') showNext(e);
+    if (e.key === 'ArrowLeft') showPrev(e);
+  });
+</script>
+</body>
+</html>
