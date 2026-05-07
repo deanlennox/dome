@@ -420,8 +420,9 @@
   function initInnStyle(attempt) {
     attempt = attempt || 0;
     if (typeof InnStyle === 'function') {
-      InnStyle('proteadomeglamping', {
-        container: '#innstyle-booking',
+      InnStyle({
+        id: 'proteadomeglamping',
+        container: '#innstyle-booking'
       });
     } else if (attempt < 20) {
       // retry every 250ms for up to 5 seconds
