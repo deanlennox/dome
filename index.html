@@ -164,6 +164,13 @@
     transition: transform 6s ease;
   }
   .about-image:hover img { transform: scale(1.04); }
+  .about-image-overlay {
+    position: absolute; bottom: 2rem; right: -1px;
+    background: var(--sage); color: var(--cream);
+    padding: 0.8rem 1.2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.82rem; font-style: italic; max-width: 220px; line-height: 1.5;
+  }
   .about-text {
     padding: 6rem 3rem 6rem 4rem;
     display: flex; flex-direction: column; justify-content: center;
@@ -377,7 +384,6 @@
   }
   .reviews-track {
     display: flex; transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
-    width: max-content;
   }
   .review-card {
     flex: 0 0 33.333%; padding: 0 1rem;
@@ -905,23 +911,6 @@
         <div class="review-author">Newalani Family</div>
       </div></div>
 
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Absolutely incredible! We really enjoyed our stay. The dome was an escape from the crazy hustle &amp; just what we all needed. Christine is an exceptional host &amp; has thought of every little thing. Nebula guy was an extra special little feature &amp; we so enjoyed it as a family. Thank you from the bottom of our hearts for creating this little slice of heaven.</p>
-        <div class="review-author">Johnston Family</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Thank you for the warm welcome, care and attention you put into our stay. It was the perfect setting to celebrate our 10th anniversary with our children. We especially loved the nebula and getting to see and experience the animals.</p>
-        <div class="review-author">Newalani Family</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">We had a lovely weekend by the dome. The quietness and nature around us was perfect for our anniversary celebration. Besides the heat and our little 8 legged friends, we loved it and will definitely be back again! Thank you for your amazing hospitality and having whatever we needed ready. Your dome is absolutely beautiful and can't wait to see the success of it come your way.</p>
-        <div class="review-author">Keana &amp; Simon</div>
-      </div></div>
     </div><!-- /reviews-track -->
   </div>
 
@@ -941,18 +930,13 @@
         <div class="radio-mic">🎙</div>
         <div class="radio-station">Radio Tygerberg</div>
         <div class="radio-freq">104FM</div>
+        <div class="radio-show">Alles Wat Lekker Is</div>
       </div>
       <div class="radio-divider"></div>
       <div class="radio-content-col">
         <div class="radio-context">
           Christine was interviewed on Radio Tygerberg 104FM's popular <em>Alles Wat Lekker Is</em> segment — a show dedicated to uncovering the most interesting and unique experiences the Cape has to offer.
         </div>
-        
-        <audio controls style="width: 100%; margin: 1rem 0;">
-          <source src="radio.m4a" type="audio/mp4">
-          Your browser does not support the audio element.
-        </audio>
-
         <blockquote class="radio-quote">
           "Protea Dome glamping wants everyone to have a personalised experience, whether it's a birthday, anniversary or just a weekend to get away. The space offers tranquility and peace — waking up with natural sunlight and the birds tweeting."
         </blockquote>
@@ -1142,14 +1126,6 @@
   function buildGDots() {
     if (!gDots) return;
     gDots.innerHTML = '';
-    
-    // Hide dots on mobile
-    if (window.innerWidth <= 900) {
-      gDots.style.display = 'none';
-      return;
-    }
-    
-    gDots.style.display = 'flex';
     for (let i = 0; i < gTotalPages(); i++) {
       const d = document.createElement('button');
       d.className = 'gallery-dot' + (i === gIndex ? ' active' : '');
@@ -1159,28 +1135,18 @@
   }
 
   function updateGScroll() {
-    const card = gCards[0];
-    if (!card) return;
-    
-    const cardWidth = card.offsetWidth;
-    const gap = parseFloat(getComputedStyle(gScroller).gap) || 16;
-    const scrollPos = gIndex * (cardWidth + gap);
-
+    const scrollPos = gIndex * (gScroller.offsetWidth / gCardsPerView);
     gScroller.scrollTo({ left: scrollPos, behavior: 'smooth' });
-
-    if (window.innerWidth > 900 && gDots) {
-      [...gDots.children].forEach((d, i) => d.classList.toggle('active', i === gIndex));
-    }
+    if(gDots) [...gDots.children].forEach((d, i) => d.classList.toggle('active', i === gIndex));
   }
 
-  if (gPrev) gPrev.addEventListener('click', () => { if (gIndex > 0) { gIndex--; updateGScroll(); } });
-  if (gNext) gNext.addEventListener('click', () => { if (gIndex < gTotalPages() - 1) { gIndex++; updateGScroll(); } });
+  gPrev.addEventListener('click', () => { if (gIndex > 0) { gIndex--; updateGScroll(); } });
+  gNext.addEventListener('click', () => { if (gIndex < gTotalPages() - 1) { gIndex++; updateGScroll(); } });
   
   window.addEventListener('resize', () => {
     const newCardsPerView = window.innerWidth <= 900 ? 1 : 3;
     if (newCardsPerView !== gCardsPerView) {
       gCardsPerView = newCardsPerView;
-      gIndex = 0;
       buildGDots();
       updateGScroll();
     }
@@ -1211,7 +1177,8 @@
 
   function goToPage(page) {
     reviewIndex = Math.max(0, Math.min(page, totalPages() - 1));
-    track.style.transform = `translateX(-${reviewIndex * 100}%)`;
+    const cardWidth = 100 / cardsPerView;
+    track.style.transform = `translateX(-${reviewIndex * cardsPerView * cardWidth}%)`;
     [...dotsEl.children].forEach((d, i) => d.classList.toggle('active', i === reviewIndex));
   }
 
