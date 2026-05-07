@@ -405,6 +405,68 @@
   }
   .press-badge .badge-label { color: var(--sand); font-style: italic; }
 
+  /* ── RADIO FEATURE ── */
+  .radio-feature {
+    margin-top: 4rem;
+    background: var(--earth);
+  }
+  .radio-feature-inner {
+    display: grid;
+    grid-template-columns: 200px 1px 1fr;
+    align-items: stretch;
+  }
+  .radio-logo-col {
+    padding: 3rem 2.5rem;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+    background: rgba(255,255,255,0.03);
+  }
+  .radio-mic { font-size: 2rem; margin-bottom: 1rem; opacity: 0.7; }
+  .radio-station {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 600; letter-spacing: 0.08em;
+    color: var(--cream); text-transform: uppercase; line-height: 1.2;
+  }
+  .radio-freq {
+    font-family: 'Jost', sans-serif;
+    font-size: 1.4rem; font-weight: 300; color: var(--sand);
+    letter-spacing: 0.05em; margin: 0.3rem 0;
+  }
+  .radio-show {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem; font-style: italic;
+    color: rgba(245,239,230,0.4); letter-spacing: 0.05em; margin-top: 0.4rem;
+  }
+  .radio-divider { width: 1px; background: rgba(255,255,255,0.08); }
+  .radio-content-col {
+    padding: 3rem 3.5rem;
+    display: flex; flex-direction: column; justify-content: center; gap: 1.2rem;
+  }
+  .radio-context {
+    font-size: 0.82rem; font-weight: 300; line-height: 1.75;
+    color: rgba(245,239,230,0.5);
+  }
+  .radio-context em { font-style: italic; color: var(--sand); }
+  .radio-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem; font-weight: 300; font-style: italic;
+    line-height: 1.65; color: var(--cream);
+    border-left: 2px solid var(--clay);
+    padding-left: 1.5rem; margin: 0;
+  }
+  .radio-attribution {
+    font-size: 0.68rem; font-weight: 400; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--clay);
+  }
+  @media (max-width: 700px) {
+    .radio-feature-inner { grid-template-columns: 1fr; }
+    .radio-divider { width: 100%; height: 1px; }
+    .radio-logo-col { padding: 2rem; flex-direction: row; gap: 1.2rem; text-align: left; align-items: center; }
+    .radio-mic { margin-bottom: 0; font-size: 1.5rem; }
+    .radio-content-col { padding: 2rem; }
+    .radio-quote { font-size: 1.05rem; }
+  }
+
   /* ── CONTACT ── */
   .contact-cta {
     background: var(--sage); display: grid;
@@ -824,12 +886,23 @@
     </button>
   </div>
 
-  <div style="text-align:center;">
-    <div class="press-badge reveal">
-      <span>🎙</span>
-      <div>
-        <div class="badge-label">As heard on Radio Tygerberg 104FM</div>
-        <div style="font-size:0.68rem;letter-spacing:0.1em;color:rgba(245,239,230,0.5);margin-top:0.2rem;">Alles Wat Lekker Is — with Ingrid &amp; Meyer</div>
+  <div class="radio-feature reveal">
+    <div class="radio-feature-inner">
+      <div class="radio-logo-col">
+        <div class="radio-mic">🎙</div>
+        <div class="radio-station">Radio Tygerberg</div>
+        <div class="radio-freq">104FM</div>
+        <div class="radio-show">Alles Wat Lekker Is</div>
+      </div>
+      <div class="radio-divider"></div>
+      <div class="radio-content-col">
+        <div class="radio-context">
+          Christine was interviewed on Radio Tygerberg 104FM's popular <em>Alles Wat Lekker Is</em> segment — a show dedicated to uncovering the most interesting and unique experiences the Cape has to offer.
+        </div>
+        <blockquote class="radio-quote">
+          "Protea Dome glamping wants everyone to have a personalised experience, whether it's a birthday, anniversary or just a weekend to get away. The space offers tranquility and peace — waking up with natural sunlight and the birds tweeting."
+        </blockquote>
+        <div class="radio-attribution">— Christine, Protea Dome · as heard on Radio Tygerberg 104FM</div>
       </div>
     </div>
   </div>
