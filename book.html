@@ -302,6 +302,11 @@
   <!-- INNSTYLE BOOKING ENGINE -->
   <div class="innstyle-wrapper">
     <div id="innstyle-booking"></div>
+    <script>
+        InnStyle('proteadomeglamping', {
+            container: '#innstyle-booking',
+        });
+    </script>
   </div>
 
   <!-- SIDEBAR -->
@@ -408,13 +413,6 @@
   document.querySelectorAll('.season').forEach(el => {
     const months = el.dataset.months.split(',').map(Number);
     if (months.includes(currentMonth)) el.classList.add('active-season');
-  });
-
-  // ── INNSTYLE ─────────────────────────────────────────────
-  document.addEventListener("DOMContentLoaded", function() {
-      InnStyle('proteadomeglamping', {
-          container: '#innstyle-booking',
-      });
   });
 </script>
 
