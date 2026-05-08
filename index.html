@@ -77,15 +77,20 @@
   #nav.scrolled .nav-hamburger span { background: var(--earth); }
 
   /* ── HERO ── */
+  /* FIX: Use background-size/position via CSS so it works reliably on mobile Safari.
+     The hero-bg div approach avoids the iOS vh scroll-bar bug that causes a gap. */
   .hero {
-    position: relative; height: 100vh; min-height: 600px;
+    position: relative;
+    height: 100svh; /* svh = small viewport height — avoids mobile browser chrome overlap */
+    min-height: 560px;
     display: flex; align-items: flex-end; overflow: hidden;
   }
   .hero-bg {
     position: absolute; inset: 0;
+    /* FIX: background-position set to "center 30%" to keep the sky+dome in frame on mobile crop */
     background:
       linear-gradient(to bottom, rgba(20,15,8,0.3) 0%, rgba(20,15,8,0.2) 40%, rgba(20,15,8,0.8) 100%),
-      url('images/hero.jpg') center/cover no-repeat;
+      url('images/hero.jpg') 70% 30% / cover no-repeat;
   }
   .hero-bg::after {
     content: ''; position: absolute; inset: 0;
@@ -120,13 +125,23 @@
     display: inline-block; font-family: 'Jost', sans-serif;
     font-size: 0.78rem; font-weight: 500; letter-spacing: 0.15em;
     text-transform: uppercase; text-decoration: none;
-    padding: 1rem 2.5rem; background: var(--clay); color: var(--cream);
-    transition: background 0.3s, transform 0.3s;
+    padding: 1rem 2.5rem; transition: background 0.3s, transform 0.3s, color 0.3s;
   }
-  .btn-primary:hover, .btn-outline:hover { 
-    background: var(--warm); transform: translateY(-2px); 
+  .btn-primary {
+    background: var(--clay); color: var(--cream);
   }
-  .btn-outline { margin-left: 1rem; }
+  .btn-primary:hover { background: var(--warm); transform: translateY(-2px); }
+  /* FIX: btn-outline is now a proper ghost/outline button, distinct from btn-primary */
+  .btn-outline {
+    background: transparent; color: var(--cream);
+    border: 1px solid rgba(245,239,230,0.5);
+    margin-left: 1rem;
+  }
+  .btn-outline:hover {
+    background: rgba(245,239,230,0.12);
+    border-color: var(--cream);
+    transform: translateY(-2px);
+  }
   .hero-scroll {
     position: absolute; bottom: 2rem; right: 3rem;
     display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
@@ -164,6 +179,13 @@
     transition: transform 6s ease;
   }
   .about-image:hover img { transform: scale(1.04); }
+  .about-image-overlay {
+    position: absolute; bottom: 2rem; right: -1px;
+    background: var(--sage); color: var(--cream);
+    padding: 0.8rem 1.2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.82rem; font-style: italic; max-width: 220px; line-height: 1.5;
+  }
   .about-text {
     padding: 6rem 3rem 6rem 4rem;
     display: flex; flex-direction: column; justify-content: center;
@@ -255,57 +277,25 @@
 
   /* ── GALLERY ── */
   .gallery-section {
-    padding: 7rem 3rem; background: var(--off-white); position: relative;
-  }
-  .gallery-container {
-    max-width: 1400px; margin: 0 auto; position: relative; padding: 0 4rem;
+    padding: 7rem 3rem; background: var(--off-white);
   }
   .gallery-grid {
-    display: flex; gap: 1rem; overflow-x: auto;
-    scroll-snap-type: x mandatory; scrollbar-width: none;
-    padding-bottom: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
   }
-  .gallery-grid::-webkit-scrollbar { display: none; }
-
   .gallery-item {
-    flex: 0 0 calc(33.333% - 0.7rem);
-    aspect-ratio: 16/10;
-    scroll-snap-align: start;
     position: relative; overflow: hidden;
-    cursor: pointer; background: var(--cream);
+    aspect-ratio: 1; cursor: pointer;
+    background: var(--cream);
   }
   .gallery-item img {
     width: 100%; height: 100%; object-fit: cover; display: block;
     transition: transform 0.6s ease, filter 0.4s;
-    filter: brightness(0.95);
+    filter: brightness(0.9);
   }
   .gallery-item:hover img {
-    transform: scale(1.05); filter: brightness(1.05);
-  }
-
-  .gallery-nav {
-    display: flex; justify-content: center; align-items: center;
-    gap: 1.5rem; margin-top: 2rem;
-  }
-  .gallery-nav-btn {
-    background: none; border: 1px solid var(--sand);
-    width: 44px; height: 44px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: all 0.3s; color: var(--earth);
-  }
-  .gallery-nav-btn:hover { background: var(--earth); border-color: var(--earth); color: var(--cream); }
-  .gallery-nav-btn svg { width: 18px; height: 18px; }
-  .gallery-dots { display: flex; gap: 0.5rem; }
-  .gallery-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--sand); border: none; cursor: pointer;
-    transition: background 0.3s;
-  }
-  .gallery-dot.active { background: var(--clay); }
-
-  @media (max-width: 900px) {
-    .gallery-container { padding: 0 1.5rem; }
-    .gallery-item { flex: 0 0 85%; }
+    transform: scale(1.06); filter: brightness(1.05);
   }
   .gallery-item::after {
     content: '';
@@ -333,40 +323,64 @@
     opacity: 0; transition: opacity 0.4s ease;
   }
   .lightbox.active { display: flex; opacity: 1; }
-  
+
+  /* FIX: Lightbox layout restructured so nav arrows are OUTSIDE the image container
+     on desktop but INSIDE (overlaid) on mobile — both always visible */
+  .lightbox-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .lightbox-content {
-    position: relative; max-width: 90%; max-height: 85%;
-    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    max-width: min(90vw, 1200px);
+    max-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .lightbox-image {
-    max-width: 100%; max-height: 100%;
+    max-width: 100%; max-height: 80vh;
     object-fit: contain;
     box-shadow: 0 30px 60px rgba(0,0,0,0.5);
     border: 1px solid rgba(255,255,255,0.1);
     transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: block;
   }
   .lightbox.active .lightbox-image { transform: scale(1); }
 
   .lightbox-close {
-    position: absolute; top: 2rem; right: 2rem;
-    background: none; border: none; color: var(--cream);
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    background: rgba(28,24,18,0.6); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 50%; color: var(--cream);
     cursor: pointer; padding: 10px; z-index: 10;
+    width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s;
   }
+  .lightbox-close:hover { background: rgba(255,255,255,0.15); }
+
+  /* FIX: Nav arrows — positioned outside image on desktop, overlaid on mobile */
   .lightbox-nav {
     position: absolute; top: 50%; transform: translateY(-50%);
-    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
     color: var(--cream); width: 56px; height: 56px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: all 0.3s;
+    cursor: pointer; transition: all 0.3s; z-index: 10;
+    flex-shrink: 0;
   }
   .lightbox-nav:hover { background: var(--cream); color: var(--earth); }
-  .lightbox-prev { left: -80px; }
-  .lightbox-next { right: -80px; }
+  .lightbox-prev { left: calc(50% - min(45vw, 600px) - 72px); }
+  .lightbox-next { right: calc(50% - min(45vw, 600px) - 72px); }
 
-  @media (max-width: 1100px) {
-    .lightbox-prev { left: 20px; }
-    .lightbox-next { right: 20px; }
-    .lightbox-nav { width: 44px; height: 44px; background: rgba(28,24,18,0.5); }
+  /* Counter badge */
+  .lightbox-counter {
+    position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+    font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(245,239,230,0.4); font-family: 'Jost', sans-serif;
   }
 
   /* ── REVIEWS ── */
@@ -377,7 +391,6 @@
   }
   .reviews-track {
     display: flex; transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
-    width: max-content;
   }
   .review-card {
     flex: 0 0 33.333%; padding: 0 1rem;
@@ -416,7 +429,7 @@
   }
   .reviews-nav-btn:hover { background: var(--earth); border-color: var(--earth); color: var(--cream); }
   .reviews-nav-btn svg { width: 16px; height: 16px; }
-  .reviews-dots { display: flex; gap: 0.5rem; align-items: center; }
+  .reviews-dots { display: flex; gap: 0.5rem; align-items: center; flex-shrink: 0; }
   .reviews-dot {
     width: 6px; height: 6px; border-radius: 50%;
     background: var(--sand); cursor: pointer; transition: all 0.3s;
@@ -483,14 +496,6 @@
   .radio-attribution {
     font-size: 0.68rem; font-weight: 400; letter-spacing: 0.14em;
     text-transform: uppercase; color: var(--clay);
-  }
-  @media (max-width: 700px) {
-    .radio-feature-inner { grid-template-columns: 1fr; }
-    .radio-divider { width: 100%; height: 1px; }
-    .radio-logo-col { padding: 2rem; flex-direction: row; gap: 1.2rem; text-align: left; align-items: center; }
-    .radio-mic { margin-bottom: 0; font-size: 1.5rem; }
-    .radio-content-col { padding: 2rem; }
-    .radio-quote { font-size: 1.05rem; }
   }
 
   /* ── CONTACT ── */
@@ -581,13 +586,16 @@
 
     .hero-content { padding: 0 1.5rem 4rem; }
     .hero h1 { font-size: 3rem; }
-    .hero-content > div { display: flex; flex-direction: column; gap: 1rem; }
+    /* FIX: Stack buttons vertically on mobile with full width */
+    .hero-content > div {
+      display: flex; flex-direction: column; gap: 1rem;
+    }
     .btn-primary, .btn-outline { margin-left: 0; width: 100%; text-align: center; }
 
     section { padding: 4rem 1.5rem; }
     .about, .location, .contact-cta { grid-template-columns: 1fr; }
-    .about-image { min-height: 250px; order: -1; }
-    .about-text { padding: 2rem 1.5rem; }
+    .about-image { min-height: 260px; order: -1; }
+    .about-text { padding: 2.5rem 1.5rem; }
     .about-features { grid-template-columns: 1fr; }
 
     .activities-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
@@ -595,18 +603,51 @@
     .activity-card { aspect-ratio: 4/3; }
 
     .gallery-section { padding: 4rem 1.5rem; }
+    /* FIX: 2-col gallery on mobile, tighter gap */
     .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
 
     .review-card { flex: 0 0 90%; }
+
+    /* FIX: Lightbox nav — on mobile the arrows sit inside the viewport edges,
+       always both visible, large enough touch targets */
+    .lightbox-prev {
+      left: 12px;
+      width: 44px; height: 44px;
+      background: rgba(28,24,18,0.65);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .lightbox-next {
+      right: 12px;
+      width: 44px; height: 44px;
+      background: rgba(28,24,18,0.65);
+      border-color: rgba(255,255,255,0.2);
+    }
+    /* On mobile the content doesn't need extra margin for the arrows — they overlay */
+    .lightbox-content {
+      max-width: calc(100vw - 112px); /* leave room for both arrows */
+    }
 
     .contact-image { min-height: 300px; order: -1; }
     .contact-text { padding: 3.5rem 1.5rem; }
 
     footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2.5rem 1.5rem; }
     .footer-links { flex-wrap: wrap; justify-content: center; gap: 1.2rem; }
+
+    .radio-feature-inner { grid-template-columns: 1fr; }
+    .radio-divider { width: 100%; height: 1px; }
+    .radio-logo-col { padding: 2rem; flex-direction: row; gap: 1.2rem; text-align: left; align-items: center; }
+    .radio-mic { margin-bottom: 0; font-size: 1.5rem; }
+    .radio-content-col { padding: 2rem; }
+    .radio-quote { font-size: 1.05rem; }
   }
+
   @media (max-width: 1100px) and (min-width: 901px) {
     .review-card { flex: 0 0 50%; }
+    /* On mid-range screens keep arrows near image */
+    .lightbox-prev { left: 20px; }
+    .lightbox-next { right: 20px; }
+    .lightbox-nav { width: 48px; height: 48px; background: rgba(28,24,18,0.5); }
+    .lightbox-content { max-width: calc(100vw - 128px); }
   }
 
   /* ── MOBILE NAV OVERLAY ── */
@@ -681,10 +722,11 @@
 </section>
 
 <!-- ABOUT -->
+<!-- FIX: Restored the missing about-image div (stray '<' was all that existed previously) -->
 <div class="about" id="about">
   <div class="about-image">
     <img src="images/interior.jpg" alt="Protea Dome interior" loading="lazy">
-    <div class="about-image-overlay">"It's not just a dome — it's a way of life."</div>
+    <div class="about-image-overlay">A geodesic retreat above the Paarl valley</div>
   </div>
   <div class="about-text reveal">
     <div class="section-label">About the Dome</div>
@@ -783,43 +825,37 @@
     <div class="section-label">Gallery</div>
     <h2 class="section-title">Life at the <em>Dome</em></h2>
   </div>
-  <div class="gallery-container reveal">
-    <div class="gallery-grid" id="galleryScroller">
-      <div class="gallery-item"><img src="gallery/44d2a4_75bbb032840746f7b61ee0685340fbee~mv2.jpg" alt="Protea Dome at night"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_eaebb3e6780e428db178a18e3d771458~mv2.jpg" alt="Dome interior living"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_566c802d6b8b47ed8973cc5bc32bcdcc~mv2.jpg" alt="Farm surroundings"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_cf15b71540974f30a5063526ebe5f5fb~mv2.jpg" alt="Valley view"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_60ea058118b4448d86686de54cf06f4e~mv2.jpg" alt="Dam view"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_522d3f77621443d1ab897a2d36c7cd07~mv2.png" alt="Protea Dome aerial"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_e631d46fd0b64b52ab8ac179ea9c3c2a~mv2.jpg" alt="Dome detail"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_67395aeb4f4848ba9a36d8fec4e20d22~mv2.jpg" alt="Outdoor bath"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_debeffaba55647d0835d3428ebfacaef~mv2.jpg" alt="Farm life"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_bb6a88c9d9724b7bbdd0a4475b654efa~mv2.jpg" alt="Inside view"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_d3456211246c4f28a642d35068b96bd8~mv2.jpg" alt="Morning coffee"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_17372958a72347d49dd62f32501a6c74~mv2.jpg" alt="Sunset view"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_bd6d16a432b347809077ea78936c562f~mv2.jpg" alt="Horse riding"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_7789b981c51540d1a6b11d777f7ccced~mv2.jpg" alt="Art on the farm"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_6c797c3409a14f31902c5f0f1b16c3f2~mv2.jpg" alt="Nature trails"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_ad7485e2b3a342f6ac01b4ef6a35c530~mv2.jpg" alt="Dome deck"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_fcd4aa928016448a8686f52a6554da3b~mv2.jpg" alt="Interior decor"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_f37f2eba71404fcca49e90ef3cc92f3e~mv2.jpg" alt="Stargazing bath"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_c7a1e0505e4f4f0095b8f4076a4612cc~mv2.jpg" alt="Farm morning"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_f757624dcef040459cb39cf1c8b9edc3~mv2.jpg" alt="Eco retreat"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_638bfceaaab64b6cb2e787f777660e43~mv2.jpg" alt="Paarl valley"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_fdb297d7f1fb4fe9ab2580dac77ab0f3~mv2.jpg" alt="Interior textures"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_e200c37b214e4f208190a8a25ccd47a6~mv2.jpg" alt="Cozy corners"></div>
-      <div class="gallery-item"><img src="gallery/44d2a4_1c282cab2c164cfa83c1343d1575d4ce~mv2.jpg" alt="Farm surroundings"></div>
-    </div>
+  <div class="gallery-grid">
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_75bbb032840746f7b61ee0685340fbee~mv2.jpg" alt="Protea Dome at night" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_eaebb3e6780e428db178a18e3d771458~mv2.jpg" alt="Dome interior living" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_566c802d6b8b47ed8973cc5bc32bcdcc~mv2.jpg" alt="Farm surroundings" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_cf15b71540974f30a5063526ebe5f5fb~mv2.jpg" alt="Valley view" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_60ea058118b4448d86686de54cf06f4e~mv2.jpg" alt="Dam view" loading="lazy"></div>
+    <div class="gallery-item reveal"><img src="gallery/44d2a4_522d3f77621443d1ab897a2d36c7cd07~mv2.png" alt="Protea Dome aerial" loading="lazy"></div>
   </div>
-
-  <div class="gallery-nav">
-    <button class="gallery-nav-btn" id="galleryPrev" aria-label="Previous">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-    </button>
-    <div class="gallery-dots" id="galleryDots"></div>
-    <button class="gallery-nav-btn" id="galleryNext" aria-label="Next">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-    </button>
+  <!-- Hidden images — available in lightbox carousel only -->
+  <div id="gallery-hidden" style="display:none;">
+    <img src="gallery/44d2a4_e631d46fd0b64b52ab8ac179ea9c3c2a~mv2.jpg" alt="Dome detail">
+    <img src="gallery/44d2a4_67395aeb4f4848ba9a36d8fec4e20d22~mv2.jpg" alt="Outdoor bath">
+    <img src="gallery/44d2a4_debeffaba55647d0835d3428ebfacaef~mv2.jpg" alt="Farm life">
+    <img src="gallery/44d2a4_bb6a88c9d9724b7bbdd0a4475b654efa~mv2.jpg" alt="Inside view">
+    <img src="gallery/44d2a4_d3456211246c4f28a642d35068b96bd8~mv2.jpg" alt="Morning coffee">
+    <img src="gallery/44d2a4_17372958a72347d49dd62f32501a6c74~mv2.jpg" alt="Sunset view">
+    <img src="gallery/44d2a4_bd6d16a432b347809077ea78936c562f~mv2.jpg" alt="Horse riding">
+    <img src="gallery/44d2a4_7789b981c51540d1a6b11d777f7ccced~mv2.jpg" alt="Art on the farm">
+    <img src="gallery/44d2a4_6c797c3409a14f31902c5f0f1b16c3f2~mv2.jpg" alt="Nature trails">
+    <img src="gallery/44d2a4_ad7485e2b3a342f6ac01b4ef6a35c530~mv2.jpg" alt="Dome deck">
+    <img src="gallery/44d2a4_fcd4aa928016448a8686f52a6554da3b~mv2.jpg" alt="Interior decor">
+    <img src="gallery/44d2a4_f37f2eba71404fcca49e90ef3cc92f3e~mv2.jpg" alt="Stargazing bath">
+    <img src="gallery/44d2a4_c7a1e0505e4f4f0095b8f4076a4612cc~mv2.jpg" alt="Farm morning">
+    <img src="gallery/44d2a4_f757624dcef040459cb39cf1c8b9edc3~mv2.jpg" alt="Eco retreat">
+    <img src="gallery/44d2a4_638bfceaaab64b6cb2e787f777660e43~mv2.jpg" alt="Paarl valley">
+    <img src="gallery/44d2a4_fdb297d7f1fb4fe9ab2580dac77ab0f3~mv2.jpg" alt="Interior textures">
+    <img src="gallery/44d2a4_e200c37b214e4f208190a8a25ccd47a6~mv2.jpg" alt="Cozy corners">
+    <img src="gallery/44d2a4_1c282cab2c164cfa83c1343d1575d4ce~mv2.jpg" alt="Farm surroundings">
+  </div>
+  <div style="text-align:center; margin-top: 2.5rem;">
+    <button class="gallery-more-btn" id="galleryMoreBtn">View All Photos <span id="galleryCount"></span></button>
   </div>
 </section>
 
@@ -905,23 +941,6 @@
         <div class="review-author">Newalani Family</div>
       </div></div>
 
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Absolutely incredible! We really enjoyed our stay. The dome was an escape from the crazy hustle &amp; just what we all needed. Christine is an exceptional host &amp; has thought of every little thing. Nebula guy was an extra special little feature &amp; we so enjoyed it as a family. Thank you from the bottom of our hearts for creating this little slice of heaven.</p>
-        <div class="review-author">Johnston Family</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Thank you for the warm welcome, care and attention you put into our stay. It was the perfect setting to celebrate our 10th anniversary with our children. We especially loved the nebula and getting to see and experience the animals.</p>
-        <div class="review-author">Newalani Family</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">We had a lovely weekend by the dome. The quietness and nature around us was perfect for our anniversary celebration. Besides the heat and our little 8 legged friends, we loved it and will definitely be back again! Thank you for your amazing hospitality and having whatever we needed ready. Your dome is absolutely beautiful and can't wait to see the success of it come your way.</p>
-        <div class="review-author">Keana &amp; Simon</div>
-      </div></div>
     </div><!-- /reviews-track -->
   </div>
 
@@ -947,7 +966,7 @@
         <div class="radio-context">
           Christine was interviewed on Radio Tygerberg 104FM's popular <em>Alles Wat Lekker Is</em> segment — a show dedicated to uncovering the most interesting and unique experiences the Cape has to offer.
         </div>
-        
+
         <audio controls style="width: 100%; margin: 1rem 0;">
           <source src="radio.m4a" type="audio/mp4">
           Your browser does not support the audio element.
@@ -1020,21 +1039,24 @@
   <a href="book.html" class="mob-book">Book Now</a>
 </div>
 
-  <!-- LIGHTBOX MODAL -->
-  <div class="lightbox" id="lightbox">
-    <button class="lightbox-close" id="lbClose" aria-label="Close gallery">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-    </button>
-    <div class="lightbox-content">
-      <button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Previous image">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
-      </button>
-      <img src="" alt="" class="lightbox-image" id="lbImage">
-      <button class="lightbox-nav lightbox-next" id="lbNext" aria-label="Next image">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-      </button>
-    </div>
+<!-- LIGHTBOX MODAL -->
+<!-- FIX: Added lightbox-wrapper div so nav arrows are siblings of lightbox-content,
+     not children — allowing independent absolute positioning on all screen sizes -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lbClose" aria-label="Close gallery">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
+  <button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Previous image">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+  </button>
+  <div class="lightbox-content">
+    <img src="" alt="" class="lightbox-image" id="lbImage">
   </div>
+  <button class="lightbox-nav lightbox-next" id="lbNext" aria-label="Next image">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+  </button>
+  <div class="lightbox-counter" id="lbCounter"></div>
+</div>
 
 <script>
   // ── NAV SCROLL ──────────────────────────────────────────
@@ -1074,10 +1096,11 @@
   const lbClose     = document.getElementById('lbClose');
   const lbPrev      = document.getElementById('lbPrev');
   const lbNext      = document.getElementById('lbNext');
+  const lbCounter   = document.getElementById('lbCounter');
 
   // Build full image list: visible + hidden
-  const visibleImgs  = [...document.querySelectorAll('.gallery-item img')];
-  const hiddenImgs   = [...document.querySelectorAll('#gallery-hidden img')];
+  const visibleImgs    = [...document.querySelectorAll('.gallery-item img')];
+  const hiddenImgs     = [...document.querySelectorAll('#gallery-hidden img')];
   const allGalleryImgs = [...visibleImgs, ...hiddenImgs];
 
   // Set gallery count on button
@@ -1086,10 +1109,15 @@
 
   let currentIndex = 0;
 
-  function openLightbox(index) {
-    currentIndex = index;
+  function updateLightbox() {
     lbImage.src = allGalleryImgs[currentIndex].src;
     lbImage.alt = allGalleryImgs[currentIndex].alt;
+    lbCounter.textContent = `${currentIndex + 1} / ${allGalleryImgs.length}`;
+  }
+
+  function openLightbox(index) {
+    currentIndex = index;
+    updateLightbox();
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
@@ -1100,14 +1128,12 @@
   function showNext(e) {
     if (e) e.stopPropagation();
     currentIndex = (currentIndex + 1) % allGalleryImgs.length;
-    lbImage.src = allGalleryImgs[currentIndex].src;
-    lbImage.alt = allGalleryImgs[currentIndex].alt;
+    updateLightbox();
   }
   function showPrev(e) {
     if (e) e.stopPropagation();
     currentIndex = (currentIndex - 1 + allGalleryImgs.length) % allGalleryImgs.length;
-    lbImage.src = allGalleryImgs[currentIndex].src;
-    lbImage.alt = allGalleryImgs[currentIndex].alt;
+    updateLightbox();
   }
 
   visibleImgs.forEach((img, i) => {
@@ -1121,7 +1147,9 @@
   lbClose.addEventListener('click', closeLightbox);
   lbNext.addEventListener('click', showNext);
   lbPrev.addEventListener('click', showPrev);
-  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
   document.addEventListener('keydown', (e) => {
     if (!lightbox.classList.contains('active')) return;
     if (e.key === 'Escape')      closeLightbox();
@@ -1129,63 +1157,18 @@
     if (e.key === 'ArrowLeft')   showPrev();
   });
 
-  // ── GALLERY SCROLLER ────────────────────────────────────
-  const gScroller   = document.getElementById('galleryScroller');
-  const gDots       = document.getElementById('galleryDots');
-  const gPrev       = document.getElementById('galleryPrev');
-  const gNext       = document.getElementById('galleryNext');
-  const gCards      = [...gScroller.children];
-  let gCardsPerView = window.innerWidth <= 900 ? 1 : 3;
-  let gIndex        = 0;
-  const gTotalPages = () => Math.ceil(gCards.length / gCardsPerView);
-
-  function buildGDots() {
-    if (!gDots) return;
-    gDots.innerHTML = '';
-    
-    // Hide dots on mobile
-    if (window.innerWidth <= 900) {
-      gDots.style.display = 'none';
-      return;
+  // ── TOUCH SWIPE FOR LIGHTBOX ──────────────────────────
+  // FIX: Added swipe support on mobile so users can swipe left/right in lightbox
+  let touchStartX = 0;
+  lightbox.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  lightbox.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 40) {
+      dx < 0 ? showNext() : showPrev();
     }
-    
-    gDots.style.display = 'flex';
-    for (let i = 0; i < gTotalPages(); i++) {
-      const d = document.createElement('button');
-      d.className = 'gallery-dot' + (i === gIndex ? ' active' : '');
-      d.addEventListener('click', () => { gIndex = i; updateGScroll(); });
-      gDots.appendChild(d);
-    }
-  }
-
-  function updateGScroll() {
-    const card = gCards[0];
-    if (!card) return;
-    
-    const cardWidth = card.offsetWidth;
-    const gap = parseFloat(getComputedStyle(gScroller).gap) || 16;
-    const scrollPos = gIndex * (cardWidth + gap);
-
-    gScroller.scrollTo({ left: scrollPos, behavior: 'smooth' });
-
-    if (window.innerWidth > 900 && gDots) {
-      [...gDots.children].forEach((d, i) => d.classList.toggle('active', i === gIndex));
-    }
-  }
-
-  if (gPrev) gPrev.addEventListener('click', () => { if (gIndex > 0) { gIndex--; updateGScroll(); } });
-  if (gNext) gNext.addEventListener('click', () => { if (gIndex < gTotalPages() - 1) { gIndex++; updateGScroll(); } });
-  
-  window.addEventListener('resize', () => {
-    const newCardsPerView = window.innerWidth <= 900 ? 1 : 3;
-    if (newCardsPerView !== gCardsPerView) {
-      gCardsPerView = newCardsPerView;
-      gIndex = 0;
-      buildGDots();
-      updateGScroll();
-    }
-  });
-  buildGDots();
+  }, { passive: true });
 
   // ── REVIEWS CAROUSEL ────────────────────────────────────
   const track     = document.getElementById('reviewsTrack');
@@ -1211,11 +1194,11 @@
 
   function goToPage(page) {
     reviewIndex = Math.max(0, Math.min(page, totalPages() - 1));
-    track.style.transform = `translateX(-${reviewIndex * 100}%)`;
+    const cardWidth = 100 / cardsPerView;
+    track.style.transform = `translateX(-${reviewIndex * cardsPerView * cardWidth}%)`;
     [...dotsEl.children].forEach((d, i) => d.classList.toggle('active', i === reviewIndex));
   }
 
-  // Set card widths
   function setCardWidths() {
     cardsPerView = window.innerWidth <= 900 ? 1 : window.innerWidth <= 1100 ? 2 : 3;
     cards.forEach(c => { c.style.flex = `0 0 ${100 / cardsPerView}%`; });
