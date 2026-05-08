@@ -4,22 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Book Your Stay — Protea Dome Glamping</title>
-<meta name="description" content="Book your glamping stay at Protea Dome in the Cape Winelands. Check availability and reserve your dome online.">
+<meta name="description" content="Book your stay at Protea Dome — a handcrafted geodesic dome retreat in the Cape Winelands.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-
-<!-- InnStyle Booking Engine -->
-<script id="InnStyle-js" src="https://developer.innstyle.co.uk/calendar.min.js" defer></script>
-
 <style>
   :root {
-    --earth:    #2c2416;
-    --warm:     #5c4a2a;
-    --clay:     #a0784a;
-    --sand:     #d4b896;
-    --cream:    #f5efe6;
-    --sage:     #7a8c6e;
-    --off-white:#faf7f2;
+    --earth: #2c2416;
+    --warm: #5c4a2a;
+    --clay: #a0784a;
+    --sand: #d4b896;
+    --cream: #f5efe6;
+    --sage: #7a8c6e;
+    --off-white: #faf7f2;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,15 +24,15 @@
     font-family: 'Jost', sans-serif;
     background: var(--off-white);
     color: var(--earth);
-    line-height: 1.6;
+    overflow-x: hidden;
   }
 
   /* ── NAV ── */
   #nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 1.4rem 3rem;
-    background: rgba(250,247,242,0.96);
+    padding: 1rem 3rem;
+    background: rgba(250,247,242,0.97);
     backdrop-filter: blur(8px);
     box-shadow: 0 1px 0 rgba(44,36,22,0.08);
   }
@@ -52,21 +48,146 @@
     text-decoration: none; transition: color 0.3s;
   }
   .nav-links a:hover { color: var(--clay); }
-  .nav-cta {
+  .nav-back {
     font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em;
-    text-transform: uppercase;
+    text-transform: uppercase; color: var(--earth);
     border: 1px solid var(--clay); padding: 0.55rem 1.4rem;
     text-decoration: none; transition: all 0.3s;
-    background: var(--clay); color: var(--cream);
   }
-  .nav-cta:hover { background: var(--warm); }
+  .nav-back:hover { background: var(--clay); color: var(--cream); }
   .nav-hamburger {
     display: none; flex-direction: column; gap: 5px; cursor: pointer;
-    background: none; border: none; padding: 4px; z-index: 201;
+    background: none; border: none; padding: 4px;
   }
   .nav-hamburger span {
     display: block; width: 24px; height: 1px; background: var(--earth);
   }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    padding: 10rem 3rem 4rem;
+    background: var(--cream);
+    border-bottom: 1px solid rgba(44,36,22,0.08);
+    text-align: center;
+  }
+  .page-header .section-label {
+    font-size: 0.68rem; font-weight: 400; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--clay); margin-bottom: 1rem;
+  }
+  .page-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 300;
+    line-height: 1.15; color: var(--earth);
+  }
+  .page-header h1 em { font-style: italic; color: var(--clay); }
+  .page-header p {
+    font-size: 0.95rem; font-weight: 300; line-height: 1.8;
+    color: var(--warm); max-width: 500px; margin: 1.5rem auto 0;
+  }
+
+  /* ── BOOKING WIDGET SECTION ── */
+  .booking-section {
+    padding: 5rem 3rem 7rem;
+    background: var(--off-white);
+    min-height: 60vh;
+  }
+  .booking-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ── BOOKING INFO STRIP ── */
+  .booking-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(44,36,22,0.08);
+    border: 1px solid rgba(44,36,22,0.08);
+    margin-bottom: 3rem;
+  }
+  .booking-info-item { background: var(--cream); padding: 1.8rem 2rem; }
+  .bi-label {
+    font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--clay); margin-bottom: 0.5rem;
+  }
+  .bi-value { font-size: 0.88rem; font-weight: 300; line-height: 1.6; color: var(--warm); }
+
+  /* ── BOOKING CTA BOX ── */
+  .booking-cta-box {
+    text-align: center; padding: 5rem 2rem;
+    background: var(--cream); border: 1px solid rgba(44,36,22,0.08);
+  }
+  .booking-cta-icon { font-size: 2.5rem; margin-bottom: 1.5rem; opacity: 0.7; }
+  .booking-cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 300;
+    color: var(--earth); margin-bottom: 1rem;
+  }
+  .booking-cta-text {
+    font-size: 0.95rem; font-weight: 300; line-height: 1.8;
+    color: var(--warm); max-width: 460px; margin: 0 auto 2.5rem;
+  }
+  .btn-book {
+    display: inline-flex; align-items: center;
+    font-family: 'Jost', sans-serif; font-size: 0.82rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none;
+    padding: 1.1rem 3rem; background: var(--clay); color: var(--cream);
+    transition: background 0.3s, transform 0.3s;
+  }
+  .btn-book:hover { background: var(--warm); transform: translateY(-2px); }
+  .booking-cta-note {
+    margin-top: 1.2rem; font-size: 0.72rem; font-weight: 300;
+    letter-spacing: 0.08em; color: rgba(44,36,22,0.35);
+  }
+  @media (max-width: 900px) {
+    .booking-info { grid-template-columns: 1fr; }
+    .booking-cta-box { padding: 3rem 1.5rem; }
+  }
+
+  /* ── CONTACT STRIP ── */
+  .contact-strip {
+    background: var(--earth);
+    padding: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+  .contact-strip-label {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--sand); font-weight: 400;
+    white-space: nowrap;
+  }
+  .contact-strip-links {
+    display: flex; gap: 2.5rem; flex-wrap: wrap; align-items: center;
+  }
+  .contact-strip a {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.85rem; font-weight: 300;
+    color: rgba(245,239,230,0.7); text-decoration: none;
+    transition: color 0.3s;
+  }
+  .contact-strip a:hover { color: var(--sand); }
+  .contact-strip .icon { color: var(--sand); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--earth); padding: 2rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 600; color: var(--cream); letter-spacing: 0.05em;
+  }
+  .footer-brand small {
+    display: block; font-family: 'Jost', sans-serif;
+    font-size: 0.65rem; font-weight: 300; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--sand); margin-top: 0.2rem;
+  }
+  .footer-copy { font-size: 0.68rem; color: rgba(245,239,230,0.25); font-weight: 300; }
 
   /* ── MOBILE NAV OVERLAY ── */
   .mobile-nav-overlay {
@@ -82,15 +203,9 @@
   .mobile-nav-overlay a {
     font-family: 'Cormorant Garamond', serif;
     font-size: 2rem; font-weight: 300; color: var(--earth);
-    text-decoration: none; transition: color 0.2s;
+    text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s;
   }
   .mobile-nav-overlay a:hover { color: var(--clay); }
-  .mobile-nav-overlay .mob-book {
-    font-family: 'Jost', sans-serif; font-size: 0.8rem;
-    font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
-    background: var(--clay); color: var(--cream) !important;
-    padding: 0.9rem 2.5rem; margin-top: 0.5rem;
-  }
   .mobile-nav-close {
     position: absolute; top: 1.4rem; right: 1.5rem;
     background: none; border: none; cursor: pointer;
@@ -98,154 +213,16 @@
     align-items: center; justify-content: center; color: var(--earth);
   }
 
-  /* ── PAGE HERO ── */
-  .page-hero {
-    padding: 9rem 3rem 4rem;
-    background: var(--earth);
-    position: relative; overflow: hidden;
-  }
-  .page-hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: url('images/valley.jpg') center/cover no-repeat;
-    opacity: 0.18;
-  }
-  .page-hero-content { position: relative; z-index: 1; max-width: 640px; }
-  .section-label {
-    font-size: 0.68rem; font-weight: 400; letter-spacing: 0.25em;
-    text-transform: uppercase; color: var(--sand); margin-bottom: 1rem;
-  }
-  .page-hero h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300;
-    line-height: 1.1; color: var(--cream); margin-bottom: 1.2rem;
-  }
-  .page-hero h1 em { font-style: italic; color: var(--sand); }
-  .page-hero p {
-    font-size: 0.9rem; font-weight: 300; line-height: 1.8;
-    color: rgba(245,239,230,0.65); max-width: 480px;
-  }
-  .hero-rules {
-    display: flex; gap: 2rem; margin-top: 1.8rem; flex-wrap: wrap;
-  }
-  .hero-rule {
-    display: flex; align-items: center; gap: 0.5rem;
-    font-size: 0.72rem; letter-spacing: 0.06em;
-    color: rgba(245,239,230,0.45);
-  }
-  .hero-rule span { color: var(--sand); }
-
-  /* ── MAIN LAYOUT ── */
-  .booking-layout {
-    display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 3rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 4rem 3rem 6rem;
-    align-items: start;
-  }
-
-  /* ── INNSTYLE WRAPPER ── */
-  .innstyle-wrapper {
-    background: white;
-    border-top: 3px solid var(--clay);
-    box-shadow: 0 4px 40px rgba(44,36,22,0.06);
-    min-height: 400px;
-  }
-
-  #innstyle-booking {
-    font-family: 'Jost', sans-serif;
-  }
-
-  /* ── SIDEBAR ── */
-  .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
-
-  .sidebar-card {
-    background: white;
-    border-top: 3px solid var(--sand);
-    padding: 2rem;
-    box-shadow: 0 4px 40px rgba(44,36,22,0.05);
-  }
-  .sidebar-card-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.15rem; font-weight: 400; color: var(--earth);
-    margin-bottom: 1.2rem; padding-bottom: 0.8rem;
-    border-bottom: 1px solid rgba(44,36,22,0.06);
-  }
-
-  .seasons { display: flex; flex-direction: column; gap: 0.6rem; }
-  .season {
-    display: grid; grid-template-columns: 28px 1fr;
-    gap: 0.7rem; align-items: start; padding: 0.7rem;
-    border-left: 2px solid transparent; transition: border-color 0.2s, background 0.2s;
-  }
-  .season.active-season { border-left-color: var(--clay); background: rgba(160,120,74,0.04); }
-  .season-icon { font-size: 1.1rem; text-align: center; }
-  .season-name {
-    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--clay); margin-bottom: 0.15rem;
-  }
-  .season-months { font-size: 0.65rem; color: var(--sand); margin-bottom: 0.25rem; }
-  .season-desc { font-size: 0.76rem; font-weight: 300; color: var(--warm); line-height: 1.5; }
-
-  .contact-options { display: flex; flex-direction: column; gap: 0.7rem; }
-  .contact-opt {
-    display: flex; align-items: center; gap: 0.7rem;
-    text-decoration: none; font-size: 0.8rem; font-weight: 300;
-    color: var(--warm); padding: 0.6rem 0.8rem;
-    border: 1px solid rgba(44,36,22,0.1); transition: all 0.2s;
-  }
-  .contact-opt:hover { border-color: var(--clay); color: var(--clay); }
-  .contact-opt-icon { font-size: 0.95rem; width: 18px; text-align: center; flex-shrink: 0; }
-  .btn-wa {
-    display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-    background: #25D366; color: white;
-    text-decoration: none; padding: 0.85rem;
-    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em;
-    text-transform: uppercase; transition: background 0.2s; margin-top: 0.8rem;
-  }
-  .btn-wa:hover { background: #1ebe5d; }
-
-  .know-list { display: flex; flex-direction: column; gap: 0.8rem; }
-  .know-item { display: flex; gap: 0.7rem; align-items: flex-start; }
-  .know-tick { color: var(--clay); font-size: 0.9rem; flex-shrink: 0; margin-top: 0.05rem; }
-  .know-text { font-size: 0.78rem; font-weight: 300; color: var(--warm); line-height: 1.5; }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--earth); padding: 3rem;
-    display: flex; justify-content: space-between; align-items: center;
-    border-top: 1px solid rgba(255,255,255,0.08);
-  }
-  .footer-brand {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem; font-weight: 600; color: var(--cream); letter-spacing: 0.05em;
-  }
-  .footer-brand small {
-    display: block; font-family: 'Jost', sans-serif;
-    font-size: 0.68rem; font-weight: 300; letter-spacing: 0.15em;
-    text-transform: uppercase; color: var(--sand); margin-top: 0.3rem;
-  }
-  .footer-links { display: flex; gap: 2rem; }
-  .footer-links a {
-    font-size: 0.72rem; font-weight: 300; letter-spacing: 0.1em;
-    text-transform: uppercase; color: rgba(245,239,230,0.4);
-    text-decoration: none; transition: color 0.3s;
-  }
-  .footer-links a:hover { color: var(--sand); }
-  .footer-copy { font-size: 0.7rem; color: rgba(245,239,230,0.25); font-weight: 300; }
-
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
-    #nav { padding: 1.2rem 1.5rem; }
-    .nav-links, .nav-cta { display: none; }
+    #nav { padding: 1rem 1.5rem; }
+    .nav-links, .nav-back { display: none; }
     .nav-hamburger { display: flex; }
-    .page-hero { padding: 7rem 1.5rem 3rem; }
-    .booking-layout { grid-template-columns: 1fr; padding: 3rem 1.5rem 4rem; gap: 2rem; }
-    footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem; }
-    .footer-links { flex-wrap: wrap; justify-content: center; gap: 1.2rem; }
-    .hero-rules { flex-direction: column; gap: 0.6rem; }
+    .page-header { padding: 7rem 1.5rem 3rem; }
+    .booking-section { padding: 3rem 1.5rem 5rem; }
+    .contact-strip { padding: 2.5rem 1.5rem; gap: 1.5rem; flex-direction: column; align-items: flex-start; }
+    .contact-strip-links { flex-direction: column; gap: 1rem; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
   }
 </style>
 </head>
@@ -261,123 +238,69 @@
     <li><a href="index.html#gallery">Gallery</a></li>
     <li><a href="index.html#reviews">Reviews</a></li>
   </ul>
-  <a href="book.html" class="nav-cta">Book Now</a>
-  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+  <a href="index.html" class="nav-back">← Back to Site</a>
+  <button class="nav-hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </header>
 
-<!-- MOBILE NAV OVERLAY -->
-<div class="mobile-nav-overlay" id="mobileNav">
-  <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-    </svg>
-  </button>
-  <a href="index.html#about"      onclick="closeMobileNav()">The Dome</a>
-  <a href="index.html#activities" onclick="closeMobileNav()">Activities</a>
-  <a href="index.html#location"   onclick="closeMobileNav()">Location</a>
-  <a href="index.html#gallery"    onclick="closeMobileNav()">Gallery</a>
-  <a href="index.html#reviews"    onclick="closeMobileNav()">Reviews</a>
-  <a href="book.html" class="mob-book">Book Now</a>
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="section-label">Availability &amp; Reservations</div>
+  <h1>Book the <em>Dome</em></h1>
+  <p>Select your dates below to check availability and make a reservation. For special requests, contact Christine directly.</p>
 </div>
 
-<!-- PAGE HERO -->
-<div class="page-hero">
-  <div class="page-hero-content">
-    <div class="section-label">Reservations</div>
-    <h1>Book the <em>Dome</em></h1>
-    <p>Select your dates, choose your extras, and confirm your escape to the Cape Winelands — all in one place.</p>
-    <div class="hero-rules">
-      <div class="hero-rule"><span>🕐</span> 48h minimum notice</div>
-      <div class="hero-rule"><span>🌙</span> Weekends: 2-night minimum</div>
-      <div class="hero-rule"><span>☀️</span> Weekdays: 1-night minimum</div>
-    </div>
-  </div>
-</div>
+<!-- BOOKING WIDGET -->
+<section class="booking-section">
+  <div class="booking-inner">
 
-<!-- MAIN LAYOUT -->
-<div class="booking-layout">
-
-  <!-- INNSTYLE BOOKING ENGINE -->
-  <div class="innstyle-wrapper">
-    <div id="innstyle-booking"></div>
-    <script>
-        InnStyle('proteadomeglamping', {
-            container: '#innstyle-booking',
-        });
-    </script>
-  </div>
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-
-    <div class="sidebar-card">
-      <div class="sidebar-card-title">When to Visit</div>
-      <div class="seasons">
-        <div class="season" data-months="11,0,1">
-          <div class="season-icon">☀️</div>
-          <div>
-            <div class="season-name">Summer</div>
-            <div class="season-months">December – February</div>
-            <div class="season-desc">Warm dry days, golden sunsets and starry nights for the outdoor bath.</div>
-          </div>
-        </div>
-        <div class="season" data-months="2,3,4">
-          <div class="season-icon">🍂</div>
-          <div>
-            <div class="season-name">Autumn</div>
-            <div class="season-months">March – May</div>
-            <div class="season-desc">Amber winelands, mild days and crisp evenings — ideal for hiking.</div>
-          </div>
-        </div>
-        <div class="season" data-months="5,6,7">
-          <div class="season-icon">🌧️</div>
-          <div>
-            <div class="season-name">Winter</div>
-            <div class="season-months">June – August</div>
-            <div class="season-desc">Cool, green and cosy — perfect for a quiet retreat with red wine.</div>
-          </div>
-        </div>
-        <div class="season" data-months="8,9,10">
-          <div class="season-icon">🌸</div>
-          <div>
-            <div class="season-name">Spring</div>
-            <div class="season-months">September – November</div>
-            <div class="season-desc">Wildflowers, newborn foals and perfect valley temperatures.</div>
-          </div>
-        </div>
+    <div class="booking-info">
+      <div class="booking-info-item">
+        <div class="bi-label">Minimum Stay</div>
+        <div class="bi-value">Weekends: 2 nights &nbsp;·&nbsp; Weekdays: 1 night</div>
+      </div>
+      <div class="booking-info-item">
+        <div class="bi-label">Notice Required</div>
+        <div class="bi-value">48 hours minimum to prepare your stay</div>
+      </div>
+      <div class="booking-info-item">
+        <div class="bi-label">Special Requests</div>
+        <div class="bi-value">Birthdays, anniversaries, personalised touches — just ask</div>
       </div>
     </div>
 
-    <div class="sidebar-card">
-      <div class="sidebar-card-title">Prefer to Chat?</div>
-      <p style="font-size:0.78rem;font-weight:300;color:var(--warm);line-height:1.6;margin-bottom:1rem;">Happy to answer any questions before you book.</p>
-      <div class="contact-options">
-        <a href="tel:+27834518949" class="contact-opt">
-          <span class="contact-opt-icon">📞</span> +27 83 451 8949
-        </a>
-        <a href="mailto:proteadomeglamping@gmail.com" class="contact-opt">
-          <span class="contact-opt-icon">✉</span> proteadomeglamping@gmail.com
-        </a>
-      </div>
-      <a href="https://wa.me/27834518949" class="btn-wa" target="_blank" rel="noopener">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        WhatsApp Us
+    <div class="booking-cta-box">
+      <div class="booking-cta-icon">🗓</div>
+      <h2 class="booking-cta-title">Check Availability &amp; Book</h2>
+      <p class="booking-cta-text">Our live calendar shows real-time availability. Select your dates and confirm your reservation directly through our secure booking system.</p>
+      <a href="https://proteadomeglamping.innstyle.co.uk" target="_blank" rel="noopener" class="btn-book">
+        Open Booking Calendar
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:0.6rem;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
       </a>
+      <p class="booking-cta-note">Opens in a new tab · Secure booking via InnStyle</p>
     </div>
 
-    <div class="sidebar-card" style="border-top-color:var(--sage);">
-      <div class="sidebar-card-title">Good to Know</div>
-      <div class="know-list">
-        <div class="know-item"><span class="know-tick">✓</span><span class="know-text">48-hour minimum notice for all bookings</span></div>
-        <div class="know-item"><span class="know-tick">✓</span><span class="know-text">Weekends require a 2-night minimum stay</span></div>
-        <div class="know-item"><span class="know-tick">✓</span><span class="know-text">Activities must be booked with your stay</span></div>
-        <div class="know-item"><span class="know-tick">✓</span><span class="know-text">Ideal for couples and small families</span></div>
-      </div>
-    </div>
+  </div>
+</section>
 
-  </aside>
+<!-- CONTACT STRIP -->
+<div class="contact-strip">
+  <div class="contact-strip-label">Prefer to enquire directly?</div>
+  <div class="contact-strip-links">
+    <a href="tel:+27834518949">
+      <span class="icon">📞</span>
+      <span>+27 83 451 8949</span>
+    </a>
+    <a href="mailto:proteadomeglamping@gmail.com">
+      <span class="icon">✉</span>
+      <span>proteadomeglamping@gmail.com</span>
+    </a>
+    <a href="https://wa.me/27834518949" target="_blank" rel="noopener">
+      <span class="icon">💬</span>
+      <span>WhatsApp</span>
+    </a>
+  </div>
 </div>
 
 <!-- FOOTER -->
@@ -386,34 +309,29 @@
     Protea Dome Glamping
     <small>Paarl Farms · Cape Winelands · South Africa</small>
   </div>
-  <div class="footer-links">
-    <a href="index.html#about">The Dome</a>
-    <a href="index.html#activities">Activities</a>
-    <a href="index.html#location">Location</a>
-    <a href="index.html#gallery">Gallery</a>
-    <a href="book.html">Book</a>
-  </div>
   <div class="footer-copy">© 2025 Protea Dome Glamping</div>
 </footer>
 
+<!-- MOBILE NAV OVERLAY -->
+<div class="mobile-nav-overlay" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+  <a href="index.html#about">The Dome</a>
+  <a href="index.html#activities">Activities</a>
+  <a href="index.html#location">Location</a>
+  <a href="index.html#gallery">Gallery</a>
+  <a href="index.html#reviews">Reviews</a>
+</div>
+
 <script>
-  // ── MOBILE NAV ──────────────────────────────────────────
-  const mobileNav   = document.getElementById('mobileNav');
-  const hamburger   = document.getElementById('hamburger');
+  const mobileNav  = document.getElementById('mobileNav');
+  const hamburger  = document.querySelector('.nav-hamburger');
   const mobileClose = document.getElementById('mobileNavClose');
-
-  function openMobileNav()  { mobileNav.classList.add('open');    document.body.style.overflow = 'hidden'; }
-  function closeMobileNav() { mobileNav.classList.remove('open'); document.body.style.overflow = ''; }
-
-  hamburger.addEventListener('click', openMobileNav);
-  mobileClose.addEventListener('click', closeMobileNav);
-
-  // ── SEASON HIGHLIGHT ────────────────────────────────────
-  const currentMonth = new Date().getMonth();
-  document.querySelectorAll('.season').forEach(el => {
-    const months = el.dataset.months.split(',').map(Number);
-    if (months.includes(currentMonth)) el.classList.add('active-season');
-  });
+  hamburger.addEventListener('click', () => { mobileNav.classList.add('open'); document.body.style.overflow = 'hidden'; });
+  mobileClose.addEventListener('click', () => { mobileNav.classList.remove('open'); document.body.style.overflow = ''; });
 </script>
 
 </body>
