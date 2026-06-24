@@ -3,8 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Protea Dome Glamping — Cape Winelands</title>
-<meta name="description" content="A handcrafted geodesic dome retreat on a horse-riding farm in the Paarl/Stellenbosch valley. Eco-friendly glamping for couples and small families.">
+
+<!-- ── PRIMARY SEO ── -->
+<title>Protea Dome Glamping — Geodesic Dome Retreat, Cape Winelands</title>
+<meta name="description" content="Eco-friendly geodesic dome glamping on a horse farm in Paarl, Cape Winelands. Stunning valley views, outdoor stargazing bath, horse riding &amp; art classes. 45 min from Cape Town.">
+<meta name="keywords" content="glamping Cape Winelands, geodesic dome Paarl, glamping South Africa, dome accommodation Stellenbosch, eco retreat Cape Town, horse farm glamping, Paarl Farms accommodation, unique stays Western Cape">
+<link rel="canonical" href="https://www.proteadome.com/">
+
+<!-- ── OPEN GRAPH (WhatsApp, Facebook, Instagram previews) ── -->
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="https://www.proteadome.com/">
+<meta property="og:title"       content="Protea Dome Glamping — Cape Winelands">
+<meta property="og:description" content="Sleep under the stars in a handcrafted geodesic dome on a horse farm in Paarl. Eco-friendly glamping 45 min from Cape Town.">
+<meta property="og:image"       content="https://www.proteadome.com/images/hero.jpg">
+<meta property="og:image:width"  content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale"      content="en_ZA">
+<meta property="og:site_name"   content="Protea Dome Glamping">
+
+<!-- ── TWITTER / X CARD ── -->
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="Protea Dome Glamping — Cape Winelands">
+<meta name="twitter:description" content="Sleep under the stars in a handcrafted geodesic dome on a horse farm in Paarl. 45 min from Cape Town.">
+<meta name="twitter:image"       content="https://www.proteadome.com/images/hero.jpg">
+
+<!-- ── SCHEMA.ORG — LodgingBusiness ── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LodgingBusiness",
+  "name": "Protea Dome Glamping",
+  "description": "Handcrafted eco-friendly geodesic dome retreat on a horse farm in the Cape Winelands. Features an outdoor stargazing bath, 100% linen bedding, and sweeping Paarl/Stellenbosch valley views.",
+  "url": "https://www.proteadome.com",
+  "telephone": "+27834518949",
+  "email": "proteadomeglamping@gmail.com",
+  "image": "https://www.proteadome.com/images/hero.jpg",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Tinkerberg Road, Paarl Farms",
+    "addressLocality": "Paarl",
+    "addressRegion": "Western Cape",
+    "postalCode": "7620",
+    "addressCountry": "ZA"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": -33.7373,
+    "longitude": 18.9629
+  },
+  "amenityFeature": [
+    { "@type": "LocationFeatureSpecification", "name": "Outdoor bath",         "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Eco-friendly design",  "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Horse riding",         "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Art classes",          "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Dam views",            "value": true }
+  ],
+  "starRating": { "@type": "Rating", "ratingValue": "5" },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": "12"
+  },
+  "sameAs": [
+    "https://www.facebook.com/proteadomeglamping",
+    "https://www.instagram.com/proteadomeglamping"
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -77,20 +144,15 @@
   #nav.scrolled .nav-hamburger span { background: var(--earth); }
 
   /* ── HERO ── */
-  /* FIX: Use background-size/position via CSS so it works reliably on mobile Safari.
-     The hero-bg div approach avoids the iOS vh scroll-bar bug that causes a gap. */
   .hero {
-    position: relative;
-    height: 100svh; /* svh = small viewport height — avoids mobile browser chrome overlap */
-    min-height: 560px;
+    position: relative; height: 100vh; min-height: 600px;
     display: flex; align-items: flex-end; overflow: hidden;
   }
   .hero-bg {
     position: absolute; inset: 0;
-    /* FIX: background-position set to "center 30%" to keep the sky+dome in frame on mobile crop */
     background:
       linear-gradient(to bottom, rgba(20,15,8,0.3) 0%, rgba(20,15,8,0.2) 40%, rgba(20,15,8,0.8) 100%),
-      url('images/hero.jpg') 70% 30% / cover no-repeat;
+      url('images/hero.jpg') center/cover no-repeat;
   }
   .hero-bg::after {
     content: ''; position: absolute; inset: 0;
@@ -115,7 +177,7 @@
     font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 300;
     line-height: 1.08; color: var(--cream); margin-bottom: 1.5rem;
   }
-  .hero h1 em { font-style: italic; color: var(--cream); font-weight: 600; font-size: 1.3em; text-shadow: 0 0 60px rgba(212,184,150,0.6), 0 2px 4px rgba(0,0,0,0.3); letter-spacing: 0.02em; }
+  .hero h1 em { font-style: italic; color: var(--sand); }
   .hero-sub {
     font-size: 0.95rem; font-weight: 400; line-height: 1.7;
     color: var(--off-white); margin-bottom: 2.5rem; max-width: 420px;
@@ -125,23 +187,13 @@
     display: inline-block; font-family: 'Jost', sans-serif;
     font-size: 0.78rem; font-weight: 500; letter-spacing: 0.15em;
     text-transform: uppercase; text-decoration: none;
-    padding: 1rem 2.5rem; transition: background 0.3s, transform 0.3s, color 0.3s;
+    padding: 1rem 2.5rem; background: var(--clay); color: var(--cream);
+    transition: background 0.3s, transform 0.3s;
   }
-  .btn-primary {
-    background: var(--clay); color: var(--cream);
+  .btn-primary:hover, .btn-outline:hover { 
+    background: var(--warm); transform: translateY(-2px); 
   }
-  .btn-primary:hover { background: var(--warm); transform: translateY(-2px); }
-  /* FIX: btn-outline is now a proper ghost/outline button, distinct from btn-primary */
-  .btn-outline {
-    background: transparent; color: var(--cream);
-    border: 1px solid rgba(245,239,230,0.5);
-    margin-left: 1rem;
-  }
-  .btn-outline:hover {
-    background: rgba(245,239,230,0.12);
-    border-color: var(--cream);
-    transform: translateY(-2px);
-  }
+  .btn-outline { margin-left: 1rem; }
   .hero-scroll {
     position: absolute; bottom: 2rem; right: 3rem;
     display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
@@ -323,64 +375,40 @@
     opacity: 0; transition: opacity 0.4s ease;
   }
   .lightbox.active { display: flex; opacity: 1; }
-
-  /* FIX: Lightbox layout restructured so nav arrows are OUTSIDE the image container
-     on desktop but INSIDE (overlaid) on mobile — both always visible */
-  .lightbox-wrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  
   .lightbox-content {
-    position: relative;
-    max-width: min(90vw, 1200px);
-    max-height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: relative; max-width: 90%; max-height: 85%;
+    display: flex; align-items: center; justify-content: center;
   }
   .lightbox-image {
-    max-width: 100%; max-height: 80vh;
+    max-width: 100%; max-height: 100%;
     object-fit: contain;
     box-shadow: 0 30px 60px rgba(0,0,0,0.5);
     border: 1px solid rgba(255,255,255,0.1);
     transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    display: block;
   }
   .lightbox.active .lightbox-image { transform: scale(1); }
 
   .lightbox-close {
-    position: absolute; top: 1.5rem; right: 1.5rem;
-    background: rgba(28,24,18,0.6); border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 50%; color: var(--cream);
+    position: absolute; top: 2rem; right: 2rem;
+    background: none; border: none; color: var(--cream);
     cursor: pointer; padding: 10px; z-index: 10;
-    width: 48px; height: 48px;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.3s;
   }
-  .lightbox-close:hover { background: rgba(255,255,255,0.15); }
-
-  /* FIX: Nav arrows — positioned outside image on desktop, overlaid on mobile */
   .lightbox-nav {
     position: absolute; top: 50%; transform: translateY(-50%);
-    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
     color: var(--cream); width: 56px; height: 56px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: all 0.3s; z-index: 10;
-    flex-shrink: 0;
+    cursor: pointer; transition: all 0.3s;
   }
   .lightbox-nav:hover { background: var(--cream); color: var(--earth); }
-  .lightbox-prev { left: calc(50% - min(45vw, 600px) - 72px); }
-  .lightbox-next { right: calc(50% - min(45vw, 600px) - 72px); }
+  .lightbox-prev { left: -80px; }
+  .lightbox-next { right: -80px; }
 
-  /* Counter badge */
-  .lightbox-counter {
-    position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-    font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
-    color: rgba(245,239,230,0.4); font-family: 'Jost', sans-serif;
+  @media (max-width: 1100px) {
+    .lightbox-prev { left: 20px; }
+    .lightbox-next { right: 20px; }
+    .lightbox-nav { width: 44px; height: 44px; background: rgba(28,24,18,0.5); }
   }
 
   /* ── REVIEWS ── */
@@ -429,7 +457,7 @@
   }
   .reviews-nav-btn:hover { background: var(--earth); border-color: var(--earth); color: var(--cream); }
   .reviews-nav-btn svg { width: 16px; height: 16px; }
-  .reviews-dots { display: flex; gap: 0.5rem; align-items: center; flex-shrink: 0; }
+  .reviews-dots { display: flex; gap: 0.5rem; align-items: center; }
   .reviews-dot {
     width: 6px; height: 6px; border-radius: 50%;
     background: var(--sand); cursor: pointer; transition: all 0.3s;
@@ -496,6 +524,14 @@
   .radio-attribution {
     font-size: 0.68rem; font-weight: 400; letter-spacing: 0.14em;
     text-transform: uppercase; color: var(--clay);
+  }
+  @media (max-width: 700px) {
+    .radio-feature-inner { grid-template-columns: 1fr; }
+    .radio-divider { width: 100%; height: 1px; }
+    .radio-logo-col { padding: 2rem; flex-direction: row; gap: 1.2rem; text-align: left; align-items: center; }
+    .radio-mic { margin-bottom: 0; font-size: 1.5rem; }
+    .radio-content-col { padding: 2rem; }
+    .radio-quote { font-size: 1.05rem; }
   }
 
   /* ── CONTACT ── */
@@ -586,16 +622,13 @@
 
     .hero-content { padding: 0 1.5rem 4rem; }
     .hero h1 { font-size: 3rem; }
-    /* FIX: Stack buttons vertically on mobile with full width */
-    .hero-content > div {
-      display: flex; flex-direction: column; gap: 1rem;
-    }
+    .hero-content > div { display: flex; flex-direction: column; gap: 1rem; }
     .btn-primary, .btn-outline { margin-left: 0; width: 100%; text-align: center; }
 
     section { padding: 4rem 1.5rem; }
     .about, .location, .contact-cta { grid-template-columns: 1fr; }
-    .about-image { min-height: 260px; order: -1; }
-    .about-text { padding: 2.5rem 1.5rem; }
+    .about-image { min-height: 250px; order: -1; }
+    .about-text { padding: 2rem 1.5rem; }
     .about-features { grid-template-columns: 1fr; }
 
     .activities-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
@@ -603,51 +636,18 @@
     .activity-card { aspect-ratio: 4/3; }
 
     .gallery-section { padding: 4rem 1.5rem; }
-    /* FIX: 2-col gallery on mobile, tighter gap */
     .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
 
     .review-card { flex: 0 0 90%; }
-
-    /* FIX: Lightbox nav — on mobile the arrows sit inside the viewport edges,
-       always both visible, large enough touch targets */
-    .lightbox-prev {
-      left: 12px;
-      width: 44px; height: 44px;
-      background: rgba(28,24,18,0.65);
-      border-color: rgba(255,255,255,0.2);
-    }
-    .lightbox-next {
-      right: 12px;
-      width: 44px; height: 44px;
-      background: rgba(28,24,18,0.65);
-      border-color: rgba(255,255,255,0.2);
-    }
-    /* On mobile the content doesn't need extra margin for the arrows — they overlay */
-    .lightbox-content {
-      max-width: calc(100vw - 112px); /* leave room for both arrows */
-    }
 
     .contact-image { min-height: 300px; order: -1; }
     .contact-text { padding: 3.5rem 1.5rem; }
 
     footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2.5rem 1.5rem; }
     .footer-links { flex-wrap: wrap; justify-content: center; gap: 1.2rem; }
-
-    .radio-feature-inner { grid-template-columns: 1fr; }
-    .radio-divider { width: 100%; height: 1px; }
-    .radio-logo-col { padding: 2rem; flex-direction: row; gap: 1.2rem; text-align: left; align-items: center; }
-    .radio-mic { margin-bottom: 0; font-size: 1.5rem; }
-    .radio-content-col { padding: 2rem; }
-    .radio-quote { font-size: 1.05rem; }
   }
-
   @media (max-width: 1100px) and (min-width: 901px) {
     .review-card { flex: 0 0 50%; }
-    /* On mid-range screens keep arrows near image */
-    .lightbox-prev { left: 20px; }
-    .lightbox-next { right: 20px; }
-    .lightbox-nav { width: 48px; height: 48px; background: rgba(28,24,18,0.5); }
-    .lightbox-content { max-width: calc(100vw - 128px); }
   }
 
   /* ── MOBILE NAV OVERLAY ── */
@@ -722,11 +722,10 @@
 </section>
 
 <!-- ABOUT -->
-<!-- FIX: Restored the missing about-image div (stray '<' was all that existed previously) -->
 <div class="about" id="about">
   <div class="about-image">
     <img src="images/interior.jpg" alt="Protea Dome interior" loading="lazy">
-    <div class="about-image-overlay">A geodesic retreat above the Paarl valley</div>
+    <div class="about-image-overlay">"It's not just a dome — it's a way of life."</div>
   </div>
   <div class="about-text reveal">
     <div class="section-label">About the Dome</div>
@@ -960,18 +959,13 @@
         <div class="radio-mic">🎙</div>
         <div class="radio-station">Radio Tygerberg</div>
         <div class="radio-freq">104FM</div>
+        <div class="radio-show">Alles Wat Lekker Is</div>
       </div>
       <div class="radio-divider"></div>
       <div class="radio-content-col">
         <div class="radio-context">
           Christine was interviewed on Radio Tygerberg 104FM's popular <em>Alles Wat Lekker Is</em> segment — a show dedicated to uncovering the most interesting and unique experiences the Cape has to offer.
         </div>
-
-        <audio controls style="width: 100%; margin: 1rem 0;">
-          <source src="radio.m4a" type="audio/mp4">
-          Your browser does not support the audio element.
-        </audio>
-
         <blockquote class="radio-quote">
           "Protea Dome glamping wants everyone to have a personalised experience, whether it's a birthday, anniversary or just a weekend to get away. The space offers tranquility and peace — waking up with natural sunlight and the birds tweeting."
         </blockquote>
@@ -1039,24 +1033,21 @@
   <a href="book.html" class="mob-book">Book Now</a>
 </div>
 
-<!-- LIGHTBOX MODAL -->
-<!-- FIX: Added lightbox-wrapper div so nav arrows are siblings of lightbox-content,
-     not children — allowing independent absolute positioning on all screen sizes -->
-<div class="lightbox" id="lightbox">
-  <button class="lightbox-close" id="lbClose" aria-label="Close gallery">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-  </button>
-  <button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Previous image">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
-  </button>
-  <div class="lightbox-content">
-    <img src="" alt="" class="lightbox-image" id="lbImage">
+  <!-- LIGHTBOX MODAL -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lbClose" aria-label="Close gallery">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+    <div class="lightbox-content">
+      <button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Previous image">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <img src="" alt="" class="lightbox-image" id="lbImage">
+      <button class="lightbox-nav lightbox-next" id="lbNext" aria-label="Next image">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
   </div>
-  <button class="lightbox-nav lightbox-next" id="lbNext" aria-label="Next image">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-  </button>
-  <div class="lightbox-counter" id="lbCounter"></div>
-</div>
 
 <script>
   // ── NAV SCROLL ──────────────────────────────────────────
@@ -1096,11 +1087,10 @@
   const lbClose     = document.getElementById('lbClose');
   const lbPrev      = document.getElementById('lbPrev');
   const lbNext      = document.getElementById('lbNext');
-  const lbCounter   = document.getElementById('lbCounter');
 
   // Build full image list: visible + hidden
-  const visibleImgs    = [...document.querySelectorAll('.gallery-item img')];
-  const hiddenImgs     = [...document.querySelectorAll('#gallery-hidden img')];
+  const visibleImgs  = [...document.querySelectorAll('.gallery-item img')];
+  const hiddenImgs   = [...document.querySelectorAll('#gallery-hidden img')];
   const allGalleryImgs = [...visibleImgs, ...hiddenImgs];
 
   // Set gallery count on button
@@ -1109,15 +1099,10 @@
 
   let currentIndex = 0;
 
-  function updateLightbox() {
-    lbImage.src = allGalleryImgs[currentIndex].src;
-    lbImage.alt = allGalleryImgs[currentIndex].alt;
-    lbCounter.textContent = `${currentIndex + 1} / ${allGalleryImgs.length}`;
-  }
-
   function openLightbox(index) {
     currentIndex = index;
-    updateLightbox();
+    lbImage.src = allGalleryImgs[currentIndex].src;
+    lbImage.alt = allGalleryImgs[currentIndex].alt;
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
@@ -1128,12 +1113,14 @@
   function showNext(e) {
     if (e) e.stopPropagation();
     currentIndex = (currentIndex + 1) % allGalleryImgs.length;
-    updateLightbox();
+    lbImage.src = allGalleryImgs[currentIndex].src;
+    lbImage.alt = allGalleryImgs[currentIndex].alt;
   }
   function showPrev(e) {
     if (e) e.stopPropagation();
     currentIndex = (currentIndex - 1 + allGalleryImgs.length) % allGalleryImgs.length;
-    updateLightbox();
+    lbImage.src = allGalleryImgs[currentIndex].src;
+    lbImage.alt = allGalleryImgs[currentIndex].alt;
   }
 
   visibleImgs.forEach((img, i) => {
@@ -1147,28 +1134,13 @@
   lbClose.addEventListener('click', closeLightbox);
   lbNext.addEventListener('click', showNext);
   lbPrev.addEventListener('click', showPrev);
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) closeLightbox();
-  });
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', (e) => {
     if (!lightbox.classList.contains('active')) return;
     if (e.key === 'Escape')      closeLightbox();
     if (e.key === 'ArrowRight')  showNext();
     if (e.key === 'ArrowLeft')   showPrev();
   });
-
-  // ── TOUCH SWIPE FOR LIGHTBOX ──────────────────────────
-  // FIX: Added swipe support on mobile so users can swipe left/right in lightbox
-  let touchStartX = 0;
-  lightbox.addEventListener('touchstart', (e) => {
-    touchStartX = e.touches[0].clientX;
-  }, { passive: true });
-  lightbox.addEventListener('touchend', (e) => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(dx) > 40) {
-      dx < 0 ? showNext() : showPrev();
-    }
-  }, { passive: true });
 
   // ── REVIEWS CAROUSEL ────────────────────────────────────
   const track     = document.getElementById('reviewsTrack');
@@ -1199,6 +1171,7 @@
     [...dotsEl.children].forEach((d, i) => d.classList.toggle('active', i === reviewIndex));
   }
 
+  // Set card widths
   function setCardWidths() {
     cardsPerView = window.innerWidth <= 900 ? 1 : window.innerWidth <= 1100 ? 2 : 3;
     cards.forEach(c => { c.style.flex = `0 0 ${100 / cardsPerView}%`; });
@@ -1214,8 +1187,324 @@
     window.addEventListener('resize', setCardWidths);
   }
 </script>
+
+<!-- ── FAQ CHATBOT ─────────────────────────────────────── -->
+<style>
+  /* Bubble */
+  #faq-bubble {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--clay); color: var(--cream);
+    border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(44,36,22,0.25);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s, transform 0.3s;
+  }
+  #faq-bubble:hover { background: var(--warm); transform: scale(1.08); }
+  #faq-bubble svg { width: 24px; height: 24px; transition: opacity 0.2s; }
+  #faq-bubble .icon-close { display: none; }
+  #faq-bubble.open .icon-chat  { display: none; }
+  #faq-bubble.open .icon-close { display: block; }
+
+  /* Panel */
+  #faq-panel {
+    position: fixed; bottom: 5.5rem; right: 2rem; z-index: 998;
+    width: 340px; max-height: 520px;
+    background: var(--off-white);
+    border-top: 3px solid var(--clay);
+    box-shadow: 0 12px 50px rgba(44,36,22,0.18);
+    display: flex; flex-direction: column;
+    transform: scale(0.92) translateY(16px);
+    transform-origin: bottom right;
+    opacity: 0; pointer-events: none;
+    transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.25s;
+  }
+  #faq-panel.open {
+    transform: scale(1) translateY(0);
+    opacity: 1; pointer-events: all;
+  }
+  .faq-header {
+    background: var(--earth); padding: 1rem 1.2rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .faq-header-avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--clay); display: flex; align-items: center;
+    justify-content: center; font-size: 1rem; flex-shrink: 0;
+  }
+  .faq-header-text { flex: 1; }
+  .faq-header-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem; font-weight: 600; color: var(--cream);
+  }
+  .faq-header-status {
+    font-size: 0.65rem; font-weight: 300; letter-spacing: 0.08em;
+    color: rgba(245,239,230,0.45); text-transform: uppercase;
+  }
+
+  /* Messages */
+  .faq-messages {
+    flex: 1; overflow-y: auto; padding: 1.2rem;
+    display: flex; flex-direction: column; gap: 0.8rem;
+    scroll-behavior: smooth;
+  }
+  .faq-messages::-webkit-scrollbar { width: 4px; }
+  .faq-messages::-webkit-scrollbar-thumb { background: var(--sand); border-radius: 2px; }
+
+  .msg {
+    max-width: 88%; padding: 0.7rem 1rem;
+    font-size: 0.82rem; font-weight: 300; line-height: 1.55;
+    border-radius: 2px;
+  }
+  .msg-bot {
+    background: white; color: var(--warm);
+    border-left: 2px solid var(--clay);
+    align-self: flex-start;
+  }
+  .msg-user {
+    background: var(--clay); color: var(--cream);
+    align-self: flex-end; border-left: none;
+  }
+
+  /* Quick replies */
+  .faq-chips {
+    padding: 0 1.2rem 1rem;
+    display: flex; flex-direction: column; gap: 0.45rem;
+  }
+  .faq-chip {
+    background: white; border: 1px solid rgba(44,36,22,0.12);
+    color: var(--warm); font-family: 'Jost', sans-serif;
+    font-size: 0.78rem; font-weight: 300; text-align: left;
+    padding: 0.6rem 0.9rem; cursor: pointer; transition: all 0.2s;
+    border-radius: 2px;
+  }
+  .faq-chip:hover { border-color: var(--clay); color: var(--clay); background: rgba(160,120,74,0.04); }
+
+  /* Input row */
+  .faq-input-row {
+    display: flex; border-top: 1px solid rgba(44,36,22,0.08);
+    background: white;
+  }
+  .faq-input-row input {
+    flex: 1; border: none; outline: none; padding: 0.8rem 1rem;
+    font-family: 'Jost', sans-serif; font-size: 0.82rem;
+    font-weight: 300; color: var(--earth); background: transparent;
+  }
+  .faq-input-row input::placeholder { color: rgba(44,36,22,0.3); }
+  .faq-send {
+    background: none; border: none; cursor: pointer;
+    padding: 0 1rem; color: var(--clay); transition: color 0.2s;
+    display: flex; align-items: center;
+  }
+  .faq-send:hover { color: var(--warm); }
+
+  @media (max-width: 500px) {
+    #faq-panel { width: calc(100vw - 2rem); right: 1rem; bottom: 5rem; }
+    #faq-bubble { bottom: 1.2rem; right: 1rem; }
+  }
+</style>
+
+<!-- Bubble button -->
+<button id="faq-bubble" aria-label="Chat with us">
+  <svg class="icon-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+  </svg>
+  <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+  </svg>
+</button>
+
+<!-- Chat panel -->
+<div id="faq-panel" role="dialog" aria-label="Protea Dome FAQ">
+  <div class="faq-header">
+    <div class="faq-header-avatar">🌿</div>
+    <div class="faq-header-text">
+      <div class="faq-header-name">Protea Dome</div>
+      <div class="faq-header-status">Ask us anything</div>
+    </div>
+  </div>
+  <div class="faq-messages" id="faqMessages"></div>
+  <div class="faq-chips" id="faqChips"></div>
+  <div class="faq-input-row">
+    <input type="text" id="faqInput" placeholder="Type a question…" autocomplete="off">
+    <button class="faq-send" id="faqSend" aria-label="Send">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
 <script>
-(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="xvpVMnkmqMwFwxcaGVhSY";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+(function () {
+  // ── FAQ DATA ──────────────────────────────────────────────
+  const FAQ = [
+    {
+      triggers: ['book','booking','reserve','reservation','available','availability','dates'],
+      label: '📅 How do I book?',
+      answer: 'You can book directly on our <a href="book.html" style="color:var(--clay);">booking page</a>, or reach us on <a href="https://wa.me/27834518949" style="color:var(--clay);" target="_blank">WhatsApp</a> or by email at <a href="mailto:proteadomeglamping@gmail.com" style="color:var(--clay);">proteadomeglamping@gmail.com</a>. We confirm all bookings personally.'
+    },
+    {
+      triggers: ['price','cost','rate','how much','fee','charge'],
+      label: '💰 What does it cost?',
+      answer: 'Our rates are available on request — every stay is personalised. Please <a href="https://wa.me/27834518949" style="color:var(--clay);" target="_blank">WhatsApp us</a> or visit our <a href="book.html" style="color:var(--clay);">booking page</a> to check current availability and pricing.'
+    },
+    {
+      triggers: ['minimum','min stay','nights','how long','weekend','weekday'],
+      label: '🌙 Minimum stay?',
+      answer: 'Weekends require a <strong>2-night minimum</strong>. Weekdays are <strong>1-night minimum</strong>. All bookings need at least 48 hours notice.'
+    },
+    {
+      triggers: ['where','location','address','directions','find','get there','far','drive','distance'],
+      label: '📍 Where are you?',
+      answer: 'We\'re on Tinkerberg Road, Paarl Farms, Cape Town — about 45 min from Cape Town CBD, 20 min from Stellenbosch, and 25 min from Paarl. Right in the heart of the Cape Winelands.'
+    },
+    {
+      triggers: ['activity','activities','horse','riding','art','clay','hike','hiking','things to do','do'],
+      label: '🐎 What activities are there?',
+      answer: 'At Rivendale Winelands Riding Club farm you can enjoy: 🐎 Horse riding, 🎨 Art classes, 🧱 Clay brick building, and 🥾 Guided hiking. All activities are subject to availability and must be booked with your stay.'
+    },
+    {
+      triggers: ['dome','what is','inside','bedroom','bed','bath','outdoor','linen','sleep','accommodation'],
+      label: '🏕️ What\'s in the dome?',
+      answer: 'The geodesic dome is handcrafted and eco-friendly. It features 100% natural linen bedding, an outdoor stargazing bath, and sweeping views of the Paarl/Stellenbosch valley and the farm dam. Designed for couples or small families.'
+    },
+    {
+      triggers: ['guest','guests','people','capacity','family','children','kids','how many'],
+      label: '👨‍👩‍👧 How many guests?',
+      answer: 'The dome is ideal for couples or small families. Maximum capacity is 4 guests. Please mention children when booking so we can prepare accordingly.'
+    },
+    {
+      triggers: ['pet','dog','cat','animal','bring'],
+      label: '🐶 Are pets allowed?',
+      answer: 'Some of our guests have enjoyed stays with their dogs! Please ask us directly when booking — we\'ll confirm on a case-by-case basis. <a href="https://wa.me/27834518949" style="color:var(--clay);" target="_blank">WhatsApp us</a> to check.'
+    },
+    {
+      triggers: ['contact','phone','email','whatsapp','reach','call','number'],
+      label: '📞 How do I contact you?',
+      answer: 'You can reach Christine on: 📞 <a href="tel:+27834518949" style="color:var(--clay);">+27 83 451 8949</a> · ✉ <a href="mailto:proteadomeglamping@gmail.com" style="color:var(--clay);">proteadomeglamping@gmail.com</a> · or <a href="https://wa.me/27834518949" style="color:var(--clay);" target="_blank">WhatsApp</a>.'
+    },
+    {
+      triggers: ['occasion','birthday','anniversary','honeymoon','romantic','special','celebrate','proposal'],
+      label: '🎂 Special occasions?',
+      answer: 'Absolutely — we love making stays extra special. Whether it\'s a birthday, anniversary, honeymoon or proposal, let us know when booking and Christine will personalise your experience. 🌹'
+    },
+    {
+      triggers: ['cancel','cancellation','refund','policy'],
+      label: '❌ Cancellation policy?',
+      answer: 'Please contact us directly regarding cancellations — <a href="https://wa.me/27834518949" style="color:var(--clay);" target="_blank">WhatsApp</a> or <a href="mailto:proteadomeglamping@gmail.com" style="color:var(--clay);">email</a> is the quickest route. We handle each case personally.'
+    },
+    {
+      triggers: ['wifi','internet','signal','electricity','power','braai','fire','kitchen','cooking','food'],
+      label: '⚡ Facilities?',
+      answer: 'The dome is designed for an off-grid feel — embrace the nature experience! There\'s a braai area for outdoor cooking. For specific facility questions please <a href="https://wa.me/27834518949" style="color:var(--clay);" target="_blank">WhatsApp us</a> and we\'ll give you the full picture.'
+    },
+  ];
+
+  const TOP_CHIPS = [0, 1, 2, 3, 4]; // indices into FAQ to show as initial chips
+
+  // ── DOM ───────────────────────────────────────────────────
+  const bubble   = document.getElementById('faq-bubble');
+  const panel    = document.getElementById('faq-panel');
+  const messages = document.getElementById('faqMessages');
+  const chips    = document.getElementById('faqChips');
+  const input    = document.getElementById('faqInput');
+  const sendBtn  = document.getElementById('faqSend');
+  let opened = false;
+
+  // ── TOGGLE ───────────────────────────────────────────────
+  bubble.addEventListener('click', () => {
+    const isOpen = panel.classList.toggle('open');
+    bubble.classList.toggle('open', isOpen);
+    if (isOpen && !opened) {
+      opened = true;
+      addBotMessage('Hi! 👋 I\'m here to answer your questions about Protea Dome. What would you like to know?');
+      renderChips(TOP_CHIPS);
+    }
+    if (isOpen) input.focus();
+  });
+
+  // ── RENDER HELPERS ───────────────────────────────────────
+  function addBotMessage(html) {
+    const m = document.createElement('div');
+    m.className = 'msg msg-bot';
+    m.innerHTML = html;
+    messages.appendChild(m);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function addUserMessage(text) {
+    const m = document.createElement('div');
+    m.className = 'msg msg-user';
+    m.textContent = text;
+    messages.appendChild(m);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function renderChips(indices) {
+    chips.innerHTML = '';
+    indices.forEach(i => {
+      const faq = FAQ[i];
+      if (!faq) return;
+      const btn = document.createElement('button');
+      btn.className = 'faq-chip';
+      btn.textContent = faq.label;
+      btn.addEventListener('click', () => handleAnswer(faq, faq.label));
+      chips.appendChild(btn);
+    });
+  }
+
+  function handleAnswer(faq, userText) {
+    chips.innerHTML = '';
+    addUserMessage(userText);
+    setTimeout(() => {
+      addBotMessage(faq.answer);
+      // Suggest a few other topics
+      const others = FAQ
+        .map((_, i) => i)
+        .filter(i => FAQ[i] !== faq)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 3);
+      setTimeout(() => {
+        addBotMessage('Anything else I can help with?');
+        renderChips(others);
+      }, 400);
+    }, 280);
+  }
+
+  // ── TEXT INPUT MATCHING ──────────────────────────────────
+  function handleInput(text) {
+    if (!text.trim()) return;
+    input.value = '';
+    chips.innerHTML = '';
+    addUserMessage(text);
+
+    const lower = text.toLowerCase();
+    const match = FAQ.find(f => f.triggers.some(t => lower.includes(t)));
+
+    setTimeout(() => {
+      if (match) {
+        addBotMessage(match.answer);
+        const others = FAQ
+          .map((_, i) => i)
+          .filter(i => FAQ[i] !== match)
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 3);
+        setTimeout(() => {
+          addBotMessage('Anything else?');
+          renderChips(others);
+        }, 400);
+      } else {
+        addBotMessage('I\'m not sure about that one — Christine can answer directly! <a href="https://wa.me/27834518949" style="color:var(--clay);" target="_blank">WhatsApp her here</a> or email <a href="mailto:proteadomeglamping@gmail.com" style="color:var(--clay);">proteadomeglamping@gmail.com</a>.');
+        renderChips(TOP_CHIPS);
+      }
+    }, 300);
+  }
+
+  sendBtn.addEventListener('click', () => handleInput(input.value));
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') handleInput(input.value); });
+
+})();
 </script>
+
 </body>
 </html>

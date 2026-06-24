@@ -3,8 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Book Your Stay — Protea Dome Glamping</title>
-<meta name="description" content="Book your stay at Protea Dome — a handcrafted geodesic dome retreat in the Cape Winelands.">
+
+<!-- ── PRIMARY SEO ── -->
+<title>Book Your Stay — Protea Dome Glamping, Cape Winelands</title>
+<meta name="description" content="Book your geodesic dome glamping stay in Paarl, Cape Winelands. Check live availability online — 45 min from Cape Town, horse farm setting, outdoor stargazing bath.">
+<link rel="canonical" href="https://www.proteadome.com/book.html">
+
+<!-- ── OPEN GRAPH (WhatsApp, Facebook, Instagram previews) ── -->
+<meta property="og:type"         content="website">
+<meta property="og:url"          content="https://www.proteadome.com/book.html">
+<meta property="og:title"        content="Book — Protea Dome Glamping, Cape Winelands">
+<meta property="og:description"  content="Reserve your handcrafted dome retreat in Paarl. Check live dates and book online.">
+<meta property="og:image"        content="https://www.proteadome.com/images/hero.jpg">
+<meta property="og:image:width"  content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale"       content="en_ZA">
+<meta property="og:site_name"    content="Protea Dome Glamping">
+
+<!-- ── TWITTER / X CARD ── -->
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="Book — Protea Dome Glamping">
+<meta name="twitter:description" content="Reserve your handcrafted dome retreat in the Cape Winelands.">
+<meta name="twitter:image"       content="https://www.proteadome.com/images/hero.jpg">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -333,8 +354,324 @@
   hamburger.addEventListener('click', () => { mobileNav.classList.add('open'); document.body.style.overflow = 'hidden'; });
   mobileClose.addEventListener('click', () => { mobileNav.classList.remove('open'); document.body.style.overflow = ''; });
 </script>
+
+<!-- ── FAQ CHATBOT ─────────────────────────────────────── -->
+<style>
+  /* Bubble */
+  #faq-bubble {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--clay); color: var(--cream);
+    border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(44,36,22,0.25);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s, transform 0.3s;
+  }
+  #faq-bubble:hover { background: var(--warm); transform: scale(1.08); }
+  #faq-bubble svg { width: 24px; height: 24px; transition: opacity 0.2s; }
+  #faq-bubble .icon-close { display: none; }
+  #faq-bubble.open .icon-chat  { display: none; }
+  #faq-bubble.open .icon-close { display: block; }
+
+  /* Panel */
+  #faq-panel {
+    position: fixed; bottom: 5.5rem; right: 2rem; z-index: 998;
+    width: 340px; max-height: 520px;
+    background: var(--off-white);
+    border-top: 3px solid var(--clay);
+    box-shadow: 0 12px 50px rgba(44,36,22,0.18);
+    display: flex; flex-direction: column;
+    transform: scale(0.92) translateY(16px);
+    transform-origin: bottom right;
+    opacity: 0; pointer-events: none;
+    transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.25s;
+  }
+  #faq-panel.open {
+    transform: scale(1) translateY(0);
+    opacity: 1; pointer-events: all;
+  }
+  .faq-header {
+    background: var(--earth); padding: 1rem 1.2rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .faq-header-avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--clay); display: flex; align-items: center;
+    justify-content: center; font-size: 1rem; flex-shrink: 0;
+  }
+  .faq-header-text { flex: 1; }
+  .faq-header-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem; font-weight: 600; color: var(--cream);
+  }
+  .faq-header-status {
+    font-size: 0.65rem; font-weight: 300; letter-spacing: 0.08em;
+    color: rgba(245,239,230,0.45); text-transform: uppercase;
+  }
+
+  /* Messages */
+  .faq-messages {
+    flex: 1; overflow-y: auto; padding: 1.2rem;
+    display: flex; flex-direction: column; gap: 0.8rem;
+    scroll-behavior: smooth;
+  }
+  .faq-messages::-webkit-scrollbar { width: 4px; }
+  .faq-messages::-webkit-scrollbar-thumb { background: var(--sand); border-radius: 2px; }
+
+  .msg {
+    max-width: 88%; padding: 0.7rem 1rem;
+    font-size: 0.82rem; font-weight: 300; line-height: 1.55;
+    border-radius: 2px;
+  }
+  .msg-bot {
+    background: white; color: var(--warm);
+    border-left: 2px solid var(--clay);
+    align-self: flex-start;
+  }
+  .msg-user {
+    background: var(--clay); color: var(--cream);
+    align-self: flex-end; border-left: none;
+  }
+
+  /* Quick replies */
+  .faq-chips {
+    padding: 0 1.2rem 1rem;
+    display: flex; flex-direction: column; gap: 0.45rem;
+  }
+  .faq-chip {
+    background: white; border: 1px solid rgba(44,36,22,0.12);
+    color: var(--warm); font-family: 'Jost', sans-serif;
+    font-size: 0.78rem; font-weight: 300; text-align: left;
+    padding: 0.6rem 0.9rem; cursor: pointer; transition: all 0.2s;
+    border-radius: 2px;
+  }
+  .faq-chip:hover { border-color: var(--clay); color: var(--clay); background: rgba(160,120,74,0.04); }
+
+  /* Input row */
+  .faq-input-row {
+    display: flex; border-top: 1px solid rgba(44,36,22,0.08);
+    background: white;
+  }
+  .faq-input-row input {
+    flex: 1; border: none; outline: none; padding: 0.8rem 1rem;
+    font-family: 'Jost', sans-serif; font-size: 0.82rem;
+    font-weight: 300; color: var(--earth); background: transparent;
+  }
+  .faq-input-row input::placeholder { color: rgba(44,36,22,0.3); }
+  .faq-send {
+    background: none; border: none; cursor: pointer;
+    padding: 0 1rem; color: var(--clay); transition: color 0.2s;
+    display: flex; align-items: center;
+  }
+  .faq-send:hover { color: var(--warm); }
+
+  @media (max-width: 500px) {
+    #faq-panel { width: calc(100vw - 2rem); right: 1rem; bottom: 5rem; }
+    #faq-bubble { bottom: 1.2rem; right: 1rem; }
+  }
+</style>
+
+<!-- Bubble button -->
+<button id="faq-bubble" aria-label="Chat with us">
+  <svg class="icon-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+  </svg>
+  <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+  </svg>
+</button>
+
+<!-- Chat panel -->
+<div id="faq-panel" role="dialog" aria-label="Protea Dome FAQ">
+  <div class="faq-header">
+    <div class="faq-header-avatar">🌿</div>
+    <div class="faq-header-text">
+      <div class="faq-header-name">Protea Dome</div>
+      <div class="faq-header-status">Ask us anything</div>
+    </div>
+  </div>
+  <div class="faq-messages" id="faqMessages"></div>
+  <div class="faq-chips" id="faqChips"></div>
+  <div class="faq-input-row">
+    <input type="text" id="faqInput" placeholder="Type a question…" autocomplete="off">
+    <button class="faq-send" id="faqSend" aria-label="Send">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
 <script>
-(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="xvpVMnkmqMwFwxcaGVhSY";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+(function () {
+  // ── FAQ DATA ──────────────────────────────────────────────
+  const FAQ = [
+    {
+      triggers: ['book','booking','reserve','reservation','available','availability','dates'],
+      label: '📅 How do I book?',
+      answer: 'You can book directly on our <a href="book.html" style="color:var(--clay);">booking page</a>, or reach us on <a href="https://wa.me/27834518949" style="color:var(--clay);" target="_blank">WhatsApp</a> or by email at <a href="mailto:proteadomeglamping@gmail.com" style="color:var(--clay);">proteadomeglamping@gmail.com</a>. We confirm all bookings personally.'
+    },
+    {
+      triggers: ['price','cost','rate','how much','fee','charge'],
+      label: '💰 What does it cost?',
+      answer: 'Our rates are available on request — every stay is personalised. Please <a href="https://wa.me/27834518949" style="color:var(--clay);" target="_blank">WhatsApp us</a> or visit our <a href="book.html" style="color:var(--clay);">booking page</a> to check current availability and pricing.'
+    },
+    {
+      triggers: ['minimum','min stay','nights','how long','weekend','weekday'],
+      label: '🌙 Minimum stay?',
+      answer: 'Weekends require a <strong>2-night minimum</strong>. Weekdays are <strong>1-night minimum</strong>. All bookings need at least 48 hours notice.'
+    },
+    {
+      triggers: ['where','location','address','directions','find','get there','far','drive','distance'],
+      label: '📍 Where are you?',
+      answer: 'We\'re on Tinkerberg Road, Paarl Farms, Cape Town — about 45 min from Cape Town CBD, 20 min from Stellenbosch, and 25 min from Paarl. Right in the heart of the Cape Winelands.'
+    },
+    {
+      triggers: ['activity','activities','horse','riding','art','clay','hike','hiking','things to do','do'],
+      label: '🐎 What activities are there?',
+      answer: 'At Rivendale Winelands Riding Club farm you can enjoy: 🐎 Horse riding, 🎨 Art classes, 🧱 Clay brick building, and 🥾 Guided hiking. All activities are subject to availability and must be booked with your stay.'
+    },
+    {
+      triggers: ['dome','what is','inside','bedroom','bed','bath','outdoor','linen','sleep','accommodation'],
+      label: '🏕️ What\'s in the dome?',
+      answer: 'The geodesic dome is handcrafted and eco-friendly. It features 100% natural linen bedding, an outdoor stargazing bath, and sweeping views of the Paarl/Stellenbosch valley and the farm dam. Designed for couples or small families.'
+    },
+    {
+      triggers: ['guest','guests','people','capacity','family','children','kids','how many'],
+      label: '👨‍👩‍👧 How many guests?',
+      answer: 'The dome is ideal for couples or small families. Maximum capacity is 4 guests. Please mention children when booking so we can prepare accordingly.'
+    },
+    {
+      triggers: ['pet','dog','cat','animal','bring'],
+      label: '🐶 Are pets allowed?',
+      answer: 'Some of our guests have enjoyed stays with their dogs! Please ask us directly when booking — we\'ll confirm on a case-by-case basis. <a href="https://wa.me/27834518949" style="color:var(--clay);" target="_blank">WhatsApp us</a> to check.'
+    },
+    {
+      triggers: ['contact','phone','email','whatsapp','reach','call','number'],
+      label: '📞 How do I contact you?',
+      answer: 'You can reach Christine on: 📞 <a href="tel:+27834518949" style="color:var(--clay);">+27 83 451 8949</a> · ✉ <a href="mailto:proteadomeglamping@gmail.com" style="color:var(--clay);">proteadomeglamping@gmail.com</a> · or <a href="https://wa.me/27834518949" style="color:var(--clay);" target="_blank">WhatsApp</a>.'
+    },
+    {
+      triggers: ['occasion','birthday','anniversary','honeymoon','romantic','special','celebrate','proposal'],
+      label: '🎂 Special occasions?',
+      answer: 'Absolutely — we love making stays extra special. Whether it\'s a birthday, anniversary, honeymoon or proposal, let us know when booking and Christine will personalise your experience. 🌹'
+    },
+    {
+      triggers: ['cancel','cancellation','refund','policy'],
+      label: '❌ Cancellation policy?',
+      answer: 'Please contact us directly regarding cancellations — <a href="https://wa.me/27834518949" style="color:var(--clay);" target="_blank">WhatsApp</a> or <a href="mailto:proteadomeglamping@gmail.com" style="color:var(--clay);">email</a> is the quickest route. We handle each case personally.'
+    },
+    {
+      triggers: ['wifi','internet','signal','electricity','power','braai','fire','kitchen','cooking','food'],
+      label: '⚡ Facilities?',
+      answer: 'The dome is designed for an off-grid feel — embrace the nature experience! There\'s a braai area for outdoor cooking. For specific facility questions please <a href="https://wa.me/27834518949" style="color:var(--clay);" target="_blank">WhatsApp us</a> and we\'ll give you the full picture.'
+    },
+  ];
+
+  const TOP_CHIPS = [0, 1, 2, 3, 4]; // indices into FAQ to show as initial chips
+
+  // ── DOM ───────────────────────────────────────────────────
+  const bubble   = document.getElementById('faq-bubble');
+  const panel    = document.getElementById('faq-panel');
+  const messages = document.getElementById('faqMessages');
+  const chips    = document.getElementById('faqChips');
+  const input    = document.getElementById('faqInput');
+  const sendBtn  = document.getElementById('faqSend');
+  let opened = false;
+
+  // ── TOGGLE ───────────────────────────────────────────────
+  bubble.addEventListener('click', () => {
+    const isOpen = panel.classList.toggle('open');
+    bubble.classList.toggle('open', isOpen);
+    if (isOpen && !opened) {
+      opened = true;
+      addBotMessage('Hi! 👋 I\'m here to answer your questions about Protea Dome. What would you like to know?');
+      renderChips(TOP_CHIPS);
+    }
+    if (isOpen) input.focus();
+  });
+
+  // ── RENDER HELPERS ───────────────────────────────────────
+  function addBotMessage(html) {
+    const m = document.createElement('div');
+    m.className = 'msg msg-bot';
+    m.innerHTML = html;
+    messages.appendChild(m);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function addUserMessage(text) {
+    const m = document.createElement('div');
+    m.className = 'msg msg-user';
+    m.textContent = text;
+    messages.appendChild(m);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function renderChips(indices) {
+    chips.innerHTML = '';
+    indices.forEach(i => {
+      const faq = FAQ[i];
+      if (!faq) return;
+      const btn = document.createElement('button');
+      btn.className = 'faq-chip';
+      btn.textContent = faq.label;
+      btn.addEventListener('click', () => handleAnswer(faq, faq.label));
+      chips.appendChild(btn);
+    });
+  }
+
+  function handleAnswer(faq, userText) {
+    chips.innerHTML = '';
+    addUserMessage(userText);
+    setTimeout(() => {
+      addBotMessage(faq.answer);
+      // Suggest a few other topics
+      const others = FAQ
+        .map((_, i) => i)
+        .filter(i => FAQ[i] !== faq)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 3);
+      setTimeout(() => {
+        addBotMessage('Anything else I can help with?');
+        renderChips(others);
+      }, 400);
+    }, 280);
+  }
+
+  // ── TEXT INPUT MATCHING ──────────────────────────────────
+  function handleInput(text) {
+    if (!text.trim()) return;
+    input.value = '';
+    chips.innerHTML = '';
+    addUserMessage(text);
+
+    const lower = text.toLowerCase();
+    const match = FAQ.find(f => f.triggers.some(t => lower.includes(t)));
+
+    setTimeout(() => {
+      if (match) {
+        addBotMessage(match.answer);
+        const others = FAQ
+          .map((_, i) => i)
+          .filter(i => FAQ[i] !== match)
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 3);
+        setTimeout(() => {
+          addBotMessage('Anything else?');
+          renderChips(others);
+        }, 400);
+      } else {
+        addBotMessage('I\'m not sure about that one — Christine can answer directly! <a href="https://wa.me/27834518949" style="color:var(--clay);" target="_blank">WhatsApp her here</a> or email <a href="mailto:proteadomeglamping@gmail.com" style="color:var(--clay);">proteadomeglamping@gmail.com</a>.');
+        renderChips(TOP_CHIPS);
+      }
+    }, 300);
+  }
+
+  sendBtn.addEventListener('click', () => handleInput(input.value));
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') handleInput(input.value); });
+
+})();
 </script>
+
 </body>
 </html>
