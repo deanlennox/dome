@@ -388,7 +388,7 @@
     background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
     color: var(--cream); width: 56px; height: 56px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: all 0.3s;
+    cursor: pointer; transition: all 0.3s; z-index: 10;
   }
   .lightbox-nav:hover { background: var(--cream); color: var(--earth); }
   .lightbox-prev { left: -80px; }
@@ -514,18 +514,56 @@
     font-size: 0.68rem; font-weight: 400; letter-spacing: 0.14em;
     text-transform: uppercase; color: var(--clay);
   }
-  @media (max-width: 700px) {
+  .radio-player {
+    display: flex; align-items: center; gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  .radio-play-btn {
+    width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+    background: var(--clay); border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--cream); transition: background 0.3s, transform 0.2s;
+  }
+  .radio-play-btn:hover { background: var(--warm); transform: scale(1.08); }
+  .radio-play-btn svg { width: 16px; height: 16px; }
+  .radio-play-btn .play-icon { margin-left: 2px; }
+  .radio-player-info { flex: 1; display: flex; flex-direction: column; gap: 0.3rem; }
+  .radio-player-label {
+    font-size: 0.7rem; font-weight: 400; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(245,239,230,0.4);
+  }
+  .radio-player-bar {
+    height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px;
+    overflow: hidden; cursor: pointer;
+  }
+  .radio-player-progress {
+    height: 100%; width: 0%; background: var(--clay);
+    border-radius: 2px; transition: width 0.5s linear;
+  }
+  .radio-player-time {
+    font-size: 0.65rem; color: rgba(245,239,230,0.3); font-variant-numeric: tabular-nums;
+  }
+  @media (max-width: 900px) {
     .radio-feature-inner { grid-template-columns: 1fr; }
     .radio-divider { width: 100%; height: 1px; }
-    .radio-logo-col { padding: 2rem; flex-direction: row; gap: 1.2rem; text-align: left; align-items: center; }
-    .radio-mic { margin-bottom: 0; font-size: 1.5rem; }
-    .radio-content-col { padding: 2rem; }
-    .radio-quote { font-size: 1.05rem; }
+    .radio-logo-col {
+      padding: 1.8rem 1.5rem;
+      flex-direction: row; gap: 1rem;
+      text-align: left; align-items: center;
+    }
+    .radio-mic { margin-bottom: 0; font-size: 1.3rem; }
+    .radio-station { font-size: 0.85rem; }
+    .radio-freq { font-size: 1.1rem; }
+    .radio-show { font-size: 0.7rem; }
+    .radio-content-col { padding: 1.5rem; gap: 1rem; }
+    .radio-quote { font-size: 0.95rem; line-height: 1.6; padding-left: 1rem; }
+    .radio-context { font-size: 0.78rem; }
+    .radio-attribution { font-size: 0.62rem; letter-spacing: 0.08em; }
   }
 
   /* ── CONTACT ── */
   .contact-cta {
-    background: var(--sage); display: grid;
+    display: grid;
     grid-template-columns: 1fr 1fr; gap: 0; padding: 0; overflow: hidden;
   }
   .contact-image { position: relative; min-height: 480px; overflow: hidden; }
@@ -673,6 +711,8 @@
     align-items: center; justify-content: center; color: var(--earth);
   }
 </style>
+<script src="images.js"></script>
+<script src="reviews.js"></script>
 </head>
 <body>
 
@@ -824,80 +864,9 @@
 
   <div class="reviews-track-wrapper reveal">
     <div class="reviews-track" id="reviewsTrack">
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Wow! Just wow! As the first official guests, we were really impressed. We are so grateful for your attention to detail and hospitality. It was a beautiful birthday surprise for my husband, Emmanuel, and he loved it. We went for a hike as suggested and it was beautiful. This is definitely our little haven whenever we need a break from the city.</p>
-        <div class="review-author">Mellania &amp; Emmanuel</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">This has been our best Christmas to date! A big thank you for being so accommodating, hospitable, and making our stay so comfortable with our pooches! We deeply felt rested &amp; reconnected and wished we had one more evening. We will be back... in a less warm month :)</p>
-        <div class="review-author">Shaun &amp; Christine</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">What an amazing way to celebrate our 7th anniversary here. It was an awesome experience &amp; had a great time in nature. Thank you so much for this blessing, would love to come back.</p>
-        <div class="review-author">Noulen &amp; Jess</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">What an awesome getaway from the noise and busyness! Such a beautiful place with a friendly host. This place has everything we could possibly need. Lovely location &amp; loved the horses. Thank you so much for this little love nest. P.S: The space man is a hit!</p>
-        <div class="review-author">Graham &amp; Leigh</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Thank you — what a precious spot this is! Decor &amp; attentiveness &amp; caring service is wonderful. I love the space man &amp; fairy lights! We will come again!</p>
-        <div class="review-author">Ilse &amp; Matty</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Lovely, peaceful getaway from the city. Enjoyed the birds, the stars and some friendly horses. The small details like the spaceman &amp; fairy lights really make it special. Christine is an amazing host — a great way to spend our anniversary, will be back!</p>
-        <div class="review-author">John &amp; Kay</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">We spent our 1 year anniversary in a spot we'd never have imagined! We loved spending time in nature &amp; the dome is unreal! The stars &amp; view were breathtaking. Feeding the horses, rafting on the dam, the sunset braai — completely exceeded all expectations.</p>
-        <div class="review-author">Joshua &amp; Hannah</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">We had a wonderful time at the dome! My wife and I loved the serene surroundings and peaceful atmosphere. Our kids thoroughly enjoyed feeding the horses. Christine's hospitality was exceptional — highly recommended!</p>
-        <div class="review-author">Saleem Family</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">The peace and quiet we found here is unmatched. The accommodation itself was picturesque, a true respite from the bustling world. Thank you Christine for being a lovely host. We will definitely be back to visit the horses again soon!</p>
-        <div class="review-author">Jade &amp; Gilles</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Thank you for making our stay over New Years truly a breeze. We love the disconnect from the world and just being in touch with nature. The quietness and peaceful aura from the dome is truly like anything we have experienced.</p>
-        <div class="review-author">Isaacs Family</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Absolutely incredible! We really enjoyed our stay. The dome was an escape from the crazy hustle &amp; just what we all needed. Christine is an exceptional host &amp; has thought of every little thing. Thank you from the bottom of our hearts for creating this little slice of heaven.</p>
-        <div class="review-author">Johnston Family</div>
-      </div></div>
-
-      <div class="review-card"><div class="review-card-inner">
-        <div class="review-quote">"</div><div class="stars">★★★★★</div>
-        <p class="review-text">Thank you for the warm welcome, care and attention you put into our stay. It was the perfect setting to celebrate our 10th anniversary with our children. We especially loved the nebula and getting to see and experience the animals.</p>
-        <div class="review-author">Newalani Family</div>
-      </div></div>
-
-    </div></div>
+      <!-- populated from REVIEWS[] array in JS -->
+    </div>
+  </div>
 
   <div class="reviews-nav">
     <button class="reviews-nav-btn" id="reviewPrev" aria-label="Previous">
@@ -926,6 +895,20 @@
           "Protea Dome glamping wants everyone to have a personalised experience, whether it's a birthday, anniversary or just a weekend to get away. The space offers tranquility and peace — waking up with natural sunlight and the birds tweeting."
         </blockquote>
         <div class="radio-attribution">— Christine, Protea Dome · as heard on Radio Tygerberg 104FM</div>
+        <div class="radio-player">
+          <button class="radio-play-btn" id="radioPlayBtn" aria-label="Play interview">
+            <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+          </button>
+          <div class="radio-player-info">
+            <div class="radio-player-label">Listen to the interview</div>
+            <div class="radio-player-bar">
+              <div class="radio-player-progress" id="radioProgress"></div>
+            </div>
+            <div class="radio-player-time" id="radioTime">0:00</div>
+          </div>
+          <audio id="radioAudio" src="/radio.m4a" preload="none"></audio>
+        </div>
       </div>
     </div>
   </div>
@@ -1002,6 +985,7 @@
 </div>
 
 <script>
+  // ── GALLERY IMAGES ──────────────────────────────────────
   // ── NAV SCROLL ──────────────────────────────────────────
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
@@ -1009,7 +993,7 @@
   });
 
   // ── DYNAMIC GALLERY LOADER ─────────────────────────────
-  async function loadGalleryImages() {
+  function loadGalleryImages() {
     const visibleContainer = document.getElementById('gallery-visible');
     const hiddenContainer  = document.getElementById('gallery-hidden');
 
@@ -1017,42 +1001,27 @@
     hiddenContainer.innerHTML  = '';
 
     try {
-      const response = await fetch('https://www.proteadome.com/gallery/');
-      const html     = await response.text();
-
-      const parser = new DOMParser();
-      const doc    = parser.parseFromString(html, 'text/html');
-
-      // Target only the file links — each image row has a td[data-sort="filename.jpg"]
-      const imgPattern = /\.(jpe?g|png|gif|webp|avif)(\?|$)/i;
-
-      const galleryImages = [...doc.querySelectorAll('td[data-sort] a[href]')]
-        .map(a => a.getAttribute('href'))
-        .filter(href => href && imgPattern.test(href))
-        .map(href => {
-          if (href.startsWith('http')) return href;
-          if (href.startsWith('/'))    return 'https://www.proteadome.com' + href;
-          return 'https://www.proteadome.com/gallery/' + href.replace(/^.*\//, '');
-        });
+      const galleryImages = GALLERY_IMAGES.map(img => ({
+        src: '/gallery/' + img.src,
+        alt: img.alt || 'Protea Dome Glamping',
+      }));
 
       if (galleryImages.length === 0) {
         visibleContainer.innerHTML = `<p style="grid-column:1/-1;text-align:center;padding:3rem;color:#a0784a;">No images found in gallery.</p>`;
         return;
       }
 
-      galleryImages.forEach((imgSrc, index) => {
-        const altText = `Protea Dome image ${index + 1}`;
-
+      galleryImages.forEach((imgObj, index) => {
         if (index < 6) {
           const div = document.createElement('div');
           div.className = 'gallery-item reveal';
           const img = document.createElement('img');
-          img.src = imgSrc; img.alt = altText; img.loading = 'lazy';
+          img.src = imgObj.src; img.alt = imgObj.alt; img.loading = 'lazy';
           div.appendChild(img);
           visibleContainer.appendChild(div);
         } else {
           const img = document.createElement('img');
-          img.src = imgSrc; img.alt = altText;
+          img.src = imgObj.src; img.alt = imgObj.alt;
           hiddenContainer.appendChild(img);
         }
       });
@@ -1185,13 +1154,72 @@
     if (e.key === 'ArrowLeft') showPrev();
   });
 
-  // ── REVIEWS CAROUSEL ────────────────────────────────────
-  const track     = document.getElementById('reviewsTrack');
-  const dotsEl    = document.getElementById('reviewsDots');
-  const prevBtn   = document.getElementById('reviewPrev');
-  const nextBtn   = document.getElementById('reviewNext');
-  const cards     = track ? [...track.children] : [];
+  // ── RADIO PLAYER ─────────────────────────────────────────
+  const radioAudio    = document.getElementById('radioAudio');
+  const radioPlayBtn  = document.getElementById('radioPlayBtn');
+  const radioProgress = document.getElementById('radioProgress');
+  const radioTime     = document.getElementById('radioTime');
 
+  if (radioAudio && radioPlayBtn) {
+    radioPlayBtn.addEventListener('click', () => {
+      if (radioAudio.paused) {
+        radioAudio.play();
+        radioPlayBtn.querySelector('.play-icon').style.display  = 'none';
+        radioPlayBtn.querySelector('.pause-icon').style.display = 'block';
+      } else {
+        radioAudio.pause();
+        radioPlayBtn.querySelector('.play-icon').style.display  = 'block';
+        radioPlayBtn.querySelector('.pause-icon').style.display = 'none';
+      }
+    });
+
+    radioAudio.addEventListener('timeupdate', () => {
+      if (!radioAudio.duration) return;
+      const pct = (radioAudio.currentTime / radioAudio.duration) * 100;
+      radioProgress.style.width = pct + '%';
+      const mins = Math.floor(radioAudio.currentTime / 60);
+      const secs = Math.floor(radioAudio.currentTime % 60).toString().padStart(2, '0');
+      radioTime.textContent = `${mins}:${secs}`;
+    });
+
+    radioAudio.addEventListener('ended', () => {
+      radioPlayBtn.querySelector('.play-icon').style.display  = 'block';
+      radioPlayBtn.querySelector('.pause-icon').style.display = 'none';
+      radioProgress.style.width = '0%';
+      radioTime.textContent = '0:00';
+    });
+
+    document.querySelector('.radio-player-bar')?.addEventListener('click', (e) => {
+      if (!radioAudio.duration) return;
+      const rect = e.currentTarget.getBoundingClientRect();
+      radioAudio.currentTime = ((e.clientX - rect.left) / rect.width) * radioAudio.duration;
+    });
+  }
+
+
+  // To add a review: add an object to this array.
+  // Fields: author (string), text (string), stars (1-5, optional, defaults to 5)
+  // Build review cards from array
+  const track  = document.getElementById('reviewsTrack');
+  const dotsEl = document.getElementById('reviewsDots');
+  const prevBtn = document.getElementById('reviewPrev');
+  const nextBtn = document.getElementById('reviewNext');
+
+  REVIEWS.forEach(r => {
+    const stars = '★'.repeat(r.stars || 5);
+    const card = document.createElement('div');
+    card.className = 'review-card';
+    card.innerHTML = `<div class="review-card-inner">
+      <div class="review-quote">"</div>
+      <div class="stars">${stars}</div>
+      <p class="review-text">${r.text}</p>
+      <div class="review-author">${r.author}</div>
+    </div>`;
+    track.appendChild(card);
+  });
+
+  // Carousel logic
+  const cards = track ? [...track.children] : [];
   let cardsPerView = window.innerWidth <= 900 ? 1 : window.innerWidth <= 1100 ? 2 : 3;
   let reviewIndex  = 0;
   const totalPages = () => Math.ceil(cards.length / cardsPerView);
@@ -1201,7 +1229,7 @@
     for (let i = 0; i < totalPages(); i++) {
       const d = document.createElement('button');
       d.className = 'reviews-dot' + (i === reviewIndex ? ' active' : '');
-      d.setAttribute('aria-label', `Page ${i+1}`);
+      d.setAttribute('aria-label', `Page ${i + 1}`);
       d.addEventListener('click', () => goToPage(i));
       dotsEl.appendChild(d);
     }
